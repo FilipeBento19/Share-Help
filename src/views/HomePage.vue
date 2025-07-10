@@ -42,7 +42,7 @@ import CausasCard from '../components/CausasCard.vue'; // Ajustar caminho relati
   color: white;
   box-sizing: border-box;
 
-  background-image: url('./icons/ref.png');
+  background-image: url('/icons/ref.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
