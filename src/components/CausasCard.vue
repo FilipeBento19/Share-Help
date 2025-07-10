@@ -33,7 +33,7 @@ const formatCurrency = (value) => {
             <span>{{ cause.progress }}% alcançado</span>
             <span>Meta: {{ formatCurrency(cause.goal) }}</span>
         </div>
-      <button class="card-button"></button>
+      <button class="card-button">Doar para está causa</button>
     </div>
   </div>
 </template>
@@ -113,7 +113,6 @@ const formatCurrency = (value) => {
 .cause-image {
   width: 100%;
   height: 200px; 
-  margin-bottom: 10px; 
 }
 
 .card-button:hover {

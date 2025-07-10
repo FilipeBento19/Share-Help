@@ -17,7 +17,7 @@ import CauseCard from './components/CausasCard.vue';
     </div>
     <section class="nossas-causas">
         <h2>Nossas Causas</h2>
-        <p>Conheça os projetos que estão transformando vidas e comunidades inteiras.</p>
+        <p>Conheça os projetos que estão transformando vidas e <br>comunidades inteiras.</p>
         <div class="causes-grid">
             <CauseCard
                 v-for="cause in causesData"
@@ -26,11 +26,13 @@ import CauseCard from './components/CausasCard.vue';
             />
         </div>
     </section>
+    <section class="escolher-sh">
+
+    </section>
   </main>
 </template>
 
 <style scoped>
-
 
 .topo {
   position: relative;
