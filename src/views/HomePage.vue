@@ -1,6 +1,6 @@
 <script setup>
-import causesData from '../data/causasData'; // Ajustar caminho relativo para 'data'
-import CausasCard from '../components/CausasCard.vue'; // Ajustar caminho relativo para 'components'
+import causesData from '../data/causasData';
+import CausasCard from '../components/CausasCard.vue';
 
 </script>
 
@@ -29,7 +29,29 @@ import CausasCard from '../components/CausasCard.vue'; // Ajustar caminho relati
         </div>
     </section>
     <section class="escolher-sh">
-      </section>
+      <h1>Por que Escolher o ShareHelp?</h1>
+    <div class="escolher-coisas">
+      <div class="escolher-div">
+        <img src="/icons/seguranca.png" alt="">
+        <h2>Segurança garantida</h2>
+        <p>Acompanhe em tempo real como sua doação <br> está sendo utilizada</p>
+      </div>
+      <div class="escolher-div">
+        <img src="/icons/praticidade.png" alt="">
+        <h2>Praticidade</h2>
+        <p>Receba relatórios detalhados sobre o impacto<br>das suas doações</p>
+      </div>
+      <div class="escolher-div">
+        <img src="/icons/doacoes.png" alt="">
+        <h2>Doações Recorrentes</h2>
+        <p>Configure doações automáticas mensais ou <br>anuais</p>
+      </div>
+    </div>
+    </section>
+    <section class="formas-de-doar">
+      <h1>Formas de Doar</h1>
+      <p>Escolha a forma mais conveniente para você fazer sua doação</p>
+    </section>
   </main>
 </template>
 
@@ -144,5 +166,49 @@ import CausasCard from '../components/CausasCard.vue'; // Ajustar caminho relati
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px;
+}
+
+/*----------------------------------------------*/
+
+.escolher-sh {
+  background-color: #E5E7EB;
+  padding: 2vw;
+  text-align: center;
+}
+
+.escolher-sh h1{
+  font-weight: 650;
+  font-size: 2.3rem;
+  color: #333;
+  padding-bottom: 15px;
+}
+
+.escolher-coisas{
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.escolher-div {
+  text-align: center;
+  max-width: 150;
+  width: 25%;
+}
+
+.escolher-div h2{
+  padding-top: 10px;
+  font-weight: 1000;
+}
+
+.escolher-div p{
+  padding-top: 15px;
+  color: #4B5563;
+}
+
+/*----------------------------------------------*/
+
+.formas-de-doar {
+  text-align: center;
 }
 </style>
