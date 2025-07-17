@@ -1,6 +1,8 @@
 <script setup>
 import causesData from '../data/causasData';
 import CausasCard from '../components/CausasCard.vue';
+import PaymentCard from '../components/PaymentComponent.vue';
+
 
 </script>
 
@@ -51,6 +53,9 @@ import CausasCard from '../components/CausasCard.vue';
     <section class="formas-de-doar">
       <h1>Formas de Doar</h1>
       <p>Escolha a forma mais conveniente para você fazer sua doação</p>
+      <div class="causes-grid">
+            <PaymentCard/>
+        </div>
     </section>
   </main>
 </template>
@@ -209,6 +214,17 @@ import CausasCard from '../components/CausasCard.vue';
 /*----------------------------------------------*/
 
 .formas-de-doar {
+  padding: 51px 0 0 0;
   text-align: center;
+}
+
+.formas-de-doar h1 {
+  font-weight: 650;
+  font-size: 2.3rem;
+  color: #333;
+}
+
+.formas-de-doar p{
+  padding-top: 20px;
 }
 </style>

@@ -1,6 +1,6 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../views/HomePage.vue'; // Importe a view da sua página inicial
+import HomePage from '../views/HomePage.vue';
 
 
 
