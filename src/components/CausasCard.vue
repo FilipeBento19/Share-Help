@@ -42,15 +42,20 @@ const formatCurrency = (value) => {
 .causas-card {
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   text-align: left;
   display: flex;
   flex-direction: column;
   font-family: 'Montserrat', sans-serif;
   min-height: 220px; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
 }
 
+.causas-card:hover{
+  transform: translateY(-5px);
+}
 .card-content {
   padding: 15px; 
   display: flex;

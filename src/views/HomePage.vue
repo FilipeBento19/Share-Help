@@ -2,6 +2,7 @@
 import causesData from '../data/causasData';
 import CausasCard from '../components/CausasCard.vue';
 import PaymentCard from '../components/PaymentComponent.vue';
+import MapInteractive from '@/components/MapInteractive.vue';
 
 
 </script>
@@ -51,11 +52,16 @@ import PaymentCard from '../components/PaymentComponent.vue';
     </div>
     </section>
     <section class="formas-de-doar">
-      <h1>Formas de Doar</h1>
-      <p>Escolha a forma mais conveniente para você fazer sua doação</p>
-      <div class="causes-grid">
+      <div class="formas-desc">
+        <h1>Formas de Doar</h1>
+        <p>Escolha a forma mais conveniente para você fazer sua doação</p>
+      </div>
+      <div class="payment-grid">
             <PaymentCard/>
-        </div>
+      </div>
+    </section>
+    <section class="mapa-interativo">
+      <MapInteractive/>
     </section>
   </main>
 </template>
@@ -126,22 +132,26 @@ import PaymentCard from '../components/PaymentComponent.vue';
   background-color: #ffffff;
   color: #2563EB;
   border: 1px solid #ffffff;
+  transition: all 0.3s ease;
 }
 
 .topo button.primary:hover {
   background-color: #dddddd;
-  border-color: #dddddd; 
+  border-color: #dddddd;
+  transform: translateY(-2px);
 }
 
 .topo button.secondary {
   background-color: transparent;
   color: white;
   border: 3px solid white;
+  transition: all 0.3s ease;  
 }
 
 .topo button.secondary:hover {
   border-color: #dddddd;
   color: #dddddd;
+  transform: translateY(-2px);  
 }
 
 /*----------------------------------------------*/
@@ -154,7 +164,7 @@ import PaymentCard from '../components/PaymentComponent.vue';
 .nossas-causas h2 {
     font-weight: 650;
     font-size: 2.5em;
-    color: #333;
+    color: black;
     margin-bottom: 15px;
 }
 
@@ -171,12 +181,13 @@ import PaymentCard from '../components/PaymentComponent.vue';
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px;
+    
 }
 
 /*----------------------------------------------*/
 
 .escolher-sh {
-  background-color: #E5E7EB;
+  background-color: #eff1f5 ;
   padding: 2vw;
   text-align: center;
 }
@@ -184,7 +195,7 @@ import PaymentCard from '../components/PaymentComponent.vue';
 .escolher-sh h1{
   font-weight: 650;
   font-size: 2.3rem;
-  color: #333;
+  color: black;
   padding-bottom: 15px;
 }
 
@@ -204,6 +215,7 @@ import PaymentCard from '../components/PaymentComponent.vue';
 .escolher-div h2{
   padding-top: 10px;
   font-weight: 1000;
+  color: black;
 }
 
 .escolher-div p{
@@ -213,18 +225,22 @@ import PaymentCard from '../components/PaymentComponent.vue';
 
 /*----------------------------------------------*/
 
+.formas-desc{
+  padding-top: 30px;
+}
+
 .formas-de-doar {
-  padding: 51px 0 0 0;
   text-align: center;
 }
 
-.formas-de-doar h1 {
+.formas-de-doar h1 {  
   font-weight: 650;
   font-size: 2.3rem;
-  color: #333;
+  color: black;
 }
 
-.formas-de-doar p{
-  padding-top: 20px;
+.payment-grid {
+  padding-top: 2.5vw;
+  padding-bottom: 4vw;
 }
 </style>
