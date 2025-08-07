@@ -38,19 +38,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0 }
-    }
-  }
-});
-
-// Tratamento de erro para rotas não encontradas
-router.onError((error) => {
-  console.error('Router error:', error);
-});
+  routes
+})
 
 export default router;
