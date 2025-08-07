@@ -1,5 +1,5 @@
 // src/router/index.js
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
 import Login from '../views/Login.vue';
 
@@ -14,6 +14,11 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    redirect: '/'
+  }
   // {
   //   path: '/institutions',
   //   name: 'Institutions',
@@ -32,9 +37,15 @@ const routes = [
 ];
 
 const router = createRouter({
-  // Usar Hash History - funciona sempre no Vercel
-  history: createWebHashHistory(),
-  routes
+  history: createWebHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
 });
 
 // Tratamento de erro para rotas não encontradas
