@@ -1,5 +1,5 @@
 // src/router/index.js
-import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
 import Login from '../views/Login.vue';
 
@@ -32,10 +32,8 @@ const routes = [
 ];
 
 const router = createRouter({
-  // Usar Web History em desenvolvimento, Hash History em produção se não tiver vercel.json
-  history: process.env.NODE_ENV === 'production' 
-    ? createWebHistory() // Tente primeiro com Web History
-    : createWebHistory(),
+  // Usar Hash History - funciona sempre no Vercel
+  history: createWebHashHistory(),
   routes
 });
 
