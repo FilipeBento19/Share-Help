@@ -19,6 +19,7 @@
           <li><a href="/map">Mapa interativo</a></li>
           <li><a href="/team">Nossa equipe</a></li>
           <li><button class="header-donate-button">Doar agora</button></li>
+          <li><a href="/login"><img src="/icons/login.png" alt=""></img></a></li>
         </ul>
       </nav>
     </div>

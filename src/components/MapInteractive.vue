@@ -137,13 +137,11 @@
   transform: translateY(0);
 }
 
-
 .map-image {
   width: 100%;
   max-width: 800px;
   height: 625px;
     
 }
-
 
 </style>
