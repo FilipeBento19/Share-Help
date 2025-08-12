@@ -63,6 +63,7 @@ import MapInteractive from '@/components/MapInteractive.vue';
     <section class="mapa-interativo">
       <MapInteractive/>
     </section>
+    
   </main>
 </template>
 
