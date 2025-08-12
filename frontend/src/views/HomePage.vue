@@ -3,6 +3,7 @@ import causesData from '../data/causasData';
 import CausasCard from '../components/CausasCard.vue';
 import PaymentCard from '../components/PaymentComponent.vue';
 import MapInteractive from '@/components/MapInteractive.vue';
+import FooterComponent from '@/components/FooterComponent.vue';
 
 
 </script>
@@ -63,7 +64,9 @@ import MapInteractive from '@/components/MapInteractive.vue';
     <section class="mapa-interativo">
       <MapInteractive/>
     </section>
-    
+    <section>
+      <FooterComponent/>
+    </section>
   </main>
 </template>
 
