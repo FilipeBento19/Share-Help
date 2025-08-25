@@ -17,7 +17,6 @@ import FooterComponent from '@/components/FooterComponent.vue';
           <p>Conectamos doadores e instituições carentes de forma transparente e segura. Cada real doado faz a diferença na vida de quem mais precisa.</p>
           <div class="buttons">
             <button class="primary">Doar Agora</button>
-            <button class="secondary">Saiba Mais</button>
           </div>
         </div>
     </div>
@@ -143,19 +142,6 @@ import FooterComponent from '@/components/FooterComponent.vue';
   background-color: #dddddd;
   border-color: #dddddd;
   transform: translateY(-2px);
-}
-
-.topo button.secondary {
-  background-color: transparent;
-  color: white;
-  border: 3px solid white;
-  transition: all 0.3s ease;  
-}
-
-.topo button.secondary:hover {
-  border-color: #dddddd;
-  color: #dddddd;
-  transform: translateY(-2px);  
 }
 
 /*----------------------------------------------*/

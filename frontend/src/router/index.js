@@ -1,7 +1,9 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
-import Login from '../views/Login.vue';
+import Login from '../views/LoginPage.vue';
+import InstitutionPage from '../views/institutionPage.vue';
+import AbrigoPage from '../views/AbrigoPage.vue';
 
 const routes = [
   {
@@ -13,6 +15,16 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  { 
+    path: '/institution',
+    name: 'Instituição',
+    component: InstitutionPage
+  },
+  { 
+    path: '/abrigo',
+    name: 'Abrigo',
+    component: AbrigoPage
   },
   {
     path: '/:pathMatch(.*)*',

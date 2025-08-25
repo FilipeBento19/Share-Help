@@ -15,11 +15,11 @@
       <nav class="main-nav">
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="/institutions">Instituições</a></li>
+          <li><a href="/institution">Instituições</a></li>
           <li><a href="/map">Mapa interativo</a></li>
           <li><a href="/team">Nossa equipe</a></li>
           <li><button class="header-donate-button">Doar agora</button></li>
-          <li><a href="/login"><img src="/icons/login.png" alt=""></img></a></li>
+          <li class="login"><a href="/login"><img src="/icons/login.png" alt=""></a></li>
         </ul>
       </nav>
     </div>
@@ -111,4 +111,7 @@
   background-color: #1d4ed8;
 }
 
+.login{
+  padding-top: 6px;
+}
 </style>

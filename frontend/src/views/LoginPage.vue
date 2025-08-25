@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import LoginForm from '@/components/LoginForm.vue'
 import RegisterStep from '@/components/RegisterStep.vue'
 
-
 // Estados principais
 const email = ref('')
 const password = ref('')
@@ -24,7 +23,48 @@ const registerData = ref({
   confirmPassword: ''
 })
 
+// Função para o login
+const handleLogin = () => {
+  console.log('Login clicado:', { 
+    email: email.value, 
+    password: password.value,
+    keepLoggedIn: keepLoggedIn.value 
+  })
+  // resto do django ou oq quiser
+}
 
+// Função para mostrar tela de cadastro
+const createAccount = () => {
+  showRegister.value = true
+  error.value = ''
+}
+
+// Função para voltar ao login
+const backToLogin = () => {
+  showRegister.value = false
+  error.value = ''
+  // Limpar dados do cadastro
+  registerData.value = {
+    email: '',
+    verificationCode: '',
+    name: '',
+    username: '',
+    password: '',
+    confirmPassword: ''
+  }
+}
+
+// Função para próximo passo do cadastro
+const handleNextStep = () => {
+  console.log('Próximo passo:', registerStep.value, registerData.value)
+  // resto do django ou oq quiser
+}
+
+// Função para reenviar código de verificação
+const resendCode = () => {
+  console.log('Reenviar código para:', registerData.value.email)
+  // resto do django ou oq quiser
+}
 </script>
 
 <template>

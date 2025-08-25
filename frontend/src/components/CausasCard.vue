@@ -20,23 +20,24 @@ const formatCurrency = (value) => {
 };
 </script>
 
-<template>
-  <div class="causas-card">
-    <img :src="cause.image" :alt="cause.title" class="cause-image">
-    <div class="card-content">
-        <h3>{{ cause.title }}</h3>
-        <p class="description">{{ cause.description }}</p>
-        <div class="progress-bar-container">
-        <div class="progress-bar" :style="{ width: cause.progress + '%' }"></div>
+  <template>
+    <div class="causas-card">
+      <img :src="cause.image" :alt="cause.title" class="cause-image">
+      <div class="card-content">
+          <h3>{{ cause.title }}</h3>
+          <p class="description">{{ cause.description }}</p>
+          <div class="progress-bar-container">
+          <div class="progress-bar" :style="{ width: cause.progress + '%' }"></div>
+      </div>
+          <div class="progress-info">
+              <span>{{ cause.progress }}% alcançado</span>
+              <span>Meta: {{ formatCurrency(cause.goal) }}</span>
+          </div>
+          
+        <a :href="cause.link"><button class="card-button">Doar para está causa</button></a>
+      </div>
     </div>
-        <div class="progress-info">
-            <span>{{ cause.progress }}% alcançado</span>
-            <span>Meta: {{ formatCurrency(cause.goal) }}</span>
-        </div>
-      <button class="card-button">Doar para está causa</button>
-    </div>
-  </div>
-</template>
+  </template>
 
 <style scoped>
 .causas-card {
