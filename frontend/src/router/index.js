@@ -2,7 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
 import Login from '../views/LoginPage.vue';
-import InstitutionPage from '../views/institutionPage.vue';
+import InstitutionPage from '../views/InstitutionPage.vue';
 import AbrigoPage from '../views/AbrigoPage.vue';
 
 const routes = [
