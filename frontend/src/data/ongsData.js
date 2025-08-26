@@ -2,8 +2,8 @@ const ongs = [
   // ----------------- CRIANÇAS -----------------
   {
     id: 'lar-abdon-batista',
-    categoria: 'crianças',
-    title: 'Associação de Amigos das Crianças do Lar Abdon Batista',
+    categoria: 'criancas',
+    title: 'Associação de Amigos das criancas do Lar Abdon Batista',
     description: 'Toda criança merece um lar seguro e cheio de carinho. No Lar Abdon Batista, acolhemos aquelas que, por diferentes motivos, não podem estar com suas famílias no momento. Aqui, elas encontram proteção, cuidado e oportunidades para um novo começo. Nosso maior compromisso é oferecer um ambiente acolhedor enquanto trabalhamos para fortalecer seus vínculos familiares e garantir um futuro com mais segurança e esperança.',
     filtros: ['roupas', 'alimentos'],
     telefone: '(47) 3422-6944',
@@ -15,9 +15,9 @@ const ongs = [
   },
   {
     id: 'omunga',
-    categoria: 'crianças',
+    categoria: 'criancas',
     title: 'OMUNGA Grife Social e Instituto',
-    description: 'A OMUNGA é uma organização social de Joinville que nasceu como uma grife em 2013 e hoje atua como instituto, levando educação para comunidades vulneráveis no Brasil e na África. Por meio da venda de produtos, doações e projetos, a OMUNGA implementa bibliotecas, capacita professores e incentiva a leitura. Seu nome, de origem angolana, significa “união”. Já impactou milhares de crianças e educadores em regiões como o sertão nordestino, Amazônia e Angola.',
+    description: 'A OMUNGA é uma organização social de Joinville que nasceu como uma grife em 2013 e hoje atua como instituto, levando educação para comunidades vulneráveis no Brasil e na África. Por meio da venda de produtos, doações e projetos, a OMUNGA implementa bibliotecas, capacita professores e incentiva a leitura. Seu nome, de origem angolana, significa “união”. Já impactou milhares de criancas e educadores em regiões como o sertão nordestino, Amazônia e Angola.',
     filtros: ['livros'],
     telefone: '(47) 33056716',
     local: 'Ágora Tech Park/HUB - Rua Dona Francisca, 8300 - Sala 307 - Distrito Industrial, Joinville - SC, 89219-600',
@@ -27,7 +27,7 @@ const ongs = [
   },
   {
     id: 'missao-crianca-jardim-paraiso',
-    categoria: 'crianças',
+    categoria: 'criancas',
     title: 'Missão Criança Jardim Paraíso',
     description: 'Há 28 anos, o Projeto Missão Criança tem transformado vidas no Jardim Paraíso, oferecendo 250 vagas no contraturno escolar para crianças e adolescentes. Movido pelo amor de Deus, o projeto promove desenvolvimento social, emocional e espiritual, em um ambiente seguro e acolhedor. Mais do que reforço escolar e oficinas, o Missão Criança oferece esperança, orientação e apoio às famílias, impactando toda a comunidade.',
     filtros: ['brinquedos', 'roupas'],
@@ -39,7 +39,7 @@ const ongs = [
   },
   {
     id: 'ecos-esperanca',
-    categoria: 'crianças',
+    categoria: 'criancas',
     title: 'Associação Ecos de Esperança',
     description: 'Instituição cristã, não-governamental e sem fins lucrativos, dedicada à proteção integral de crianças e adolescentes e à promoção de seus direitos. Nossa missão é lutar por igualdade, justiça social e dignidade para todos, fundamentados nos princípios do Evangelho de Cristo.',
     filtros: ['roupas', 'brinquedos', 'alimentos'],
@@ -51,7 +51,7 @@ const ongs = [
   },
   {
     id: 'instituto-conforme',
-    categoria: 'crianças',
+    categoria: 'criancas',
     title: 'Instituto Conforme',
     description: 'Atende famílias em vulnerabilidade, oferecendo apoio por meio de projetos, palestras, consultas com profissionais de saúde e orientação jurídica. Também distribui cestas básicas e promove a qualificação profissional.',
     filtros: ['roupas', 'brinquedos', 'alimentos'],
@@ -63,7 +63,7 @@ const ongs = [
   },
   {
     id: 'casa-do-adalto',
-    categoria: 'crianças',
+    categoria: 'criancas',
     title: 'Associação Casa do Adalto',
     description: 'Instituição de apoio a crianças e adolescentes com neoplasia, fundada em 2002 em memória de Adalto, diagnosticado com câncer aos 4 anos. Atua de forma beneficente, oferecendo acolhimento e suporte.',
     filtros: ['roupas', 'alimentos'],
@@ -75,7 +75,7 @@ const ongs = [
   },
   {
     id: 'projeto-resgate',
-    categoria: 'crianças',
+    categoria: 'criancas',
     title: 'Projeto Resgate',
     description: 'Projeto dedicado ao acolhimento e proteção de crianças, oferecendo cuidado, oportunidades e reforço de vínculos familiares.',
     filtros: ['roupas', 'brinquedos', 'livros'],

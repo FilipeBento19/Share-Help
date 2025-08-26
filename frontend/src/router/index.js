@@ -4,6 +4,8 @@ import HomePage from '../views/HomePage.vue';
 import Login from '../views/LoginPage.vue';
 import InstitutionPage from '../views/InstitutionPage.vue';
 import AbrigoPage from '../views/AbrigoPage.vue';
+import CriancaPage from '../views/CriancaPage.vue';
+import IdososPage from '../views/IdososPage.vue';
 
 const routes = [
   {
@@ -25,6 +27,16 @@ const routes = [
     path: '/abrigo',
     name: 'Abrigo',
     component: AbrigoPage
+  },
+  { 
+    path: '/idosos',
+    name: 'Idosos',
+    component: IdososPage
+  },
+  { 
+    path: '/criancas',
+    name: 'Crianças',
+    component: CriancaPage
   },
   {
     path: '/:pathMatch(.*)*',

@@ -8,14 +8,14 @@ const companyInfo = {
 
 const quickLinks = [
   { name: 'Home', href: '#' },
-  { name: 'Instituições', href: '#' },
+  { name: 'Instituições', href: '/institution' },
   { name: 'Mapa Interativo', href: '#' },
   { name: 'Nossa equipe', href: '#' }
 ]
 
 const contactInfo = {
-  phone: '(47) 99846-3469',
-  email: 'contato@ShareHelp.org',
+  phone: '(47) 99975-7571',
+  email: 'contatosharehelp@gmail.com',
   location: 'Joinville, SC'
 }
 </script>
@@ -37,9 +37,9 @@ const contactInfo = {
           
           <!-- Redes -->
           <div class="social-links">
-            <a href=""><img src="/icons/facefooter.png" alt=""></a>
-            <a href=""><img src="/icons/facefooter.png" alt=""></a>
-            <a href=""><img src="/icons/facefooter.png" alt=""></a>
+            <a href="/"><img src="/icons/facefooter.png" alt=""></a>
+            <a href="/"><img src="/icons/instafooter.png" alt=""></a>
+            <a href="/"><img src="/icons/twitterfooter.png" alt=""></a>
           </div>
         </div>
 

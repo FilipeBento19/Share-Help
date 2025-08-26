@@ -6,7 +6,7 @@ const causes = [
     description: 'Garantindo refeições nutritivas para crianças em escolas públicas.',
     progress: 89, // %
     goal: 430, 
-    link: '/abrigo' ,
+    link: '/criancas' ,
   },
   {
     id: 'cuidados-com-idosos',
@@ -15,7 +15,7 @@ const causes = [
     description: 'Apoio médico e social para idosos em situação de vulnerabilidade.',
     progress: 56,
     goal: 990,
-    link: '/abrigo' ,
+    link: '/idosos' ,
   },
   {
     id: 'abrigo-moradores-rua',

@@ -14,7 +14,7 @@ const formatCurrency = (value) => {
 
 // Pegar a instituição recomendada (Ecos de Esperança)
 const recommendedInstitution = computed(() => {
-  const ong = ongs.find((o) => o.id === 'casa-vo-joaquina')
+  const ong = ongs.find((o) => o.id === 'ecos-esperanca')
   return {
     name: ong.title,
     description: ong.description,
@@ -34,7 +34,7 @@ const recommendedInstitution = computed(() => {
 const availableInstitutions = computed(() => {
   return ongs
     //.filter((ong) => ong.id !== 'ecos-esperanca')
-    .filter((ong) => ong.categoria == 'moradores-de-rua')
+    .filter((ong) => ong.categoria == 'criancas')
     .map((ong) => ({
       id: ong.id,
       name: ong.title,

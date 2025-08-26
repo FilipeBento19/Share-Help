@@ -16,7 +16,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
           <h1>Transforme Vidas com Sua Doação</h1>
           <p>Conectamos doadores e instituições carentes de forma transparente e segura. Cada real doado faz a diferença na vida de quem mais precisa.</p>
           <div class="buttons">
-            <button class="primary">Doar Agora</button>
+            <a href="/institution"><button class="primary">Doar Agora</button></a>
           </div>
         </div>
     </div>
