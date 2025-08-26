@@ -33,7 +33,7 @@ const recommendedInstitution = computed(() => {
 
 const availableInstitutions = computed(() => {
   return ongs
-    //.filter((ong) => ong.id !== 'lar-renascer')
+    .filter((ong) => ong.id !== 'lar-renascer')
     .filter((ong) => ong.categoria == 'idosos')
     .map((ong) => ({
       id: ong.id,
@@ -61,10 +61,9 @@ const doarParaInstituicao = (institutionId) => {
     <div class="topo">
       <div class="overlay"></div>
       <div class="banner">
-        <h1>Ajude na Alimentação<br />Escolar de Crianças Carentes</h1>
+        <h1>Ajude Apoiando Cuidados Com Idosos</h1>
         <p>
-          Cada valor doado se transforma em alimento e<br />oportunidade para crianças em situação
-          de<br />vulnerabilidade.
+          Cada valor doado se transforma em ajuda para idosos que não podem manter seus próprios cuidados
         </p>
       </div>
     </div>

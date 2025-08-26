@@ -33,7 +33,7 @@ const recommendedInstitution = computed(() => {
 
 const availableInstitutions = computed(() => {
   return ongs
-    //.filter((ong) => ong.id !== 'ecos-esperanca')
+    .filter((ong) => ong.id !== 'ecos-esperanca')
     .filter((ong) => ong.categoria == 'criancas')
     .map((ong) => ({
       id: ong.id,

@@ -34,7 +34,7 @@ const formatCurrency = (value) => {
               <span>Meta: {{ formatCurrency(cause.goal) }}</span>
           </div>
           
-        <a :href="cause.link"><button class="card-button">Doar para está causa</button></a>
+        <router-link :to="cause.link"><button class="card-button">Doar para está causa</button></router-link>
       </div>
     </div>
   </template>

@@ -30,10 +30,9 @@ const doarParaInstituicao = (institutionId) => {
     <div class="topo">
       <div class="overlay"></div>
       <div class="banner">
-        <h1>Ajude na Alimentação<br />Escolar de Crianças Carentes</h1>
+        <h1>Instituições disponíveis</h1>
         <p>
-          Cada valor doado se transforma em alimento e<br />oportunidade para crianças em situação
-          de<br />vulnerabilidade.
+          Cada valor doado muda o futuro de quem realmente precisa. Sua contribuição, por menor que pareça, leva esperança, transforma vidas e abre oportunidades
         </p>
       </div>
     </div>
@@ -115,7 +114,7 @@ const doarParaInstituicao = (institutionId) => {
 .topo .banner {
   z-index: 2;
   position: relative;
-  max-width: 720px;
+  max-width: 730px;
   width: 100%;
   text-align: left;
   padding-left: 10%;

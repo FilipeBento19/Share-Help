@@ -37,9 +37,9 @@ const contactInfo = {
           
           <!-- Redes -->
           <div class="social-links">
-            <a href="/"><img src="/icons/facefooter.png" alt=""></a>
-            <a href="/"><img src="/icons/instafooter.png" alt=""></a>
-            <a href="/"><img src="/icons/twitterfooter.png" alt=""></a>
+            <router-link to="/"><img src="/icons/facefooter.png" alt=""></router-link>
+            <router-link to="/"><img src="/icons/instafooter.png" alt=""></router-link>
+            <router-link to="/"><img src="/icons/twitterfooter.png" alt=""></router-link>
           </div>
         </div>
 

@@ -14,12 +14,12 @@
       </div>
       <nav class="main-nav">
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/institution">Instituições</a></li>
-          <li><a href="/map">Mapa interativo</a></li>
-          <li><a href="/team">Nossa equipe</a></li>
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/institution">Instituições</router-link></li>
+          <li><router-link to="/map">Mapa interativo</router-link></li>
+          <li><router-link to="/team">Nossa equipe</router-link></li>
           <li><button class="header-donate-button">Doar agora</button></li>
-          <li class="login"><a href="/login"><img src="/icons/login.png" alt=""></a></li>
+          <li class="login"><router-link to="/login"><img src="/icons/login.png" alt=""></router-link></li>
         </ul>
       </nav>
     </div>
