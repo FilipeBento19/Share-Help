@@ -77,7 +77,6 @@ import FooterComponent from '@/components/FooterComponent.vue';
   align-items: center;
   color: white;
   box-sizing: border-box;
-
   background-image: url('/icons/ref.png');
   background-size: cover;
   background-position: center;

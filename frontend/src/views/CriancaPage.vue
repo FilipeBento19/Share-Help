@@ -325,47 +325,6 @@ const doarParaInstituicao = (institutionId) => {
   margin-bottom: 15px; 
 }
 
-.current-amount {
-  font-size: 0.9em;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-/* Detalhes da instituição */
-.institution-details {
-  margin-bottom: 25px;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
-
-.detail-item {
-  margin-bottom: 8px;
-  font-size: 0.9em;
-  color: #4b5563;
-}
-
-.detail-item strong {
-  color: #1f2937;
-  margin-right: 8px;
-}
-
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 5px;
-}
-
-.filtro-tag {
-  background: #dbeafe;
-  color: #1d4ed8;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 0.8em;
-  font-weight: 500;
-}
-
 .card-actions {
   display: flex;
   gap: 15px;
@@ -538,4 +497,5 @@ const doarParaInstituicao = (institutionId) => {
   background: #1d4ed8;
   transform: translateY(-1px);
 }
+
 </style>

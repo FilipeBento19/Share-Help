@@ -1,540 +1,500 @@
-<script setup>
-import { computed } from 'vue'
-import FooterComponent from '@/components/FooterComponent.vue'
-import ongs from '@/data/ongsData'
+    <script setup>
+    import { computed } from 'vue'
+    import FooterComponent from '@/components/FooterComponent.vue'
+    import ongs from '@/data/ongsData'
 
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(value);
-};
+    const formatCurrency = (value) => {
+      return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(value);
+    };
 
-// Pegar a instituição recomendada (Ecos de Esperança)
-const recommendedInstitution = computed(() => {
-  const ong = ongs.find((o) => o.id === 'casa-vo-joaquina')
-  return {
-    name: ong.title,
-    description: ong.description,
-    timeLeft: '12:23:01:09',
-    goal: 5000,
-    raised: 2800,
-    image: ong.img,
-    telefone: ong.telefone,
-    local: ong.local,
-    horario: ong.horario,
-    filtros: ong.filtros,
-    progress: ong.progress,
-  }
-})
+    // Pegar a instituição recomendada (Ecos de Esperança)
+    const recommendedInstitution = computed(() => {
+      const ong = ongs.find((o) => o.id === 'casa-vo-joaquina')
+      return {
+        name: ong.title,
+        description: ong.description,
+        timeLeft: '12:23:01:09',
+        goal: 5000,
+        raised: 2800,
+        image: ong.img,
+        telefone: ong.telefone,
+        local: ong.local,
+        horario: ong.horario,
+        filtros: ong.filtros,
+        progress: ong.progress,
+      }
+    })
 
 
-const availableInstitutions = computed(() => {
-  return ongs
-    .filter((ong) => ong.id !== 'ecos-esperanca')
-    .filter((ong) => ong.categoria == 'moradores-de-rua')
-    .map((ong) => ({
-      id: ong.id,
-      name: ong.title,
-      description: ong.description,
-      image: ong.img,
-      telefone: ong.telefone,
-      local: ong.local,
-      horario: ong.horario,
-      filtros: ong.filtros,
-      categoria: ong.categoria,
-    }))
-})
+    const availableInstitutions = computed(() => {
+      return ongs
+        .filter((ong) => ong.id !== 'ecos-esperanca')
+        .filter((ong) => ong.categoria == 'moradores-de-rua')
+        .map((ong) => ({
+          id: ong.id,
+          name: ong.title,
+          description: ong.description,
+          image: ong.img,
+          telefone: ong.telefone,
+          local: ong.local,
+          horario: ong.horario,
+          filtros: ong.filtros,
+          categoria: ong.categoria,
+        }))
+    })
 
-// Função para doar para instituições individuais
-const doarParaInstituicao = (institutionId) => {
-  console.log('Doar para instituição:', institutionId)
-  // Vamos ter que puxar isso para a pagina da instituição do site
-}
+    // Função para doar para instituições individuais
+    const doarParaInstituicao = (institutionId) => {
+      console.log('Doar para instituição:', institutionId)
+      // Vamos ter que puxar isso para a pagina da instituição do site
+    }
 
-</script>
+    </script>
 
-<template>
-  <main>
-    <div class="topo">
-      <div class="overlay"></div>
-      <div class="banner">
-        <h1>Ajude Gerando Abrigo Para Moradores de Rua</h1>
-        <p>
-          Cada valor doado gera lares para pessoas sem condição em situação de vulnerabilidade
-        </p>
-      </div>
-    </div>
-
-    <section class="sharehelp-recomenda">
-      <h2>ShareHelp Recomenda</h2>
-      <p>Conheça o projeto inovador que tem o apoio da<br />equipe sharehelp</p>
-
-      <div class="recommendation-card">
-        <div class="card-left">
-          <div class="institution-logo">
-            <img :src="recommendedInstitution.image" :alt="recommendedInstitution.name" />
-          </div>
-          <div class="timer">
-            <span class="time">{{ recommendedInstitution.timeLeft }}</span>
+    <template>
+      <main>
+        <div class="topo">
+          <div class="overlay"></div>
+          <div class="banner">
+            <h1>Ajude Gerando Abrigo Para Moradores de Rua</h1>
+            <p>
+              Cada valor doado gera lares para pessoas sem condição em situação de vulnerabilidade
+            </p>
           </div>
         </div>
 
-        <div class="card-right">
-          <h3>{{ recommendedInstitution.name }}</h3>
-          <div class="description">
-            <p>{{ recommendedInstitution.description }}</p>
-          </div>
+        <section class="sharehelp-recomenda">
+          <h2>ShareHelp Recomenda</h2>
+          <p>Conheça o projeto inovador que tem o apoio da<br />equipe sharehelp</p>
 
-          <div class="progress-section">
-            <div class="progress-bar">
-              <div
-                class="progress-fill"
-                :style="{
-                  width: (recommendedInstitution.raised / recommendedInstitution.goal) * 100 + '%',
-                }"
-              ></div>
-            </div>
-            <div class="progress-info">
-                <span>{{ Math.round((recommendedInstitution.raised / recommendedInstitution.goal) * 100) }}% alcançado</span>
-                <span>Meta: {{ formatCurrency(recommendedInstitution.goal) }}</span>
-            </div>
-          </div>
-
-          <div class="card-actions">
-            <button class="btn-doar-opcao" @click="doarParaEstaOpcao">Doar para esta opção</button>
-            <button class="btn-pagina-instituicao" @click="verPaginaDaInstituicao">
-              Página da Instituição
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="instituicoes-disponiveis">
-      <h2>Instituições disponíveis</h2>
-      <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
-
-      <div class="institutions-grid">
-        <div
-          v-for="institution in availableInstitutions"
-          :key="institution.id"
-          class="institution-card"
-        >
-          <div class="institution-image">
-            <img :src="institution.image" :alt="institution.name" />
-          </div>
-          <div class="institution-info">
-            <h4>{{ institution.name }}</h4>
-            <p class="institution-description">{{ institution.description }}</p>
-
-            <div class="institution-meta">
-              <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
-              <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
-              <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
-              <div class="meta-item filtros-container">
-                <strong>Aceita:</strong>
-                <div class="filtros-list">
-                  <span
-                    v-for="filtro in institution.filtros"
-                    :key="filtro"
-                    class="filtro-tag-small"
-                  >
-                    {{ filtro }}
-                  </span>
-                </div>
+          <div class="recommendation-card">
+            <div class="card-left">
+              <div class="institution-logo">
+                <img :src="recommendedInstitution.image" :alt="recommendedInstitution.name" />
+              </div>
+              <div class="timer">
+                <span class="time">{{ recommendedInstitution.timeLeft }}</span>
               </div>
             </div>
 
-            <button class="btn-doar-instituicao" @click="doarParaInstituicao(institution.id)">
-              Doar para esta instituição
-            </button>
+            <div class="card-right">
+              <h3>{{ recommendedInstitution.name }}</h3>
+              <div class="description">
+                <p>{{ recommendedInstitution.description }}</p>
+              </div>
+
+              <div class="progress-section">
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    :style="{
+                      width: (recommendedInstitution.raised / recommendedInstitution.goal) * 100 + '%',
+                    }"
+                  ></div>
+                </div>
+                <div class="progress-info">
+                    <span>{{ Math.round((recommendedInstitution.raised / recommendedInstitution.goal) * 100) }}% alcançado</span>
+                    <span>Meta: {{ formatCurrency(recommendedInstitution.goal) }}</span>
+                </div>
+              </div>
+
+              <div class="card-actions">
+                <button class="btn-doar-opcao" @click="doarParaEstaOpcao">Doar para esta opção</button>
+                <button class="btn-pagina-instituicao" @click="verPaginaDaInstituicao">
+                  Página da Instituição
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section>
-      <FooterComponent />
-    </section>
-  </main>
-</template>
+        <section class="instituicoes-disponiveis">
+          <h2>Instituições disponíveis</h2>
+          <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
 
-<style scoped>
-/* Banner Principal */
-.topo {
-  position: relative;
-  height: 60vh;
-  display: flex;
-  align-items: center;
-  color: white;
-  box-sizing: border-box;
-  background-image: url('/icons/ref.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+          <div class="institutions-grid">
+            <div
+              v-for="institution in availableInstitutions"
+              :key="institution.id"
+              class="institution-card"
+            >
+              <div class="institution-image">
+                <img :src="institution.image" :alt="institution.name" />
+              </div>
+              <div class="institution-info">
+                <h4>{{ institution.name }}</h4>
+                <p class="institution-description">{{ institution.description }}</p>
 
-.topo .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7));
-  z-index: 1;
-}
+                <div class="institution-meta">
+                  <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
+                  <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
+                  <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
+                  <div class="meta-item filtros-container">
+                    <strong>Aceita:</strong>
+                    <div class="filtros-list">
+                      <span
+                        v-for="filtro in institution.filtros"
+                        :key="filtro"
+                        class="filtro-tag-small"
+                      >
+                        {{ filtro }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
-.topo .banner {
-  z-index: 2;
-  position: relative;
-  max-width: 720px;
-  width: 100%;
-  text-align: left;
-  padding-left: 10%;
-}
+                <button class="btn-doar-instituicao" @click="doarParaInstituicao(institution.id)">
+                  Doar para esta instituição
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-.topo h1 {
-  font-size: 3em;
-  font-weight: 790;
-  margin-bottom: 20px;
-  line-height: 1.2;
-}
+        <section>
+          <FooterComponent />
+        </section>
+      </main>
+    </template>
 
-.topo p {
-  font-size: 1.2em;
-  margin-bottom: 30px;
-  line-height: 1.5;
-}
+    <style scoped>
+    /* Banner Principal */
+    .topo {
+      position: relative;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      color: white;
+      box-sizing: border-box;
+      background-image: url('/icons/ref.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
 
-/* ShareHelp Recomenda */
-.sharehelp-recomenda {
-  padding: 60px 20px;
-  text-align: center;
-  background-color: #f8f9fa;
-}
+    .topo .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7));
+      z-index: 1;
+    }
 
-.sharehelp-recomenda h2 {
-  font-size: 2.5em;
-  font-weight: 650;
-  color: black;
-  margin-bottom: 15px;
-}
+    .topo .banner {
+      z-index: 2;
+      position: relative;
+      max-width: 720px;
+      width: 100%;
+      text-align: left;
+      padding-left: 10%;
+    }
 
-.sharehelp-recomenda > p {
-  font-size: 1.1em;
-  color: #555;
-  margin-bottom: 40px;
-}
+    .topo h1 {
+      font-size: 3em;
+      font-weight: 790;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
 
-.recommendation-card {
-  max-width: 1000px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
-}
+    .topo p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
 
-.card-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 200px;
-}
+    /* ShareHelp Recomenda */
+    .sharehelp-recomenda {
+      padding: 60px 20px;
+      text-align: center;
+      background-color: #f8f9fa;
+    }
 
-.institution-logo {
-  width: 260px;
-  height: 200px;
-  border-radius: 15px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
+    .sharehelp-recomenda h2 {
+      font-size: 2.5em;
+      font-weight: 650;
+      color: black;
+      margin-bottom: 15px;
+    }
 
-.institution-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .sharehelp-recomenda > p {
+      font-size: 1.1em;
+      color: #555;
+      margin-bottom: 40px;
+    }
 
-.timer {
-  text-align: center;
-}
+    .recommendation-card {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+    }
 
-.time {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #dc2626;
-  font-family: 'Courier New', monospace;
-}
+    .card-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 200px;
+    }
 
-.card-right {
-  flex: 1;
-  text-align: left;
-}
+    .institution-logo {
+      width: 260px;
+      height: 200px;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
 
-.card-right h3 {
-  font-size: 1.8em;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 20px;
-}
+    .institution-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-.description {
-  margin-bottom: 25px;
-}
+    .timer {
+      text-align: center;
+    }
 
-.description p {
-  font-size: 0.95em;
-  color: #4b5563;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
+    .time {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #dc2626;
+      font-family: 'Courier New', monospace;
+    }
 
-.progress-section {
-  margin-bottom: 25px;
-}
+    .card-right {
+      flex: 1;
+      text-align: left;
+    }
 
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background-color: #e5e7eb;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
+    .card-right h3 {
+      font-size: 1.8em;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 20px;
+    }
 
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
-  transition: width 0.3s ease;
-}
+    .description {
+      margin-bottom: 25px;
+    }
 
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8em; 
-  color: #777;
-  margin-bottom: 15px; 
-}
+    .description p {
+      font-size: 0.95em;
+      color: #4b5563;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
 
-.current-amount {
-  font-size: 0.9em;
-  color: #6b7280;
-  font-weight: 500;
-}
+    .progress-section {
+      margin-bottom: 25px;
+    }
 
-/* Detalhes da instituição */
-.institution-details {
-  margin-bottom: 25px;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
 
-.detail-item {
-  margin-bottom: 8px;
-  font-size: 0.9em;
-  color: #4b5563;
-}
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+      transition: width 0.3s ease;
+    }
 
-.detail-item strong {
-  color: #1f2937;
-  margin-right: 8px;
-}
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8em; 
+      color: #777;
+      margin-bottom: 15px; 
+    }
 
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 5px;
-}
+    .card-actions {
+      display: flex;
+      gap: 15px;
+    }
 
-.filtro-tag {
-  background: #dbeafe;
-  color: #1d4ed8;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-size: 0.8em;
-  font-weight: 500;
-}
+    .btn-doar-opcao {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.card-actions {
-  display: flex;
-  gap: 15px;
-}
+    .btn-doar-opcao:hover {
+      transform: translateY(-2px);
+    }
 
-.btn-doar-opcao {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    .btn-pagina-instituicao {
+      background: #2563eb;
+      color: white;
+      border: 2px solid #2563eb;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.btn-doar-opcao:hover {
-  transform: translateY(-2px);
-}
+    .btn-pagina-instituicao:hover {
+      transform: translateY(-2px);
+    }
 
-.btn-pagina-instituicao {
-  background: #2563eb;
-  color: white;
-  border: 2px solid #2563eb;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    .institution-description {
+      font-size: 0.9em;
+      color: #6b7280;
+      margin-bottom: 15px;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
-.btn-pagina-instituicao:hover {
-  transform: translateY(-2px);
-}
+    .institution-meta {
+      margin-bottom: 15px;
+    }
 
-.institution-description {
-  font-size: 0.9em;
-  color: #6b7280;
-  margin-bottom: 15px;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+    .meta-item {
+      font-size: 0.8em;
+      color: #6b7280;
+      margin-bottom: 5px;
+    }
 
-.institution-meta {
-  margin-bottom: 15px;
-}
+    .meta-item strong {
+      color: #1f2937;
+    }
 
-.meta-item {
-  font-size: 0.8em;
-  color: #6b7280;
-  margin-bottom: 5px;
-}
+    .filtros-container {
+      margin-top: 8px;
+    }
 
-.meta-item strong {
-  color: #1f2937;
-}
+    .filtros-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 5px;
+    }
 
-.filtros-container {
-  margin-top: 8px;
-}
+    .filtro-tag-small {
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 0.7em;
+      font-weight: 500;
+    }
 
-.filtros-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 5px;
-}
+    /* Instituições Disponíveis */
+    .instituicoes-disponiveis {
+      padding: 60px 20px;
+      text-align: center;
+    }
 
-.filtro-tag-small {
-  background: #e0e7ff;
-  color: #3730a3;
-  padding: 2px 6px;
-  border-radius: 8px;
-  font-size: 0.7em;
-  font-weight: 500;
-}
+    .instituicoes-disponiveis h2 {
+      font-size: 2.5em;
+      font-weight: 650;
+      color: black;
+      margin-bottom: 15px;
+    }
 
-/* Instituições Disponíveis */
-.instituicoes-disponiveis {
-  padding: 60px 20px;
-  text-align: center;
-}
+    .instituicoes-disponiveis > p {
+      font-size: 1.1em;
+      color: #555;
+      margin-bottom: 50px;
+    }
 
-.instituicoes-disponiveis h2 {
-  font-size: 2.5em;
-  font-weight: 650;
-  color: black;
-  margin-bottom: 15px;
-}
+    .institutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-.instituicoes-disponiveis > p {
-  font-size: 1.1em;
-  color: #555;
-  margin-bottom: 50px;
-}
+    .institution-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      min-height: 450px;
+      display: flex;
+      flex-direction: column;
+    }
 
-.institutions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
+    .institution-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
 
-.institution-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  transition: all 0.3s ease;
-  min-height: 450px;
-  display: flex;
-  flex-direction: column;
-}
+    .institution-image {
+      width: 100%;
+      height: 200px;
+      background-color: #6b7280;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.institution-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-}
+    .institution-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-.institution-image {
-  width: 100%;
-  height: 200px;
-  background-color: #6b7280;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .institution-info {
+      padding: 20px;
+      text-align: left;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-.institution-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .institution-info h4 {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
 
-.institution-info {
-  padding: 20px;
-  text-align: left;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+    .btn-doar-instituicao {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 15px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: auto;
+    }
 
-.institution-info h4 {
-  font-size: 1.2em;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
+    .btn-doar-instituicao:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
 
-.btn-doar-instituicao {
-  width: 100%;
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 12px 15px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.9em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: auto;
-}
-
-.btn-doar-instituicao:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
-}
-</style>
+    </style>

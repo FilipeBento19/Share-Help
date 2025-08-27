@@ -6,6 +6,7 @@ import InstitutionPage from '../views/InstitutionPage.vue';
 import AbrigoPage from '../views/AbrigoPage.vue';
 import CriancaPage from '../views/CriancaPage.vue';
 import IdososPage from '../views/IdososPage.vue';
+import OngPage from '../views/OngPage.vue';
 
 const routes = [
   {
@@ -38,31 +39,48 @@ const routes = [
     name: 'Crianças',
     component: CriancaPage
   },
+  { 
+    path: '/ong:id',
+    name: 'Ong',
+    component: OngPage
+  },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     redirect: '/'
   }
-  // {
-  //   path: '/institutions',
-  //   name: 'Institutions',
-  //   component: InstitutionsPage
-  // },
-  // {
-  //   path: '/map',
-  //   name: 'Map',
-  //   component: MapPage
-  // },
-  // {
-  //   path: '/team',
-  //   name: 'Team',
-  //   component: TeamPage
-  // }
 ];
+
+function smoothScrollToTop(duration = 200) {
+  const start = window.scrollY;
+  const startTime = performance.now();
+
+  function animateScroll(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+
+    window.scrollTo(0, start * (1 - ease));
+
+    if (progress < 1) {
+      requestAnimationFrame(animateScroll);
+    }
+  }
+
+  requestAnimationFrame(animateScroll);
+}
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      smoothScrollToTop(500); // 500 = 0.5s
+      return { left: 0, top: 0 }; 
+    }
+  }
+});
 
 export default router;

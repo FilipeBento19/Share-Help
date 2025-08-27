@@ -7,10 +7,10 @@ const companyInfo = {
 }
 
 const quickLinks = [
-  { name: 'Home', href: '#' },
-  { name: 'Instituições', href: '/institution' },
-  { name: 'Mapa Interativo', href: '#' },
-  { name: 'Nossa equipe', href: '#' }
+  { name: 'Home', to: '/' },
+  { name: 'Instituições', to: '/institution' },
+  { name: 'Mapa Interativo', to: '/' },
+  { name: 'Nossa equipe', to: '/' }
 ]
 
 const contactInfo = {
@@ -29,7 +29,7 @@ const contactInfo = {
         <div class="section">
           <div class="logo-wrapper">
             <div class="logo">
-              <a href=""><img src="/icons/corazonlogo.png" alt=""></a>
+              <router-link to="/"><img src="/icons/corazonlogo.png" alt=""></router-link>
             </div>
             <h3 class="company-name">{{ companyInfo.name }}</h3>
           </div>
@@ -47,14 +47,14 @@ const contactInfo = {
         <div class="section">
           <h4 class="title">Links Rápidos</h4>
           <nav class="nav">
-            <a 
+            <router-link
               v-for="link in quickLinks" 
               :key="link.name"
-              :href="link.href"
+              :to="link.to"
               class="nav-link"
             >
               {{ link.name }}
-            </a>
+            </router-link>
           </nav>
         </div>
 
