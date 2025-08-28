@@ -6,11 +6,10 @@ import ongs from '@/data/ongsData';
 <template>
   
   
-  <div v-if="game" class="pagina-game">
+  <div class="pagina-game">
     <router-link to="/"><button class="botao-voltar">◄ Voltar</button></router-link>
-    
     <div class="container-game">
-      <div class="capa-container">
+      <div class="capa-container">  
         <img :src="ongs.img" :alt="ongs.title" class="capa-game">
       </div>
       
@@ -18,13 +17,13 @@ import ongs from '@/data/ongsData';
         <h1>{{ ongs.title }}</h1>
         
         <div class="detalhes">
-          <p><strong>Plataformas:</strong> {{ game.plataformas.join(', ') }}</p>
-          <p><strong>Lançamento:</strong> {{ game.lancamento }}</p>
-          <p><strong>Classificação:</strong> {{ game.classificacao }}</p>
+          <p><strong>Plataformas:</strong></p>
+          <p><strong>Lançamento:</strong></p>
+          <p><strong>Classificação:</strong> </p>
         </div>
         
         <div class="preco-container">
-          <h3>R$ {{ game.valor.toFixed(2) }}</h3>
+          <h3>R$ </h3>
           <button @click="adicionarAoCarrinho(game)" class="botao-comprar">
             Adicionar ao Carrinho
           </button>
@@ -32,12 +31,9 @@ import ongs from '@/data/ongsData';
         
         <div class="descricao">
           <h3>Sobre o Jogo</h3>
-          <p>{{ game.descricao }}</p>
+          <p>aaa</p>
         </div>
       </div>
-    </div>
-    <div v-if="mostrarMensagem" class="mensagem-carrinho">
-      {{ mensagemCarrinho }}
     </div>
   </div>
   <footer>

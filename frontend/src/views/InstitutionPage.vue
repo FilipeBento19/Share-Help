@@ -9,7 +9,7 @@ const availableInstitutions = computed(() => {
       id: ong.id,
       name: ong.title,
       description: ong.description,
-      image: ong.img || '/icons/institution-placeholder.png',
+      image: ong.img,
       telefone: ong.telefone,
       local: ong.local,
       horario: ong.horario,
@@ -18,11 +18,7 @@ const availableInstitutions = computed(() => {
     }))
 })
 
-// Função para doar para instituições individuais
-const doarParaInstituicao = (institutionId) => {
-  console.log('Doar para instituição:', institutionId)
-  // Vamos ter que puxar isso para a pagina da instituição do site
-}
+
 </script>
 
 <template>
@@ -72,9 +68,7 @@ const doarParaInstituicao = (institutionId) => {
               </div>
             </div>
 
-            <button class="btn-doar-instituicao" @click="doarParaInstituicao(institution.id)">
-              Doar para esta instituição
-            </button>
+            <router-link :to="`/institution/${institution.id}`"><button class="btn-doar-instituicao" > Doar para esta instituição </button></router-link>
           </div>
         </div>
       </div>

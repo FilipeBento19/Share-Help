@@ -40,8 +40,8 @@ const routes = [
     component: CriancaPage
   },
   { 
-    path: '/ong:id',
-    name: 'Ong',
+    path: '/institution/:id',
+    name: 'Instituição/Ongpage',
     component: OngPage
   },
   {
