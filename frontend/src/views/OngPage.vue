@@ -1,48 +1,59 @@
 <script setup>
-import ongs from '@/data/ongsData';
+import { useRoute, useRouter } from 'vue-router'
+import ongs from '@/data/ongsData'
 
+const route = useRoute()
+const router = useRouter()
+
+const ongId = route.params.id
+
+const voltar = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.push('/')
+  }
+}
+
+const ong = ongs.find(o => o.id === ongId)
 </script>
 
 <template>
-  
-  
-  <div class="pagina-game">
-    <router-link to="/"><button class="botao-voltar">◄ Voltar</button></router-link>
-    <div class="container-game">
-      <div class="capa-container">  
-        <img :src="ongs.img" :alt="ongs.title" class="capa-game">
+  <div class="pagina-instituicao" v-if="ong">
+     <button class="botao-voltar" @click="voltar">◄ Voltar</button>
+    
+    <div class="container-instituicao">
+      <div class="logo-container">  
+        <img :src="ong.img" :alt="ong.title" class="logo-instituicao">
       </div>
       
-      <div class="info-game">
-        <h1>{{ ongs.title }}</h1>
+      <div class="info-instituicao">
+        <h1>{{ ong.title }}</h1>
         
-        <div class="detalhes">
-          <p><strong>Plataformas:</strong></p>
-          <p><strong>Lançamento:</strong></p>
-          <p><strong>Classificação:</strong> </p>
+        <div class="detalhes-instituicao">
+          <p><strong>Filtros:</strong> {{ ong.filtros.join(', ') }}</p>
+          <p><strong>Contato:</strong> {{ ong.telefone }}</p>
+          <p><strong>Endereço:</strong> {{ ong.local }}</p>
+          <p><strong>Horário de funcionamento:</strong> {{ ong.horario }}</p>
         </div>
         
-        <div class="preco-container">
-          <h3>R$ </h3>
-          <button @click="adicionarAoCarrinho(game)" class="botao-comprar">
-            Adicionar ao Carrinho
-          </button>
+        <div class="descricao-instituicao">
+          <p>{{ ong.description }}</p>
         </div>
         
-        <div class="descricao">
-          <h3>Sobre o Jogo</h3>
-          <p>aaa</p>
+        <div class="botao-container">
+          <button class="botao-doar">Doar Agora</button>
         </div>
       </div>
     </div>
   </div>
-  <footer>
-
-  </footer>
+  <div v-else>
+    <p>ONG não encontrada.</p>
+  </div>
 </template>
 
 <style scoped>
-.pagina-game {
+.pagina-instituicao {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
@@ -62,122 +73,90 @@ import ongs from '@/data/ongsData';
   text-decoration: underline;
 }
 
-.container-game {
+.container-instituicao {
   display: flex;
   gap: 2rem;
   margin-top: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  overflow: hidden;
 }
 
-.capa-container {
+.logo-container {
   flex: 1;
-  max-width: 400px;
+  max-width: 300px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
 }
 
-.capa-game {
+.logo-instituicao {
   width: 100%;
-  margin-top: 50px;
+  max-width: 200px;
+  height: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.info-game {
+.info-instituicao {
   flex: 2;
+  padding: 2rem;
 }
 
 h1 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-  text-align: left;
-}
-
-h2 {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 1.5rem;
-  font-weight: normal;
-}
-
-.detalhes {
-  background: #f8f8f8;
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 1.5rem 0;
-}
-
-.detalhes p {
-  margin: 0.5rem 0;
-  color: #555;
-}
-
-.preco-container {
-  margin: 2rem 0;
-}
-
-.preco-container h3 {
   font-size: 1.8rem;
-  color: #e94560;
-  margin-bottom: 1rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
 }
 
-.botao-comprar {
-  background-color: #1a1a2e;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.detalhes-instituicao {
+  margin-bottom: 1.5rem;
 }
 
-.botao-comprar:hover {
-  background-color: #0f3460;
+.detalhes-instituicao p {
+  margin: 0.4rem 0;
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
-.descricao {
-  margin-top: 2rem;
+.detalhes-instituicao strong {
+  color: #333;
+}
+
+.descricao-instituicao {
+  margin: 1.5rem 0 2rem 0;
   line-height: 1.6;
 }
 
-.descricao h3 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  color: #333;
+.descricao-instituicao p {
+  color: #666;
+  font-size: 0.95rem;
+  text-align: justify;
 }
 
-.descricao p {
-  color: #555;
+.botao-container {
+  display: flex;
+  justify-content: flex-start;
 }
 
-.game-nao-encontrado {
-  text-align: center;
-  margin-top: 3rem;
-}
-
-@media (max-width: 768px) {
-  .container-game {
-    flex-direction: column;
-  }
-  
-  .capa-container {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-}
-
-.mensagem-carrinho {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #e94560;
+.botao-doar {
+  background-color: #4285f4;
   color: white;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border: none;
+  padding: 0.8rem 2rem;
   font-size: 1rem;
-  z-index: 1000;
-  transition: opacity 0.5s ease-in-out;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
 }
+
+.botao-doar:hover {
+  background-color: #3367d6;
+}
+
 </style>

@@ -48,12 +48,6 @@ const availableInstitutions = computed(() => {
     }))
 })
 
-// Função para doar para instituições individuais
-const doarParaInstituicao = (institutionId) => {
-  console.log('Doar para instituição:', institutionId)
-  // Vamos ter que puxar isso para a pagina da instituição do site
-}
-
 </script>
 
 <template>
@@ -148,9 +142,9 @@ const doarParaInstituicao = (institutionId) => {
               </div>
             </div>
 
-            <button class="btn-doar-instituicao" @click="doarParaInstituicao(institution.id)">
-              Doar para esta instituição
-            </button>
+            <router-link :to="`${$route.path}/${institution.id}`">
+              <button class="btn-doar-instituicao">Doar para esta instituição</button>
+            </router-link>
           </div>
         </div>
       </div>

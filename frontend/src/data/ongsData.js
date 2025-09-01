@@ -11,7 +11,6 @@ const ongs = [
     horario: '08:00 - 18:00',
     img: '/icons/img-moment.jpg',
     progress: 0,
-    
   },
   {
     id: 'omunga',
@@ -102,7 +101,7 @@ const ongs = [
     categoria: 'criancas',
     title: 'Instituto Caranguejo',
     description: 'O Instituto Caranguejo de Educação Ambiental surgiu a partir dos trabalhos realizados com o Menino Caranguejo e do Caranga na comunidade de escolas de Joinville e região; e também da necessidade de se elaborar um diagnóstico nacional sobre o perfil não só dos professores, mas das escolas, ambientalistas e estudantes que trabalham e realizam atividades de Educação Ambiental em suas práticas pedagógicas.',
-    filtros: ['roupas', 'comida'],
+    filtros: ['roupas', 'alimentos'],
     telefone: '(47) 3473-0772',
     local: 'R. Ten. Antônio João, 4296 - Jardim Sofia, Joinville - SC, 89223-395',
     horario: '08:00 - 18:00',
@@ -152,7 +151,7 @@ const ongs = [
     categoria: 'idosos',
     title: 'Centro Integrado João de Paula - Exército da Salvação',
     description: 'Instituição que oferece apoio e desenvolvimento social, com foco em idosos e imigrantes. Trabalha para promover envelhecimento saudável e autonomia.',
-    filtros: ['comida', 'roupas'],
+    filtros: ['alimentos', 'roupas'],
     telefone: '(47) 3453-0588',
     local: 'R. XV de Novembro, 3165 - Glória, Joinville - SC, 89216-201',
     horario: '09:00 - 17:00',
@@ -164,7 +163,7 @@ const ongs = [
     categoria: 'idosos',
     title: 'Casa de Repouso Lar Aconchego',
     description: 'Ambiente acolhedor com acompanhamento 24h por profissionais de saúde. Oferece atividades de bem-estar e atendimento humanizado.',
-    filtros: ['comida', 'livros'],
+    filtros: ['alimentos', 'livros'],
     telefone: '(47) 99684-3724',
     local: 'R. Adhemar de Barros, 47 - Bucarein, Joinville - SC, 89202-306',
     horario: 'Aberto 24h',
@@ -176,7 +175,7 @@ const ongs = [
     categoria: 'idosos',
     title: 'Casa de Repouso Bom Retiro',
     description: 'Espaço dedicado ao cuidado integral de idosos, com equipe disponível 24h, oferecendo conforto e atenção especializada.',
-    filtros: ['comida', 'livros'],
+    filtros: ['alimentos', 'livros'],
     telefone: '(47) 98494-7572',
     local: 'R. Max Colin, 155 - Centro, Joinville - SC, 89201-215',
     horario: '09:00 - 19:00',
@@ -188,7 +187,7 @@ const ongs = [
     categoria: 'idosos',
     title: 'Casa de Repouso SILOÉ',
     description: 'A Casa de Repouso SILOÉ é um espaço dedicado ao cuidado e bem-estar da pessoa idosa. Com uma equipe preparada e atenciosa, oferecemos acompanhamento diário, apoio médico, atividades de lazer e convivência que promovem qualidade de vida e dignidade. Nosso objetivo é proporcionar um ambiente acolhedor, seguro e humano, onde cada idoso receba atenção individualizada e viva com conforto, respeito e carinho.',
-    filtros: ['comida', 'livros'],
+    filtros: ['alimentos', 'livros'],
     telefone: '(47) 99668-7569',
     local: 'R. Copacabana, 1109 - Floresta, Joinville - SC, 89211-388',
     horario: '09:00 - 17:00',
@@ -200,7 +199,7 @@ const ongs = [
     categoria: 'idosos',
     title: 'Instituto Conforme',
     description: 'A 8 anos atendemos famílias que conseguiram dar início à saída da vulnerabilidade que se apresentavam quando nos procuraram. Mães e pais com problemas de saúde e filhos sem ter o que comer e vestir que aprenderam através de; projetos, palestras; consulta com advogado, médico, dentista ou psicólogo;  sobre saúde, direitos e deveres do indivíduo na sociedade; onde buscar ajuda para tratamento, como conquistar sua qualificação profissional, além de serem atendidas com cestas básicas.',
-    filtros: ['comida', 'livros', 'brinquedos'],
+    filtros: ['alimentos', 'livros', 'brinquedos'],
     telefone: '(47) 93426-6602',
     local: 'R. do Campo, 315 - Morro do Meio, Joinville - SC, 89215-110',
     horario: '09:00 - 17:00',
@@ -212,7 +211,7 @@ const ongs = [
     categoria: 'idosos',
     title: 'Ação social joinville',
     description: 'A Ação Social de Joinville desenvolve um trabalho dedicado ao cuidado e à proteção de idosos em situação de vulnerabilidade. A instituição oferece acolhimento, alimentação, assistência médica e atividades socioeducativas. Seu objetivo é promover qualidade de vida, respeito e dignidade à terceira idade. Conta com o apoio da comunidade e de voluntários para manter seus serviços. A iniciativa é um exemplo de solidariedade e responsabilidade social na região.',
-    filtros: ['comida', 'roupa'],
+    filtros: ['alimentos', 'roupas'],
     telefone: '(47) 3422 6204',
     local: 'Av. Cel. Procópio Gomes, 219 - Bucarein, Joinville - SC, 89202-301',
     horario: '08:00 - 17:00',
@@ -245,6 +244,6 @@ const ongs = [
     img: '/icons/img-moment.jpg',
     progress: 0,
   },
-];
+]
 
-export default ongs;
+export default ongs
