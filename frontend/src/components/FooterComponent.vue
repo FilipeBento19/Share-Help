@@ -37,9 +37,9 @@ const contactInfo = {
           
           <!-- Redes -->
           <div class="social-links">
-            <router-link to="/"><img src="/icons/facefooter.png" alt=""></router-link>
-            <router-link to="/"><img src="/icons/instafooter.png" alt=""></router-link>
-            <router-link to="/"><img src="/icons/twitterfooter.png" alt=""></router-link>
+            <a href="/"><img src="/icons/facefooter.png" alt=""></a>
+            <a href="https://www.instagram.com/sharehelp_ifc/"><img src="/icons/instafooter.png" alt=""></a>
+            <a href="https://x.com/sharehelpifc"><img src="/icons/twitterfooter.png" alt=""></a>
           </div>
         </div>
 

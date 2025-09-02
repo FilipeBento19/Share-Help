@@ -42,7 +42,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
       <div class="escolher-div">
         <img src="/icons/praticidade.png" alt="">
         <h2>Praticidade</h2>
-        <p>Receba relatórios detalhados sobre o impacto<br>das suas doações</p>
+        <p>Receba relatórios detalhados sobre suas<br> doações</p>
       </div>
       <div class="escolher-div">
         <img src="/icons/doacoes.png" alt="">
