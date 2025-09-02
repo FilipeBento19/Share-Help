@@ -8,6 +8,7 @@ import CriancaPage from '../views/CriancaPage.vue'
 import IdososPage from '../views/IdososPage.vue'
 import OngPage from '../views/OngPage.vue'
 import PerfilPage from '../views/PerfilPage.vue'
+import MapInterativePage from '../views/MapInterative.vue'
 
 const routes = [
   {
@@ -28,6 +29,11 @@ const routes = [
     path: '/perfil',
     name: 'Perfil',
     component: PerfilPage,
+  },
+  {
+    path: '/mapinterative',
+    name: 'Map',
+    component: MapInterativePage,
   },
   {
     path: '/institution',

@@ -25,9 +25,11 @@
                     Seu gesto de solidariedade pode mudar a vida de alguém.
                     </p>
                 </div>
-                <button class="access-button">
+                <router-link class="beringela" to="/mapinterative">
+                  <button class="access-button">
                     Acessar o mapa
-                </button>
+                  </button>
+                </router-link>
             
                 <p class="map-note">
                     (o mapa é projetado apenas para a cidade de Joinville)
@@ -126,6 +128,10 @@
   margin-bottom: 12px;
   display: block;
   font-family: 'Montserrat', sans-serif;
+}
+
+.beringela {
+  text-decoration: none;
 }
 
 .access-button:hover {

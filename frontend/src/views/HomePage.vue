@@ -1,8 +1,8 @@
 <script setup>
 import causesData from '../data/causasData';
 import CausasCard from '../components/CausasCard.vue';
-import PaymentCard from '../components/PaymentComponent.vue';
-import MapInteractive from '@/components/MapInteractive.vue';
+import PaymentCard from '../components/PaymentMethodComponent.vue';
+import MapInteractive from '@/components/MapInterativeComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
 
 

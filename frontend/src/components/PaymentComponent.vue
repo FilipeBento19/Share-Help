@@ -1,170 +1,422 @@
 <script setup>
-import { defineProps } from 'vue';
+import { ref } from 'vue'
 
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({
-  cause: {
-    type: Object,
-    required: true,
-    default: () => ({})
-  }
-});
+const selectedValue = ref('')
+const customValue = ref('')
+const donationType = ref('unica')
+const selectedPayment = ref('')
 
+const predefinedValues = [25, 50, 100, 200]
+
+const selectValue = (value) => {
+  selectedValue.value = value
+  customValue.value = ''
+}
+
+const selectCustomValue = () => {
+  selectedValue.value = 'custom'
+}
+
+const selectPayment = (method) => {
+  selectedPayment.value = method
+}
+
+const finalizeDonation = () => {
+  const amount = selectedValue.value === 'custom' ? customValue.value : selectedValue.value
+  console.log('Finalizando doação:', {
+    valor: amount,
+    tipo: donationType.value,
+    pagamento: selectedPayment.value
+  })
+}
 </script>
 
 <template>
-  <div class="formas-doar-container"> 
-    <div class="cards-container">
+  <div class="divprimary">
+    <div class="header">
+      <button class="back-button">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
 
-      <div class="doacao-card">
-        <div class="doacao-img">
-          <img src="/icons/qrcode.png" alt="PIX" class="card-icon">
-          <h2>PIX</h2>
+    <div class="content-wrapper">
+      <div class="valor">
+        <h1>Escolha o valor</h1>
+
+        <div class="value-grid">
+          <button 
+            v-for="value in predefinedValues" 
+            :key="value"
+            class="value-button"
+            :class="{ active: selectedValue === value }"
+            @click="selectValue(value)"
+          >
+            R$ {{ value }}
+          </button>
         </div>
-        <p>Doação instantânea via PIX. Rápido, seguro e sem taxas.</p>
-        <button class="button button-pix">Doar via PIX</button>
+
+        <div class="custom-value">
+          <input 
+            v-model="customValue"
+            @focus="selectCustomValue"
+            type="number"
+            placeholder="Outro valor"
+            class="custom-input"
+          />
+        </div>
+
+        <div class="donation-type">
+          <h3>Tipo de doação</h3>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input 
+                v-model="donationType" 
+                type="radio" 
+                value="unica"
+              />
+              <span class="radio-label">Única</span>
+            </label>
+            <label class="radio-option">
+              <input 
+                v-model="donationType" 
+                type="radio" 
+                value="mensal"
+              />
+              <span class="radio-label">Mensal</span>
+            </label>
+          </div>
+        </div>
       </div>
 
+      <div class="form">
+        <h2>Forma de pagamento</h2>
+        
+        <div class="payment-options">
+          <button 
+            class="payment-option"
+            :class="{ active: selectedPayment === 'pix' }"
+            @click="selectPayment('pix')"
+          >
+            <div class="payment-icon pix-icon"></div>
+            <div class="payment-info">
+              <div class="payment-name">PIX</div>
+              <div class="payment-desc">Instantâneo e seguro</div>
+            </div>
+            <div class="radio-indicator" :class="{ active: selectedPayment === 'pix' }"></div>
+          </button>
 
-      <div class="doacao-card">
-        <div class="doacao-img">
-          <img src="/icons/cartaocredito.png" alt="Cartão de crédito" class="card-icon">
-          <h2>Cartão de crédito</h2>
+          <button 
+            class="payment-option"
+            :class="{ active: selectedPayment === 'card' }"
+            @click="selectPayment('card')"
+          >
+            <div class="payment-icon card-icon"></div>
+            <div class="payment-info">
+              <div class="payment-name">Cartão de Crédito</div>
+              <div class="payment-desc">Visa, Mastercard, Elo</div>
+            </div>
+            <div class="radio-indicator" :class="{ active: selectedPayment === 'card' }"></div>
+          </button>
+
+          <button 
+            class="payment-option"
+            :class="{ active: selectedPayment === 'transfer' }"
+            @click="selectPayment('transfer')"
+          >
+            <div class="payment-icon transfer-icon"></div>
+            <div class="payment-info">
+              <div class="payment-name">Débito Online</div>
+              <div class="payment-desc">Transferência bancária</div>
+            </div>
+            <div class="radio-indicator" :class="{ active: selectedPayment === 'transfer' }"></div>
+          </button>
         </div>
-        <p>Doação única ou recorrente no cartão de crédito.</p>
-        <button class="button button-cartao">Doar no Cartão</button>
-      </div>
 
-
-      <div class="doacao-card">
-        <div class="doacao-img">
-          <img src="/icons/doacaofisica.png" alt="Doação física" class="card-icon">
-          <h2>Doação Física</h2>
-        </div>
-        <p>Roupas, alimentos, brinquedos e outros itens.</p>
-        <button class="button button-fisica">Agendar Coleta</button>
+        <button 
+          class="finalize-button"
+          @click="finalizeDonation"
+          :disabled="!selectedValue || !selectedPayment"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" 
+                fill="currentColor"/>
+          </svg>
+          Finalizar Doação
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.formas-doar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  text-align: center;
-  color: #333;
-  margin-bottom: 12px;
-}
-
-.subtitle {
-  font-size: 1rem;
-  color: #666;
-  text-align: center;
-  margin-bottom: 50px;
-  font-weight: 400;
-}
-
-.cards-container {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.doacao-card {
-  background-color: #fff;
+.divprimary {
+  height: 25vw;
+  max-width: 50%;
+  background: linear-gradient(180deg, #E8E7FF 0%, #F8F9FA 100%);
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+}
+
+.header {
+  display: flex;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 32px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+.content-wrapper {
+  display: flex;
+  min-height: 100vh;
+  gap: 40px;
+}
+
+.valor {
+  flex: 1;
+}
+
+.form {
+  flex: 1;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  padding: 8px;
+  margin-right: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.value-button {
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.value-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.value-button.active {
+  border-color: #4285F4;
+  background: #F0F4FF;
+}
+
+.custom-value {
+  margin-bottom: 32px;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 20px;
+  border: 2px solid #E1E5E9;
+  border-radius: 12px;
+  font-size: 16px;
+  background: white;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #4285F4;
+}
+
+.donation-type {
+  margin-bottom: 40px;
+}
+
+.donation-type h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
+}
+
+.radio-group {
+  display: flex;
+  gap: 24px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+}
+
+.radio-label {
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.form h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 24px 0;
+}
+
+.payment-options {
   display: flex;
   flex-direction: column;
-  min-height: 280px;
-  padding: 30px 25px 25px 25px;
-  width: 280px;
-  max-width: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 12px;
+  margin-bottom: 32px;
 }
 
-.doacao-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+.payment-option {
+  background: white;
+  border: 2px solid #E1E5E9;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: left;
+}
+
+.payment-option:hover {
+  border-color: #B3C7F7;
+}
+
+.payment-option.active {
+  border-color: #4285F4;
+  background: #F0F4FF;
+}
+
+.payment-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.pix-icon {
+  background: #32BCAD;
+  position: relative;
 }
 
 .card-icon {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 16px;
+  background: #4285F4;
+  position: relative;
 }
 
-
-.doacao-img {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 16px;
+.transfer-icon {
+  background: #7C3AED;
+  position: relative;
 }
 
-.doacao-card h2 {
-  font-size: 1.3rem;
-  margin: 0;
-  color: #333;
+.payment-info {
+  flex: 1;
+}
+
+.payment-name {
+  font-size: 16px;
   font-weight: 600;
-  text-align: center;
+  color: #1a1a1a;
+  margin-bottom: 4px;
 }
 
-.doacao-card p {
-  font-size: 0.95rem;
+.payment-desc {
+  font-size: 14px;
   color: #666;
-  text-align: center;
-  line-height: 1.5;
-  margin: 16px 0 24px 0;
-  flex-grow: 1;
 }
 
-.button {
-  background: linear-gradient(135deg, #4285f4 0%, #3367d6 100%);
+.radio-indicator {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #E1E5E9;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.radio-indicator.active {
+  border-color: #4285F4;
+}
+
+.radio-indicator.active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background: #4285F4;
+  border-radius: 50%;
+}
+
+.finalize-button {
+  width: 100%;
+  background: #4285F4;
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 0.95rem;
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  max-width: 200px;
-  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
 }
 
-.button:hover {
+.finalize-button:hover:not(:disabled) {
+  background: #3367D6;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
 }
 
-.button:active {
-  transform: translateY(0);
+.finalize-button:disabled {
+  background: #E1E5E9;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.button-pix {
-  background: linear-gradient(135deg, #4285f4 0%, #3367d6 100%);
-}
 
-.button-cartao {
-  background: linear-gradient(135deg, #4285f4 0%, #3367d6 100%);
-}
-
-.button-fisica {
-  background: linear-gradient(135deg, #4285f4 0%, #3367d6 100%);
-}
 
 </style>

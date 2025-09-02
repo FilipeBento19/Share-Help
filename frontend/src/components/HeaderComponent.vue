@@ -18,10 +18,10 @@
         <ul>
           <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/institution">Instituições</router-link></li>
-          <li><router-link to="/map">Mapa interativo</router-link></li>
+          <li><router-link to="/mapinterative">Mapa interativo</router-link></li>
           <li><router-link to="/team">Nossa equipe</router-link></li>
           <li><button class="header-donate-button">Doar agora</button></li>
-          <li class="login"><router-link to="/login"><img src="/icons/login.png" alt=""></router-link></li>
+          <li class="login"><router-link to="/perfil"><img src="/icons/login.png" alt=""></router-link></li>
         </ul>
       </nav>
     </div>
@@ -54,8 +54,9 @@
 }
 
 .logo img {
-  height: 40px;
+  height: 50px;
   width: auto;
+  padding-top: 9px;
 }
 
 .logo .slogan {
@@ -68,7 +69,7 @@
 .textinho {
   display: flex;
   flex-direction: column; 
-  line-height: 1.2;
+  line-height: 0.8;
 }
 
 .textinho a {
