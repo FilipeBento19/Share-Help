@@ -7,6 +7,7 @@ const availableInstitutions = computed(() => {
   return ongs
   .filter((ong) => ong.id !== 'joao-de-paula')
   .filter((ong) => ong.id !== 'bom-retiro')
+    .filter((ong) => ong.id !== 'sementes-do-futuro')
     .map((ong) => ({
       id: ong.id,
       name: ong.title,

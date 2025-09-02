@@ -6,10 +6,12 @@
   <header class="app-header">
     <div class="header-content">
       <div class="logo">
-        <img src="/logosite.png" alt="ShareHelp Logo">
+        <router-link to="/"><img src="/logosite.png" alt="ShareHelp Logo"></img></router-link>
         <div class="textinho">
-            <h1>ShareHelp</h1>
-            <span class="slogan">Doe seguro</span>
+            <router-link to="/">
+              <h1>ShareHelp</h1>
+              <span class="slogan">Doe seguro</span>
+            </router-link>
         </div>
       </div>
       <nav class="main-nav">
@@ -19,7 +21,7 @@
           <li><router-link to="/map">Mapa interativo</router-link></li>
           <li><router-link to="/team">Nossa equipe</router-link></li>
           <li><button class="header-donate-button">Doar agora</button></li>
-          <li class="login"><router-link to="/perfil"><img src="/icons/login.png" alt=""></router-link></li>
+          <li class="login"><router-link to="/login"><img src="/icons/login.png" alt=""></router-link></li>
         </ul>
       </nav>
     </div>
@@ -67,6 +69,11 @@
   display: flex;
   flex-direction: column; 
   line-height: 1.2;
+}
+
+.textinho a {
+  text-decoration: none;
+  text-decoration-color: none;
 }
 
 .logo h1 {
