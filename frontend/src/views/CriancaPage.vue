@@ -446,7 +446,7 @@ const availableInstitutions = computed(() => {
 .institution-image {
   width: 100%;
   height: 200px;
-  background-color: #6b7280;
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;

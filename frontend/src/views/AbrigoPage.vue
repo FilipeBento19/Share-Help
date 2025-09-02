@@ -250,6 +250,7 @@
       overflow: hidden;
       margin-bottom: 20px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
     }
 
     .institution-logo img {
@@ -445,7 +446,7 @@
     .institution-image {
       width: 100%;
       height: 200px;
-      background-color: #6b7280;
+      background-color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
