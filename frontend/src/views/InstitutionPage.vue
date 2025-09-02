@@ -5,6 +5,8 @@ import ongs from '@/data/ongsData'
 
 const availableInstitutions = computed(() => {
   return ongs
+  .filter((ong) => ong.id !== 'joao-de-paula')
+  .filter((ong) => ong.id !== 'bom-retiro')
     .map((ong) => ({
       id: ong.id,
       name: ong.title,

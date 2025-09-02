@@ -20,7 +20,7 @@ const ong = ongs.find(o => o.id === ongId)
 
 <template>
   <div class="pagina-instituicao" v-if="ong">
-     <button class="botao-voltar" @click="voltar">◄ Voltar</button>
+    <img @click="voltar" class="botao-voltar" src="/icons/voltar.png" alt="">
     
     <div class="container-instituicao">
       <div class="logo-container">  
@@ -67,10 +67,11 @@ const ong = ongs.find(o => o.id === ongId)
   cursor: pointer;
   margin-bottom: 1rem;
   padding: 0.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .botao-voltar:hover {
-  text-decoration: underline;
+  transform: translateY(-5px);
 }
 
 .container-instituicao {

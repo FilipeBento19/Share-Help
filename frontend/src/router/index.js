@@ -7,10 +7,15 @@ import AbrigoPage from '../views/AbrigoPage.vue'
 import CriancaPage from '../views/CriancaPage.vue'
 import IdososPage from '../views/IdososPage.vue'
 import OngPage from '../views/OngPage.vue'
+import PerfilPage from '../views/PerfilPage.vue'
 
 const routes = [
   {
     path: '/',
+    redirect: '/home'
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: HomePage,
   },
@@ -18,6 +23,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
+  },
+  {
+    path: '/perfil',
+    name: 'Perfil',
+    component: PerfilPage,
   },
   {
     path: '/institution',

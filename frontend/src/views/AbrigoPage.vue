@@ -33,7 +33,7 @@
 
     const availableInstitutions = computed(() => {
       return ongs
-        .filter((ong) => ong.id !== 'ecos-esperanca')
+        .filter((ong) => ong.id !== 'casa-vo-joaquina')
         .filter((ong) => ong.categoria == 'moradores-de-rua')
         .map((ong) => ({
           id: ong.id,

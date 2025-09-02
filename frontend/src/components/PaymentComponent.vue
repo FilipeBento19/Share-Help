@@ -28,7 +28,7 @@ const props = defineProps({
 
       <div class="doacao-card">
         <div class="doacao-img">
-          <img src="/icons/qrcode.png" alt="Cartão de crédito" class="card-icon">
+          <img src="/icons/cartaocredito.png" alt="Cartão de crédito" class="card-icon">
           <h2>Cartão de crédito</h2>
         </div>
         <p>Doação única ou recorrente no cartão de crédito.</p>
@@ -38,7 +38,7 @@ const props = defineProps({
 
       <div class="doacao-card">
         <div class="doacao-img">
-          <img src="/icons/qrcode.png" alt="Doação física" class="card-icon">
+          <img src="/icons/doacaofisica.png" alt="Doação física" class="card-icon">
           <h2>Doação Física</h2>
         </div>
         <p>Roupas, alimentos, brinquedos e outros itens.</p>
