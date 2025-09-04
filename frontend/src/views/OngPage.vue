@@ -1,6 +1,14 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
+import { ref } from 'vue'
 import ongs from '@/data/ongsData'
+import PaymentComponent from '@/components/PaymentComponent.vue'
+
+const modalRef = ref(null)
+
+const abrirModal = () => {
+  modalRef.value.showModal = true
+}
 
 const route = useRoute()
 const router = useRouter()
@@ -42,8 +50,9 @@ const ong = ongs.find(o => o.id === ongId)
         </div>
         
         <div class="botao-container">
-          <button class="botao-doar">Doar Agora</button>
+          <button class="botao-doar" @click="abrirModal">Doar Agora</button>
         </div>
+        <PaymentComponent ref="modalRef"/>
       </div>
     </div>
   </div>
