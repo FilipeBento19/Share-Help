@@ -5,29 +5,99 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
-from .models import Usuario, TipoDoacao, Instituicao, Endereco, Favorito, Doacao
+from .models import Usuario, TipoDoacao, Instituicao, Endereco, Favorito, Doacao, CodigoVerificacao
 from .serializers import (
-    UsuarioSerializer, UsuarioCreateSerializer, TipoDoacaoSerializer,
+    UsuarioSerializer, TipoDoacaoSerializer,
     InstituicaoSerializer, EnderecoSerializer, FavoritoSerializer, 
-    DoacaoSerializer
+    DoacaoSerializer, EmailSerializer, VerificarCodigoSerializer
 )
+#Cadastro
+from rest_framework.views import APIView
+from django.core.mail import send_mail
+from django.conf import settings
+
+# Login
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+#Perfil
+from rest_framework.permissions import IsAuthenticated
+
+#==========================================================
+#                       Cadastro
+#===========================================================
+class EnviarCodigoView(APIView):
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data["email"]
+
+            # cria ou sobrescreve código
+            codigo_obj, _ = CodigoVerificacao.objects.update_or_create(email=email)
+
+            mensagem = f'''Olá!
+
+Seu código de verificação para cadastro no Share Help é: {codigo_obj.codigo}
+
+Este código é válido por 15 minutos.
+
+Se você não solicitou este código, ignore este email.
+
+Atenciosamente,
+Equipe Share Help '''
+            # envia email (precisa configurar EMAIL_BACKEND no settings.py)
+            send_mail(
+                subject="Código de verificação",
+                message=mensagem,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
+            return Response({"message": "Código enviado para o email"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UsuarioViewSet(ModelViewSet):
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
-    
-    def get_serializer_class(self):
-        if self.action == 'create':
-            return UsuarioCreateSerializer
-        return UsuarioSerializer
-    
-    @action(detail=True, methods=['get'])
-    def historico_doacoes(self, request, pk=None):
-        usuario = self.get_object()
-        doacoes = Doacao.objects.filter(usuario=usuario)
-        serializer = DoacaoSerializer(doacoes, many=True)
+class VerificarCodigoView(APIView):
+    def post(self, request):
+        serializer = VerificarCodigoSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data["email"]
+            codigo = serializer.validated_data["codigo"]
+
+            try:
+                codigo_obj = CodigoVerificacao.objects.get(email=email, codigo=codigo)
+                return Response({"message": "Código válido"}, status=status.HTTP_200_OK)
+            except CodigoVerificacao.DoesNotExist:
+                return Response({"error": "Código inválido"}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RegistrarUsuarioView(APIView):
+    def post(self, request):
+        serializer = UsuarioSerializer(data=request.data)
+        if serializer.is_valid():
+            # Verifica se email já validado com código
+            try:
+                CodigoVerificacao.objects.get(email=serializer.validated_data["email"])
+            except CodigoVerificacao.DoesNotExist:
+                return Response({"error": "Email não verificado"}, status=status.HTTP_400_BAD_REQUEST)
+
+            usuario = serializer.save()
+            return Response(UsuarioSerializer(usuario).data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#==========================================================
+#                       Perfil
+#===========================================================
+class PerfilView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UsuarioSerializer(request.user)
         return Response(serializer.data)
+
 
 
 class TipoDoacaoViewSet(ModelViewSet):

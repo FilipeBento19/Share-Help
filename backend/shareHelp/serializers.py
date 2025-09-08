@@ -1,39 +1,29 @@
 from rest_framework.serializers import ModelSerializer, ValidationError, SerializerMethodField
 from rest_framework import serializers
 from .models import Usuario, TipoDoacao, Instituicao, Endereco, Favorito, Doacao
+from django.contrib.auth.hashers import make_password
+from .models import Usuario, CodigoVerificacao
 
+#==========================================================
+#                       Cadastro
+#===========================================================
+class EmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()
 
-class UsuarioSerializer(ModelSerializer):
-    """Serializer para usuários - exclui campos sensíveis"""
-    
+class VerificarCodigoSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    codigo = serializers.CharField(max_length=6)
+
+class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'nome', 'data_criacao', 'is_active']
-        read_only_fields = ['id', 'data_criacao']
-    
-    def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        user = Usuario.objects.create_user(**validated_data)
-        if password:
-            user.set_password(password)
-            user.save()
-        return user
+        fields = ["id", "nome", "username", "email", "password"]
+        extra_kwargs = {"password": {"write_only": True}}
 
-
-class UsuarioCreateSerializer(ModelSerializer):
-    """Serializer específico para criação de usuários com senha"""
-    password = serializers.CharField(write_only=True, min_length=8)
-    
-    class Meta:
-        model = Usuario
-        fields = ['username', 'email', 'nome', 'password']
-    
     def create(self, validated_data):
-        password = validated_data.pop('password')
-        user = Usuario.objects.create_user(**validated_data)
-        user.set_password(password)
-        user.save()
-        return user
+        validated_data["password"] = make_password(validated_data["password"])
+        validated_data["email_verificado"] = True
+        return super().create(validated_data)
 
 
 class TipoDoacaoSerializer(ModelSerializer):

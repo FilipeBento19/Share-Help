@@ -1,13 +1,31 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import random
 
-
+#==========================================================
+#                       Cadastro
+#===========================================================
 class Usuario(AbstractUser):
-    nome = models.CharField(max_length=100)  
-    data_criacao = models.DateTimeField(auto_now_add=True)
-    
+    nome = models.CharField(max_length=100, blank=True, null=True)
+    email_verificado = models.BooleanField(default=False)
+
     def __str__(self):
-        return f"{self.nome} ({self.email})"
+        return self.username
+
+class CodigoVerificacao(models.Model):
+    email = models.EmailField(unique=True)
+    codigo = models.CharField(max_length=6)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.codigo:
+            self.codigo = str(random.randint(100000, 999999))  # 6 dígitos
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.email} - {self.codigo}"
+
+#==========================================================
 
 
 class TipoDoacao(models.Model):
