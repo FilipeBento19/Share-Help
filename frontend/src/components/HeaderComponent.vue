@@ -19,7 +19,7 @@
           <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/institution">Instituições</router-link></li>
           <li><router-link to="/mapinterative">Mapa interativo</router-link></li>
-          <li><router-link to="/team">Nossa equipe</router-link></li>
+          <li><router-link to="/ourteam">Nossa equipe</router-link></li>
           <li><button class="header-donate-button">Doar agora</button></li>
           <li class="login"><router-link to="/perfil"><img src="/icons/login.png" alt=""></router-link></li>
         </ul>
