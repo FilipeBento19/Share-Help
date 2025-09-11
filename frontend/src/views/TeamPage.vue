@@ -67,7 +67,7 @@
         </div>
 
         <div class="membro-item">
-          <img src="/icons/gabrielteam.png" alt="Gabriel Antônio Pinto" class="avatar">
+          <img src="/icons/gabrielteam.jpg" alt="Gabriel Antônio Pinto" class="avatar">
           <div class="info-container">
             <h3 class="nome">Gabriel Antônio Pinto</h3>
             <p class="cargo">Pesquisa e Extensão</p>

@@ -20,7 +20,6 @@
           <li><router-link to="/institution">Instituições</router-link></li>
           <li><router-link to="/mapinterative">Mapa interativo</router-link></li>
           <li><router-link to="/ourteam">Nossa equipe</router-link></li>
-          <li><button class="header-donate-button">Doar agora</button></li>
           <li class="login"><router-link to="/perfil"><img src="/icons/login.png" alt=""></router-link></li>
         </ul>
       </nav>
@@ -75,6 +74,7 @@
 .textinho a {
   text-decoration: none;
   text-decoration-color: none;
+  color: black;
 }
 
 .logo h1 {
