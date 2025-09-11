@@ -89,7 +89,7 @@
 .content-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #333;
+  color: #111827;
   margin-bottom: 30px;
   line-height: 1.3;
 }

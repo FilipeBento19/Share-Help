@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps } from 'vue';
+import { motion } from 'motion-v';
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
@@ -21,22 +22,29 @@ const formatCurrency = (value) => {
 </script>
 
   <template>
-    <div class="causas-card">
-      <img :src="cause.image" :alt="cause.title" class="cause-image">
-      <div class="card-content">
-          <h3>{{ cause.title }}</h3>
-          <p class="description">{{ cause.description }}</p>
-          <div class="progress-bar-container">
-          <div class="progress-bar" :style="{ width: cause.progress + '%' }"></div>
+    <motion.div
+      :initial="{ opacity: 0, scale: 0.5 }"  
+      :while-in-view="{ opacity: 1, scale: 1 }"  
+      :viewport="{ once: false, amount: 0.5 }"
+      :transition="{ duration: 0.8, ease: [0, 0.71, 0.2, 1.01] }"
+    >
+      <div class="causas-card">
+        <img :src="cause.image" :alt="cause.title" class="cause-image">
+        <div class="card-content">
+            <h3>{{ cause.title }}</h3>
+            <p class="description">{{ cause.description }}</p>
+            <div class="progress-bar-container">
+            <div class="progress-bar" :style="{ width: cause.progress + '%' }"></div>
+        </div>
+            <div class="progress-info">
+                <span>{{ cause.progress }}% alcançado</span>
+                <span>Meta: {{ formatCurrency(cause.goal) }}</span>
+            </div>
+            
+          <router-link :to="cause.link"><button class="card-button">Doar para está causa</button></router-link>
+        </div>
       </div>
-          <div class="progress-info">
-              <span>{{ cause.progress }}% alcançado</span>
-              <span>Meta: {{ formatCurrency(cause.goal) }}</span>
-          </div>
-          
-        <router-link :to="cause.link"><button class="card-button">Doar para está causa</button></router-link>
-      </div>
-    </div>
+    </motion.div>
   </template>
 
 <style scoped>

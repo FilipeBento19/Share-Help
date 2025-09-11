@@ -1,19 +1,55 @@
 <script setup>
+import { computed } from 'vue';
 import causesData from '../data/causasData';
 import CausasCard from '../components/CausasCard.vue';
 import PaymentCard from '../components/PaymentMethodComponent.vue';
 import MapInteractive from '@/components/MapInterativeComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
+import { motion } from 'motion-v';
+import AnimatedText from '../components/AnimatedText.vue'
 
+// Modificando para ter apenas duas linhas
+const line1 = "Transforme Vidas";
+const line2 = "com sua Doação";
+
+const wordsLine1 = computed(() => line1.split(' '));
+const wordsLine2 = computed(() => line2.split(' '));
 
 </script>
 
 <template>
   <main>
     <div class="topo">
-        <div class="overlay"></div> 
+        <div class="overlay"></div>
         <div class="banner">
-          <h1>Transforme Vidas com Sua Doação</h1>
+          <div class="linetop">       
+            <div class="line">
+              <motion.div 
+                v-for="(word, i) in wordsLine1"
+                :key="'line1-' + i"
+                class="split-word"
+                :initial="{ opacity: 0, y: 10 }"
+                :while-in-view="{ opacity: 1, y: 0 }"
+                :viewport="{ once: false }"
+                :transition="{ duration: 0.5, delay: i * 0.05 }"
+              >
+                {{ word }}
+              </motion.div>
+            </div>
+            <div class="line">
+              <motion.div 
+                v-for="(word, i) in wordsLine2"
+                :key="'line2-' + i"
+                class="split-word"
+                :initial="{ opacity: 0, y: 10 }"
+                :while-in-view="{ opacity: 1, y: 0 }"
+                :viewport="{ once: false }"
+                :transition="{ duration: 0.5, delay: (i + wordsLine1.length) * 0.05 }"
+              >
+                {{ word }}
+              </motion.div>
+            </div>
+          </div>
           <p>Conectamos doadores e instituições carentes de forma transparente e segura. Cada real doado faz a diferença na vida de quem mais precisa.</p>
           <div class="buttons">
             <a href="/institution"><button class="primary">Doar Agora</button></a>
@@ -23,13 +59,13 @@ import FooterComponent from '@/components/FooterComponent.vue';
     <section class="nossas-causas">
         <h2>Nossas Causas</h2>
         <p>Conheça os projetos que estão transformando vidas e <br>comunidades inteiras.</p>
-        <div class="causes-grid">
-            <CausasCard
-                v-for="cause in causesData"
-                :key="cause.id"
-                :cause="cause"
-            />
-        </div>
+            <div class="causes-grid">
+              <CausasCard 
+                  v-for="cause in causesData"
+                  :key="cause.id"
+                  :cause="cause"
+              />
+            </div>
     </section>
     <section class="escolher-sh">
       <h1>Por que Escolher o ShareHelp?</h1>
@@ -70,6 +106,23 @@ import FooterComponent from '@/components/FooterComponent.vue';
 </template>
 
 <style scoped>
+.linetop{
+  padding-bottom: 50px;
+}
+
+.line {
+  display: block;
+  margin-bottom: -2rem;
+}
+
+.split-word {
+  display: inline-block;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  margin-right: 0.25em;
+  color: white;
+}
+
 .topo {
   position: relative;
   height: 60vh;
@@ -91,6 +144,8 @@ import FooterComponent from '@/components/FooterComponent.vue';
   height: 100%;
   background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7)); 
   z-index: 1;
+  animation: gradientBG 8s ease infinite;
+  background-size: 300% 300%;
 }
 
 .topo .banner {
@@ -100,13 +155,6 @@ import FooterComponent from '@/components/FooterComponent.vue';
   width: 100%; 
   text-align: left; 
   padding-left: 10%; 
-}
-
-.topo h1 {
-  font-size: 3em;
-  font-weight: 790;
-  margin-bottom: 20px;
-  line-height: 1.2;
 }
 
 .topo p {
@@ -119,6 +167,12 @@ import FooterComponent from '@/components/FooterComponent.vue';
   display: flex;
   justify-content: flex-start;
   gap: 15px;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .topo button {
@@ -153,7 +207,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
 .nossas-causas h2 {
     font-weight: 650;
     font-size: 2.5em;
-    color: black;
+    color: #111827;
     margin-bottom: 15px;
 }
 
@@ -170,13 +224,12 @@ import FooterComponent from '@/components/FooterComponent.vue';
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px;
-    
 }
 
 /*----------------------------------------------*/
 
 .escolher-sh {
-  background-color: #eff1f5 ;
+  background-color: #f8f8f8 ;
   padding: 2vw;
   text-align: center;
 }
@@ -184,7 +237,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
 .escolher-sh h1{
   font-weight: 650;
   font-size: 2.3rem;
-  color: black;
+  color: #111827;
   padding-bottom: 15px;
 }
 
@@ -204,7 +257,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
 .escolher-div h2{
   padding-top: 10px;
   font-weight: 1000;
-  color: black;
+  color: #111827;
 }
 
 .escolher-div p{
@@ -225,7 +278,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
 .formas-de-doar h1 {  
   font-weight: 650;
   font-size: 2.3rem;
-  color: black;
+  color: #111827;
 }
 
 .payment-grid {

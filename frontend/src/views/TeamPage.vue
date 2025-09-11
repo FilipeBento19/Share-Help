@@ -1,4 +1,6 @@
 <script setup>
+import FooterComponent from '@/components/FooterComponent.vue';
+
 </script>
 
 <template>
@@ -81,6 +83,7 @@
       </div>
     </div>
   </div>
+  <FooterComponent/>
 </template>
 
 <style scoped>

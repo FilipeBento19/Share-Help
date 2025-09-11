@@ -6,12 +6,17 @@
   <header class="app-header">
     <div class="header-content">
       <div class="logo">
-        <router-link to="/"><img src="/logosite.png" alt="ShareHelp Logo"></img></router-link>
+        <router-link to="/">
+          <div class="logo-container">
+            <img src="/logosite.png" alt="ShareHelp Logo" class="logo-img">
+            <div class="logo-gradient"></div>
+          </div>
+        </router-link>
         <div class="textinho">
-            <router-link to="/">
-              <h1>ShareHelp</h1>
-              <span class="slogan">Doe seguro</span>
-            </router-link>
+          <router-link to="/">
+            <h1>ShareHelp</h1>
+            <span class="slogan">Doe seguro</span>
+          </router-link>
         </div>
       </div>
       <nav class="main-nav">
@@ -46,16 +51,24 @@
 
 .logo {
   display: flex;
-  align-items: center; 
-  gap: 10px; 
-  font-size: 1.5em; 
-  font-weight: 700; 
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5em;
+  font-weight: 700;
 }
 
-.logo img {
+.logo-container {
+  position: relative;
+  display: inline-block;
+  height: 50px;
+}
+
+.logo-img {
   height: 50px;
   width: auto;
   padding-top: 9px;
+  position: relative;
+  z-index: 1;
 }
 
 .logo .slogan {
@@ -67,19 +80,19 @@
 
 .textinho {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   line-height: 0.8;
 }
 
 .textinho a {
   text-decoration: none;
   text-decoration-color: none;
-  color: black;
+  color: #111827;
 }
 
 .logo h1 {
-    font-size: 1.5rem;
-    font-weight: 890;
+  font-size: 1.5rem;
+  font-weight: 890;
 }
 
 .main-nav ul {
@@ -119,7 +132,9 @@
   background-color: #1d4ed8;
 }
 
-.login{
+.login {
   padding-top: 6px;
 }
+
+
 </style>

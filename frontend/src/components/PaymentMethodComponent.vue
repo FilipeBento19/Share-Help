@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps } from 'vue';
+import { motion } from 'motion-v';
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
@@ -10,40 +11,60 @@ const props = defineProps({
   }
 });
 
+
+
 </script>
 
 <template>
   <div class="formas-doar-container"> 
     <div class="cards-container">
-
-      <div class="doacao-card">
-        <div class="doacao-img">
-          <img src="/icons/qrcode.png" alt="PIX" class="card-icon">
-          <h2>PIX</h2>
+      <motion.div
+      :initial="{ opacity: 0, scale: 0.5 }"  
+      :while-in-view="{ opacity: 1, scale: 1 }"  
+      :viewport="{ once: false, amount: 0.5 }"
+      :transition="{ duration: 0.8, ease: [0, 0.71, 0.2, 1.01] }"
+      >
+        <div class="doacao-card">
+          <div class="doacao-img">
+            <img src="/icons/qrcode.png" alt="PIX" class="card-icon">
+            <h2>PIX</h2>
+          </div>
+          <p>Doação instantânea via PIX. Rápido, seguro e sem taxas.</p>
+          <button class="button button-pix">Doar via PIX</button>
         </div>
-        <p>Doação instantânea via PIX. Rápido, seguro e sem taxas.</p>
-        <button class="button button-pix">Doar via PIX</button>
-      </div>
+      </motion.div>
 
-
-      <div class="doacao-card">
-        <div class="doacao-img">
-          <img src="/icons/cartaocredito.png" alt="Cartão de crédito" class="card-icon">
-          <h2>Cartão de crédito</h2>
+      <motion.div
+      :initial="{ opacity: 0, scale: 0.5 }"  
+      :while-in-view="{ opacity: 1, scale: 1 }"  
+      :viewport="{ once: false, amount: 0.5 }"
+      :transition="{ duration: 0.8, ease: [0, 0.71, 0.2, 1.01] }"
+      >
+        <div class="doacao-card">
+          <div class="doacao-img">
+            <img src="/icons/cartaocredito.png" alt="Cartão de crédito" class="card-icon">
+            <h2>Cartão de crédito</h2>
+          </div>
+          <p>Doação única ou recorrente no cartão de crédito.</p>
+          <button class="button button-cartao">Doar no Cartão</button>
         </div>
-        <p>Doação única ou recorrente no cartão de crédito.</p>
-        <button class="button button-cartao">Doar no Cartão</button>
-      </div>
+      </motion.div>
 
-
-      <div class="doacao-card">
-        <div class="doacao-img">
-          <img src="/icons/doacaofisica.png" alt="Doação física" class="card-icon">
-          <h2>Doação Física</h2>
+      <motion.div
+      :initial="{ opacity: 0, scale: 0.5 }"  
+      :while-in-view="{ opacity: 1, scale: 1 }"  
+      :viewport="{ once: false, amount: 0.5 }"
+      :transition="{ duration: 0.8, ease: [0, 0.71, 0.2, 1.01] }"
+      >
+        <div class="doacao-card">
+          <div class="doacao-img">
+            <img src="/icons/doacaofisica.png" alt="Doação física" class="card-icon">
+            <h2>Doação Física</h2>
+          </div>
+          <p>Roupas, alimentos, brinquedos e outros itens.</p>
+          <button class="button button-fisica">Agendar Coleta</button>
         </div>
-        <p>Roupas, alimentos, brinquedos e outros itens.</p>
-        <button class="button button-fisica">Agendar Coleta</button>
-      </div>
+      </motion.div>
     </div>
   </div>
 </template>
