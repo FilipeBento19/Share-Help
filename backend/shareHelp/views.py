@@ -15,6 +15,8 @@ from .serializers import (
 from rest_framework.views import APIView
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 
 # Login
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -25,6 +27,10 @@ from rest_framework.permissions import IsAuthenticated
 #==========================================================
 #                       Cadastro
 #===========================================================
+class UsuarioViewSet(ModelViewSet):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+
 class EnviarCodigoView(APIView):
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
@@ -83,6 +89,12 @@ class RegistrarUsuarioView(APIView):
             except CodigoVerificacao.DoesNotExist:
                 return Response({"error": "Email não verificado"}, status=status.HTTP_400_BAD_REQUEST)
 
+            senha = serializer.validated_data["password"]
+            try:
+                validate_password(senha)  # usa as regras do settings.py
+            except ValidationError as e:
+                return Response({"error": e.messages}, status=status.HTTP_400_BAD_REQUEST)
+            
             usuario = serializer.save()
             return Response(UsuarioSerializer(usuario).data, status=status.HTTP_201_CREATED)
 

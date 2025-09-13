@@ -1,59 +1,102 @@
 <script setup>
-defineProps(['email', 'password', 'keepLoggedIn', 'isLoading', 'error'])
-defineEmits(['update:email', 'update:password', 'update:keepLoggedIn', 'login', 'createAccount'])
+import { ref } from "vue"
+import axios from "axios"
+defineEmits(['createAccount'])
+
+
+
+const email = ref("")
+const password = ref("")
+const keepLoggedIn = ref(false)
+const isLoading = ref(false)
+const error = ref(null)
+
+const login = async () => {
+  isLoading.value = true
+  error.value = null
+
+  try {
+    const response = await axios.post("http://127.0.0.1:8000/api/token/", {
+      username: email.value, // Django JWT usa "username" por padrão
+      password: password.value,
+    })
+
+    // salva tokens
+    localStorage.setItem("access_token", response.data.access)
+    localStorage.setItem("refresh_token", response.data.refresh)
+
+    // se marcado "manter login", você poderia guardar num cookie ou localStorage permanente
+    if (keepLoggedIn.value) {
+      localStorage.setItem("keepLoggedIn", "true")
+    } else {
+      localStorage.removeItem("keepLoggedIn")
+    }
+
+    error.value = null
+    alert("Login realizado com sucesso!")
+  } catch {
+    error.value = "Usuário ou senha incorretos."
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>
+
 <template>
   <div class="form-content">
     <h2 class="form-title">Fazer login</h2>
-    
+
+    <!-- Usuário -->
     <div class="input-group">
       <input
-        :value="email"
-        @input="$emit('update:email', $event.target.value)"
-        type="email"
+        v-model="email"
+        type="text"
         placeholder="Nome de Usuário"
         class="input-field"
         :disabled="isLoading"
       />
     </div>
-    
+
+    <!-- Senha -->
     <div class="input-group">
       <input
-        :value="password"
-        @input="$emit('update:password', $event.target.value)"
+        v-model="password"
         type="password"
         placeholder="Senha"
         class="input-field"
         :disabled="isLoading"
-        @keyup.enter="$emit('login')"
+        @keyup.enter="login"
       />
     </div>
-    
+
+    <!-- Checkbox manter login -->
     <div class="checkbox-group">
       <label class="checkbox-label">
-        <input 
-          :checked="keepLoggedIn"
-          @change="$emit('update:keepLoggedIn', $event.target.checked)"
-          type="checkbox" 
+        <input
+          v-model="keepLoggedIn"
+          type="checkbox"
           class="checkbox"
         />
         <span class="checkbox-text">Manter login</span>
       </label>
     </div>
-    
+
+    <!-- Erro -->
     <div v-if="error" class="error-message">{{ error }}</div>
-    
-    <button 
-      @click="$emit('login')"
+
+    <!-- Botão -->
+    <button
+      @click="login"
       :disabled="isLoading"
       class="submit-button"
       :class="{ 'loading': isLoading }"
     >
       <div class="arrow-icon">
-        <img src="\icons\enviarlogin.png" alt="">
+        <img src="/icons/enviarlogin.png" alt="login" />
       </div>
     </button>
-    
+
+    <!-- Criar conta -->
     <div class="create-account">
       <span>Não consegue fazer login?</span>
       <button @click="$emit('createAccount')" class="create-account-link">
@@ -62,7 +105,9 @@ defineEmits(['update:email', 'update:password', 'update:keepLoggedIn', 'login', 
     </div>
   </div>
 </template>
+
 <style scoped>
+/* mesmo CSS que você já tinha no 1º código */
 .form-content {
   display: flex;
   flex-direction: column;
@@ -104,10 +149,6 @@ defineEmits(['update:email', 'update:password', 'update:keepLoggedIn', 'login', 
   cursor: not-allowed;
 }
 
-.input-field::placeholder {
-  color: #424242;
-}
-
 .checkbox-group {
   display: flex;
   align-items: center;
@@ -118,18 +159,12 @@ defineEmits(['update:email', 'update:password', 'update:keepLoggedIn', 'login', 
   display: flex;
   align-items: center;
   cursor: pointer;
-  user-select: none;
 }
 
 .checkbox {
   margin-right: 10px;
   transform: scale(1.2);
   accent-color: #4F46E5;
-}
-
-.checkbox-text {
-  color: #6b7280;
-  font-size: 14px;
 }
 
 .error-message {
@@ -149,26 +184,12 @@ defineEmits(['update:email', 'update:password', 'update:keepLoggedIn', 'login', 
   background-color: rgba(236, 236, 236, 0.95);
   border: none;
   cursor: pointer;
-  display: flex;    
+  display: flex;
   align-items: center;
   justify-content: center;
   align-self: center;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(70, 70, 70, 0.4);
-}
-
-.submit-button:hover {
-  transform: translateY(-3px);
-}
-
-.submit-button:active {
-  transform: translateY(-1px);
-}
-
-.submit-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
 }
 
 .submit-button.loading {
@@ -187,14 +208,6 @@ defineEmits(['update:email', 'update:password', 'update:keepLoggedIn', 'login', 
 .arrow-icon {
   width: 24px;
   height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.arrow-icon svg {
-  width: 100%;
-  height: 100%;
 }
 
 .create-account {
@@ -217,11 +230,5 @@ defineEmits(['update:email', 'update:password', 'update:keepLoggedIn', 'login', 
   font-weight: 600;
   cursor: pointer;
   text-decoration: underline;
-  transition: color 0.3s ease;
-}
-
-.create-account-link:hover {
-  color: #06B6D4;
 }
 </style>
-

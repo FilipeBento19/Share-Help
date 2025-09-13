@@ -25,10 +25,10 @@ const registerData = ref({
 
 // Função para o login
 const handleLogin = () => {
-  console.log('Login clicado:', { 
-    email: email.value, 
+  console.log('Login clicado:', {
+    email: email.value,
     password: password.value,
-    keepLoggedIn: keepLoggedIn.value 
+    keepLoggedIn: keepLoggedIn.value
   })
   // resto do django ou oq quiser
 }
@@ -70,13 +70,13 @@ const resendCode = () => {
 <template>
   <div class="page-container">
     <div class="background-image"></div>
-    
+
     <!-- Quadrado Principal -->
-    <div 
-      class="main-card" 
-      :class="{ 
-        'slide-left': showRegister, 
-        'blur-effect': isAnimating 
+    <div
+      class="main-card"
+      :class="{
+        'slide-left': showRegister,
+        'blur-effect': isAnimating
       }"
     >
       <!-- Tela de Login -->
@@ -91,7 +91,7 @@ const resendCode = () => {
           @createAccount="createAccount"
         />
       </div>
-      
+
       <!-- Tela de Cadastro -->
       <div v-else class="card-content">
         <RegisterStep
@@ -102,7 +102,7 @@ const resendCode = () => {
           @next="handleNextStep"
           @resend="resendCode"
         />
-        
+
         <div class="back-to-login">
           <span>Já possui uma conta?</span>
           <button @click="backToLogin" class="back-login-link">
@@ -111,14 +111,14 @@ const resendCode = () => {
         </div>
       </div>
     </div>
-    
-    <div 
-      class="side-text" 
+
+    <div
+      class="side-text"
       :class="{ 'show': showRegister }"
     >
       <h1>CRIAR UMA<br>CONTA</h1>
     </div>
-    
+
     <!-- Rodapé -->
     <div class="footer-text">
       É necessário uma conta para realizar doações não anônimas<br>

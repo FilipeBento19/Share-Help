@@ -26,6 +26,8 @@ class UsuarioSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+
+
 class TipoDoacaoSerializer(ModelSerializer):
     class Meta:
         model = TipoDoacao
