@@ -1,6 +1,7 @@
     <script setup>
-    import { computed } from 'vue'
+    import { computed, onMounted  } from 'vue'
     import FooterComponent from '@/components/FooterComponent.vue'
+    import { useTimeGlobal } from '@/components/timeGlobal'
     import ongs from '@/data/ongsData'
     import '@/components/InstsCssComponent.css'
 
@@ -13,14 +14,19 @@
       }).format(value);
     };
 
-    // Pegar a instituição recomendada (Ecos de Esperança)
+    const { formattedTime, startTimer } = useTimeGlobal()
+
+    onMounted(() => {
+      startTimer()
+    })
+
     const recommendedInstitution = computed(() => {
       const ong = ongs.find((o) => o.id === 'casa-vo-joaquina')
       return {
         id: ong.id,
         name: ong.title,
         description: ong.description,
-        timeLeft: '12:23:01:09',
+        timeLeft: formattedTime.value,
         goal: 5000,
         raised: 2800,
         image: ong.img,

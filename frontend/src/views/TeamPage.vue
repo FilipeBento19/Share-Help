@@ -122,13 +122,13 @@ import FooterComponent from '@/components/FooterComponent.vue';
 }
 
 .card-footer {
-  padding: 10px;
+  padding: 20px;
   text-align: left;
 }
 
 .titulo-principal {
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 800;
   color: #2563eb;
   margin: 0;
 }
@@ -180,6 +180,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
   font-size: 0.95rem;
   color: #2563eb;
   margin: 5px 0 12px 0;
+  font-weight: 550;
 }
 
 .social-links {
