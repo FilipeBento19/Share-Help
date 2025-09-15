@@ -10,7 +10,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
       <div class="image-card">
         <img src="/icons/equipe.jpg" alt="Imagem da equipe" class="team-image">
         <div class="card-footer">
-          <h1 class="titulo-principal">Nossa Equipe</h1>
+          <h1 class="titulo-principal">Equipe Sharehelp</h1>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
           <img src="/icons/gabrielteam.jpg" alt="Gabriel Antônio Pinto" class="avatar">
           <div class="info-container">
             <h3 class="nome">Gabriel Antônio Pinto</h3>
-            <p class="cargo">Pesquisa e Extensão</p>
+            <p class="cargo">Pesquisa e Gerência</p>
             <div class="social-links">
               <a href="#" class="social-link github"></a>
               <a href="#" class="social-link linkedin"></a>

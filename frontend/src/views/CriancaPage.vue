@@ -1,6 +1,8 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import FooterComponent from '@/components/FooterComponent.vue'
+import { createTimer } from '@/data/timeGlobal'
+import { motion } from 'motion-v'
 import ongs from '@/data/ongsData'
 import '@/components/InstsCssComponent.css'
 
@@ -10,8 +12,14 @@ const formatCurrency = (value) => {
     currency: 'BRL',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(value);
-};
+  }).format(value)
+}
+
+
+const recommendedTimer = createTimer([3, 0, 1, 0], 'recommendedTimer')
+onMounted(() => {
+  recommendedTimer.startTimer()
+})
 
 // Pegar a instituição recomendada (Ecos de Esperança)
 const recommendedInstitution = computed(() => {
@@ -20,7 +28,7 @@ const recommendedInstitution = computed(() => {
     id: ong.id,
     name: ong.title,
     description: ong.description,
-    timeLeft: '12:23:01:09',
+    timeLeft: recommendedTimer.formattedTime.value,
     goal: 5000,
     raised: 2800,
     image: ong.img,
@@ -108,49 +116,54 @@ const availableInstitutions = computed(() => {
         </div>
       </div>
     </section>
+    <motion.div
+      :initial="{ opacity: 0, scale: 0.95 }"
+      :animate="{ opacity: 1, scale: 1 }"
+      :transition="{ duration: 0.2, ease: 'easeInOut' }"
+    >
+      <section class="instituicoes-disponiveis">
+        <h2>Instituições disponíveis</h2>
+        <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
 
-    <section class="instituicoes-disponiveis">
-      <h2>Instituições disponíveis</h2>
-      <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
+        <div class="institutions-grid">
+          <div
+            v-for="institution in availableInstitutions"
+            :key="institution.id"
+            class="institution-card"
+          >
+            <div class="institution-image">
+              <img :src="institution.image" :alt="institution.name" />
+            </div>
+            <div class="institution-info">
+              <h4>{{ institution.name }}</h4>
+              <p class="institution-description">{{ institution.description }}</p>
 
-      <div class="institutions-grid">
-        <div
-          v-for="institution in availableInstitutions"
-          :key="institution.id"
-          class="institution-card"
-        >
-          <div class="institution-image">
-            <img :src="institution.image" :alt="institution.name" />
-          </div>
-          <div class="institution-info">
-            <h4>{{ institution.name }}</h4>
-            <p class="institution-description">{{ institution.description }}</p>
-
-            <div class="institution-meta">
-              <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
-              <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
-              <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
-              <div class="meta-item filtros-container">
-                <strong>Aceita:</strong>
-                <div class="filtros-list">
-                  <span
-                    v-for="filtro in institution.filtros"
-                    :key="filtro"
-                    class="filtro-tag-small"
-                  >
-                    {{ filtro }}
-                  </span>
+              <div class="institution-meta">
+                <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
+                <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
+                <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
+                <div class="meta-item filtros-container">
+                  <strong>Aceita:</strong>
+                  <div class="filtros-list">
+                    <span
+                      v-for="filtro in institution.filtros"
+                      :key="filtro"
+                      class="filtro-tag-small"
+                    >
+                      {{ filtro }}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <router-link :to="`${$route.path}/${institution.id}`">
-                  <button class="btn-doar-instituicao">Doar para esta instituição</button>
-            </router-link>
+              <router-link :to="`${$route.path}/${institution.id}`">
+                    <button class="btn-doar-instituicao">Doar para esta instituição</button>
+              </router-link>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </motion.div>
 
     <section>
       <FooterComponent />

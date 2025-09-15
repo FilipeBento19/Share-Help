@@ -1,15 +1,25 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ongs from '@/data/ongsData'
 import { motion } from 'motion-v'
+import { useRoute } from 'vue-router'
+import { fromOng } from '@/data/globalState'
+
+// eslint-disable-next-line no-unused-vars
+const route = useRoute();
+
+
+onMounted(() => {
+  // reset após primeira animação
+  if (fromOng.value) fromOng.value = false
+})
+
 
 const availableInstitutions = computed(() => {
   return ongs
-  .filter((ong) => ong.id !== 'joao-de-paula')
-  .filter((ong) => ong.id !== 'bom-retiro')
-    .filter((ong) => ong.id !== 'sementes-do-futuro')
-    .map((ong) => ({
+    .filter(ong => !['joao-de-paula', 'bom-retiro', 'sementes-do-futuro'].includes(ong.id))
+    .map(ong => ({
       id: ong.id,
       name: ong.title,
       description: ong.description,
@@ -22,79 +32,84 @@ const availableInstitutions = computed(() => {
     }))
 })
 
-const text = "Instituições Disponíveis";
-
-const wordtext = computed(() => text.split(' '));
-
+const text = "Instituições Disponíveis"
+const wordtext = computed(() => text.split(' '))
 </script>
 
 <template>
-  <main>
-    <div class="topo">
-      <div class="overlay"></div>
-      <div class="banner">
-        <motion.div 
-          v-for="(word, i) in wordtext"
-          :key="'line1-' + i" 
-          class="split-word"
-          :initial="{ opacity: 0, y: 10 }"
-          :while-in-view="{ opacity: 1, y: 0 }"
-          :viewport="{ once: false }"
-          :transition="{ duration: 0.5, delay: i * 0.05 }"
-        >
-          {{ word }}
-        </motion.div>
-        <p>
-          Cada valor doado muda o futuro de quem realmente precisa. Sua contribuição, por menor que pareça, leva esperança, transforma vidas e abre oportunidades
-        </p>
-      </div>
-    </div>
-
-    <section class="instituicoes-disponiveis">
-      <h2>Instituições disponíveis</h2>
-      <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
-
-      <div class="institutions-grid">
-        <div
-          v-for="institution in availableInstitutions"
-          :key="institution.id"
-          class="institution-card"
-        >
-          <div class="institution-image">
-            <img :src="institution.image" :alt="institution.name" />
-          </div>
-          <div class="institution-info">
-            <h4>{{ institution.name }}</h4>
-            <p class="institution-description">{{ institution.description }}</p>
-
-            <div class="institution-meta">
-              <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
-              <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
-              <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
-              <div class="meta-item filtros-container">
-                <strong>Aceita:</strong>
-                <div class="filtros-list">
-                  <span
-                    v-for="filtro in institution.filtros"
-                    :key="filtro"
-                    class="filtro-tag-small"
-                  >
-                    {{ filtro }}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <router-link :to="`/institution/${institution.id}`"><button class="btn-doar-instituicao" > Doar para esta instituição </button></router-link>
-          </div>
+    <main>
+      <!-- Banner e conteúdo igual ao seu código anterior -->
+      <div class="topo">
+        <div class="overlay"></div>
+        <div class="banner">
+          <motion.div
+            v-for="(word, i) in wordtext"
+            :key="'line1-' + i"
+            class="split-word"
+            :initial="{ opacity: 0, y: 10 }"
+            :while-in-view="{ opacity: 1, y: 0 }"
+            :viewport="{ once: false }"
+            :transition="{ duration: 0.5, delay: i*0.05 }"
+          >
+            {{ word }}
+          </motion.div>
+          <p>
+            Cada valor doado muda o futuro de quem realmente precisa. Sua contribuição, por menor que pareça, leva esperança, transforma vidas e abre oportunidades
+          </p>
         </div>
       </div>
-    </section>
+      <motion.div
+        :initial="{ opacity: 0, scale: 0.95 }"
+        :animate="{ opacity: 1, scale: 1 }"
+        :transition="{ duration: 0.2, ease: 'easeInOut' }"
+      >
+        <section class="instituicoes-disponiveis">
+          <h2>Instituições disponíveis</h2>
+          <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
 
-    <section>
+          <div class="institutions-grid">
+            <div
+              v-for="institution in availableInstitutions"
+              :key="institution.id"
+              class="institution-card"
+            >
+              <div class="institution-image">
+                <img :src="institution.image" :alt="institution.name" />
+              </div>
+              <div class="institution-info">
+                <h4>{{ institution.name }}</h4>
+                <p class="institution-description">{{ institution.description }}</p>
+
+                <div class="institution-meta">
+                  <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
+                  <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
+                  <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
+                  <div class="meta-item filtros-container">
+                    <strong>Aceita:</strong>
+                    <div class="filtros-list">
+                      <span
+                        v-for="filtro in institution.filtros"
+                        :key="filtro"
+                        class="filtro-tag-small"
+                      >
+                        {{ filtro }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <router-link :to="`${$route.path}/${institution.id}`">
+                  <button class="btn-doar-instituicao">Doar para esta instituição</button>
+                </router-link>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </motion.div>
       <FooterComponent />
-    </section>
-  </main>
+    </main>
+  
 </template>
 
 <style scoped>

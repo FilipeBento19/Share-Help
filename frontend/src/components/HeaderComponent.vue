@@ -152,4 +152,110 @@ import { motion } from 'motion-v';
 .login{
   padding-top: 6px;
 }
+
+@media (max-width: 1200px) {
+    .main-nav ul {
+        gap: 20px;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+    }
+    
+    .logo img {
+        height: 45px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-nav ul {
+        gap: 15px;
+    }
+    
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+    
+    .logo img {
+        height: 40px;
+    }
+    
+    .main-nav li a {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-wrap: wrap;
+    }
+    
+    .main-nav {
+        width: 100%;
+        order: 3;
+        margin-top: 15px;
+    }
+    
+    .main-nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px 20px;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+    }
+    
+    .logo img {
+        height: 35px;
+    }
+    
+    .logo .slogan {
+        font-size: 0.6em;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo {
+        padding-left: 115px;
+        gap: 8px;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+    }
+    
+    .logo img {
+        height: 30px;
+    }
+    
+    .main-nav ul {
+        gap: 8px 10px;
+    }
+    
+    .main-nav li a {
+        font-size: 0.85em;
+    }
+    
+    .login img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .textinho {
+        display: none;
+    }
+    
+    .main-nav ul {
+        gap: 5px 12px;
+    }
+    
+    .main-nav li a {
+        font-size: 0.8em;
+    }
+}
+
+
 </style>
