@@ -1,31 +1,56 @@
 <script setup>
-
+import { motion } from 'motion-v';
 </script>
 
 <template>
   <header class="app-header">
     <div class="header-content">
       <div class="logo">
-        <router-link to="/">
-          <div class="logo-container">
-            <img src="/logosite.png" alt="ShareHelp Logo" class="logo-img">
-            <div class="logo-gradient"></div>
-          </div>
-        </router-link>
+        <router-link to="/"><img src="/logosite.png" alt="ShareHelp Logo"></img></router-link>
         <div class="textinho">
-          <router-link to="/">
-            <h1>ShareHelp</h1>
-            <span class="slogan">Doe seguro</span>
-          </router-link>
+            <router-link to="/">
+              <h1>ShareHelp</h1>
+              <span class="slogan">Doe seguro</span>
+            </router-link>
         </div>
       </div>
       <nav class="main-nav">
         <ul>
+          <motion.div
+            :whileHover="{ scale: 1.1 }"
+            :whileTap="{ scale: 0.1 }"
+            class="box"
+          >
           <li><router-link to="/">Home</router-link></li>
+          </motion.div>
+          <motion.div
+            :whileHover="{ scale: 1.1 }"
+            :whileTap="{ scale: 0.1 }"
+            class="box"
+          >
           <li><router-link to="/institution">Instituições</router-link></li>
+          </motion.div>
+          <motion.div
+            :whileHover="{ scale: 1.1 }"
+            :whileTap="{ scale: 0.1 }"
+            class="box"
+          >
           <li><router-link to="/mapinterative">Mapa interativo</router-link></li>
+          </motion.div>
+          <motion.div
+            :whileHover="{ scale: 1.1 }"
+            :whileTap="{ scale: 0.1 }"
+            class="box"
+          >
           <li><router-link to="/ourteam">Nossa equipe</router-link></li>
+          </motion.div>
+          <motion.div
+            :whileHover="{ scale: 1.1 }"
+            :whileTap="{ scale: 0.1 }"
+            class="box"
+          >
           <li class="login"><router-link to="/perfil"><img src="/icons/login.png" alt=""></router-link></li>
+          </motion.div>
         </ul>
       </nav>
     </div>
@@ -51,24 +76,16 @@
 
 .logo {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.5em;
-  font-weight: 700;
+  align-items: center; 
+  gap: 10px; 
+  font-size: 1.5em; 
+  font-weight: 700; 
 }
 
-.logo-container {
-  position: relative;
-  display: inline-block;
-  height: 50px;
-}
-
-.logo-img {
+.logo img {
   height: 50px;
   width: auto;
   padding-top: 9px;
-  position: relative;
-  z-index: 1;
 }
 
 .logo .slogan {
@@ -80,19 +97,19 @@
 
 .textinho {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   line-height: 0.8;
 }
 
 .textinho a {
   text-decoration: none;
   text-decoration-color: none;
-  color: #111827;
+  color: black;
 }
 
 .logo h1 {
-  font-size: 1.5rem;
-  font-weight: 890;
+    font-size: 1.5rem;
+    font-weight: 890;
 }
 
 .main-nav ul {
@@ -132,9 +149,7 @@
   background-color: #1d4ed8;
 }
 
-.login {
+.login{
   padding-top: 6px;
 }
-
-
 </style>

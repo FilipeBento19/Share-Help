@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 
-const showModal = ref(false)
+const props = defineProps({
+  show: { type: Boolean, default: false }
+})
+const emit = defineEmits(['fechar'])
 
 const selectedValue = ref('')
 const customValue = ref('')
@@ -30,19 +33,15 @@ const finalizeDonation = () => {
     tipo: donationType.value,
     pagamento: selectedPayment.value
   })
-  showModal.value = false
+  emit('fechar') // agora avisa o pai
 }
-
-defineExpose({
-  showModal // expõe para o pai poder abrir/fechar
-})
 </script>
 
 <template>
-  <div v-if="showModal" class="overlay">
+  <div v-if="props.show" class="overlay">
     <div class="divprimary">
       <div class="header">
-        <button class="back-button" @click="showModal = false">
+        <button class="back-button" @click="$emit('fechar')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
@@ -137,7 +136,6 @@ defineExpose({
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;

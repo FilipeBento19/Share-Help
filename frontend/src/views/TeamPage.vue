@@ -8,7 +8,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
     <div class="equipe-content">
       <!-- Card da imagem grande -->
       <div class="image-card">
-        <img src="/icons/img-moment.jpg" alt="Imagem da equipe" class="team-image">
+        <img src="/icons/equipe.jpg" alt="Imagem da equipe" class="team-image">
         <div class="card-footer">
           <h1 class="titulo-principal">Nossa Equipe</h1>
         </div>
@@ -22,9 +22,9 @@ import FooterComponent from '@/components/FooterComponent.vue';
             <h3 class="nome">Arthur Cândido Benk</h3>
             <p class="cargo">UI/UX - Design Figma</p>
             <div class="social-links">
-              <a href="#" class="social-link github"></a>
-              <a href="#" class="social-link linkedin"></a>
-              <a href="#" class="social-link instagram"></a>
+              <a href="https://github.com/ArthurBenk" class="social-link github"></a>
+              <a href="https://www.linkedin.com/in/arthur-benk-1600a12b9/" class="social-link linkedin"></a>
+              <a href="https://www.instagram.com/mittens064/" class="social-link instagram"></a>
             </div>
           </div>
         </div>
@@ -35,9 +35,9 @@ import FooterComponent from '@/components/FooterComponent.vue';
             <h3 class="nome">Cauê Joaquim de Lemos Kreutz</h3>
             <p class="cargo">Backend</p>
             <div class="social-links">
-              <a href="#" class="social-link github"></a>
-              <a href="#" class="social-link linkedin"></a>
-              <a href="#" class="social-link instagram"></a>
+              <a href="https://github.com/cauejlk" class="social-link github"></a>
+              <a href="https://www.linkedin.com/in/cauejlk/" class="social-link linkedin"></a>
+              <a href="https://www.instagram.com/wtfcauejlk/" class="social-link instagram"></a>
             </div>
           </div>
         </div>
@@ -48,9 +48,9 @@ import FooterComponent from '@/components/FooterComponent.vue';
             <h3 class="nome">Filipe Bento dos Santos</h3>
             <p class="cargo">Frontend</p>
             <div class="social-links">
-              <a href="#" class="social-link github"></a>
-              <a href="#" class="social-link linkedin"></a>
-              <a href="#" class="social-link instagram"></a>
+              <a href="https://github.com/FilipeBento19" class="social-link github"></a>
+              <a href="https://www.linkedin.com/in/filipe-bento-3b29a92b8/" class="social-link linkedin"></a>
+              <a href="https://www.instagram.com/_filipe_bentoo_/" class="social-link instagram"></a>
             </div>
           </div>
         </div>
@@ -61,9 +61,9 @@ import FooterComponent from '@/components/FooterComponent.vue';
             <h3 class="nome">Ijair Erick Machado</h3>
             <p class="cargo">Frontend - API</p>
             <div class="social-links">
-              <a href="#" class="social-link github"></a>
-              <a href="#" class="social-link linkedin"></a>
-              <a href="#" class="social-link instagram"></a>
+              <a href="https://www.instagram.com/ijairerick/" class="social-link github"></a>
+              <a href="https://www.linkedin.com/in/ijair-erick-machado-6878152b8/" class="social-link linkedin"></a>
+              <a href="https://www.instagram.com/ijairerick/" class="social-link instagram"></a>
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
             <div class="social-links">
               <a href="#" class="social-link github"></a>
               <a href="#" class="social-link linkedin"></a>
-              <a href="#" class="social-link instagram"></a>
+              <a href="https://www.instagram.com/_biel._dz7/" class="social-link instagram"></a>
             </div>
           </div>
         </div>
@@ -128,7 +128,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
 
 .titulo-principal {
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 800;
   color: #2563eb;
   margin: 0;
 }
@@ -180,6 +180,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
   font-size: 0.95rem;
   color: #2563eb;
   margin: 5px 0 12px 0;
+  font-weight: 550;
 }
 
 .social-links {
@@ -197,13 +198,13 @@ import FooterComponent from '@/components/FooterComponent.vue';
 }
 
 .social-link.github {
-  background-image: url('/icons/github.svg');
+  background-image: url('/icons/git.png');
 }
 .social-link.linkedin {
-  background-image: url('/icons/linkedin.svg');
+  background-image: url('/icons/linkedin.png');
 }
 .social-link.instagram {
-  background-image: url('/icons/instagram.svg');
+  background-image: url('/icons/inst.png');
 }
 
 .social-link:hover {
