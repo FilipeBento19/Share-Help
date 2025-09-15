@@ -3,8 +3,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import ongs from '@/data/ongsData'
 import PaymentComponent from '@/components/PaymentComponent.vue'
+import { motion } from 'motion-v'
 
-const modalRef = ref(null)
+const modalRef = ref(false)
 
 const abrirModal = () => {
   modalRef.value.showModal = true
@@ -52,7 +53,18 @@ const ong = ongs.find(o => o.id === ongId)
         <div class="botao-container">
           <button class="botao-doar" @click="abrirModal">Doar Agora</button>
         </div>
-        <PaymentComponent ref="modalRef"/>
+        <motion.div
+          class="ball"
+          :initial="{ opacity: 0, scale: 0.5 }"
+          :animate="{ opacity: 1, scale: 1 }"
+          :transition="{
+              duration: 0.8,
+              delay: 0.5,
+              ease: [0, 0.71, 0.2, 1.01]
+          }"
+        >
+          <PaymentComponent ref="modalRef"/>
+        </motion.div>
       </div>
     </div>
   </div>

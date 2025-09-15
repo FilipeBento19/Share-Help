@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ongs from '@/data/ongsData'
+import { motion } from 'motion-v'
 
 const availableInstitutions = computed(() => {
   return ongs
@@ -21,6 +22,9 @@ const availableInstitutions = computed(() => {
     }))
 })
 
+const text = "Instituições Disponíveis";
+
+const wordtext = computed(() => text.split(' '));
 
 </script>
 
@@ -29,7 +33,17 @@ const availableInstitutions = computed(() => {
     <div class="topo">
       <div class="overlay"></div>
       <div class="banner">
-        <h1>Instituições disponíveis</h1>
+        <motion.div 
+          v-for="(word, i) in wordtext"
+          :key="'line1-' + i" 
+          class="split-word"
+          :initial="{ opacity: 0, y: 10 }"
+          :while-in-view="{ opacity: 1, y: 0 }"
+          :viewport="{ once: false }"
+          :transition="{ duration: 0.5, delay: i * 0.05 }"
+        >
+          {{ word }}
+        </motion.div>
         <p>
           Cada valor doado muda o futuro de quem realmente precisa. Sua contribuição, por menor que pareça, leva esperança, transforma vidas e abre oportunidades
         </p>
@@ -104,14 +118,22 @@ const availableInstitutions = computed(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7));
+  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7)); 
   z-index: 1;
+  animation: gradientBG 8s ease infinite;
+  background-size: 300% 300%;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .topo .banner {
   z-index: 2;
   position: relative;
-  max-width: 730px;
+  max-width: 800px;
   width: 100%;
   text-align: left;
   padding-left: 10%;
@@ -129,6 +151,23 @@ const availableInstitutions = computed(() => {
   margin-bottom: 30px;
   line-height: 1.5;
 }
+
+.animated-line {
+  display: flex;
+  gap: 2rem;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 0.8rem;
+  font-size: 3.1rem;
+  font-weight: 900;
+}
+
 
 /* ShareHelp Recomenda */
 .sharehelp-recomenda {

@@ -6,9 +6,7 @@ import PaymentCard from '../components/PaymentMethodComponent.vue';
 import MapInteractive from '@/components/MapInterativeComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
 import { motion } from 'motion-v';
-import AnimatedText from '../components/AnimatedText.vue'
 
-// Modificando para ter apenas duas linhas
 const line1 = "Transforme Vidas";
 const line2 = "com sua Doação";
 
