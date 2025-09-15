@@ -37,7 +37,7 @@ const contactInfo = {
           
           <!-- Redes -->
           <div class="social-links">
-            <a href="/"><img src="/icons/facefooter.png" alt=""></a>
+            <a href="https://www.facebook.com/ShareHelp"><img src="/icons/facefooter.png" alt=""></a>
             <a href="https://www.instagram.com/sharehelp_ifc/"><img src="/icons/instafooter.png" alt=""></a>
             <a href="https://x.com/sharehelpifc"><img src="/icons/twitterfooter.png" alt=""></a>
           </div>
@@ -305,5 +305,166 @@ const contactInfo = {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@media (max-width: 1200px) {
+    .grid {
+        gap: 50px;
+    }
+    
+    .company-name {
+        font-size: 1.2rem;
+    }
+    
+    .description {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+    
+    .company-name {
+        font-size: 1.15rem;
+    }
+    
+    .title {
+        font-size: 1.05rem;
+    }
+    
+    .contact-text, .nav a {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container-inner {
+        padding: 40px 20px;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .logo-wrapper {
+        justify-content: center;
+    }
+    
+    .description {
+        margin: 0 auto 24px;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .company-name {
+        font-size: 1.1rem;
+    }
+    
+    .title {
+        font-size: 1rem;
+    }
+    
+    .contact-text, .nav a {
+        font-size: 0.9rem;
+    }
+    
+    .copyright-text {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container-inner {
+        padding: 30px 15px;
+    }
+    
+    .logo img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .company-name {
+        font-size: 1rem;
+    }
+    
+    .description {
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
+    
+    .social-links a {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .social-links img {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .title {
+        font-size: 0.95rem;
+    }
+    
+    .contact-text, .nav a {
+        font-size: 0.85rem;
+    }
+    
+    .contact-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 400px) {
+    .logo-wrapper {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .logo {
+        padding: 0;
+    }
+    
+    .company-name {
+        font-size: 0.95rem;
+    }
+    
+    .description {
+        font-size: 0.85rem;
+    }
+    
+    .social-links {
+        gap: 12px;
+    }
+    
+    .social-links a {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .social-links img {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .title {
+        font-size: 0.9rem;
+    }
+    
+    .contact-text, .nav a {
+        font-size: 0.8rem;
+    }
+    
+    .copyright-text {
+        font-size: 0.75rem;
+    }
 }
 </style>

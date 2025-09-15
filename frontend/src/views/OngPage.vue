@@ -4,106 +4,114 @@ import { ref } from 'vue'
 import { motion, AnimatePresence } from 'motion-v'
 import ongs from '@/data/ongsData'
 import PaymentComponent from '@/components/PaymentComponent.vue'
+import { fromOng } from '@/data/globalState'
 
 const modalAberto = ref(false)
+const abrirModal = () => modalAberto.value = true
+const fecharModal = () => modalAberto.value = false
 
-const abrirModal = () => {
-  modalAberto.value = true
-}
-const fecharModal = () => {
-  modalAberto.value = false
-}
-
-const route = useRoute()
+const sair = ref(false)
 const router = useRouter()
+const route = useRoute()
 
 const ongId = route.params.id
+const ong = ongs.find(o => o.id === ongId)
+
 
 const voltar = () => {
+  fromOng.value = true
+  sair.value = true // dispara animação
+}
+
+const onExitComplete = () => {
   if (window.history.length > 1) {
     router.back()
   } else {
-    router.push('/')
+    // fallback
+    router.push({ path: '/', query: { fromOng: true } })
   }
 }
-
-const ong = ongs.find(o => o.id === ongId)
 </script>
 
 <template>
-  <motion.div
-    :initial="{ opacity: 0, scale: 0.5 }"  
-    :while-in-view="{ opacity: 1, scale: 1 }"  
-    :viewport="{ once: false, amount: 0.5 }"
-    :transition="{ duration: 0.3, ease: [0, 0.71, 0.2, 1.01] }"
-  >
-    <div class="pagina-instituicao" v-if="ong">
-      <img @click="voltar" class="botao-voltar" src="/icons/voltar.png" alt="">
-      
-      <div class="container-instituicao">
-        <div class="logo-container">  
-          <img :src="ong.img" :alt="ong.title" class="logo-instituicao">
-        </div>
-        
-        <div class="info-instituicao">
-          <h1>{{ ong.title }}</h1>
-          
-          <div class="detalhes-instituicao">
-            <p><strong>Filtros:</strong> {{ ong.filtros.join(', ') }}</p>
-            <p><strong>Contato:</strong> {{ ong.telefone }}</p>
-            <p><strong>Endereço:</strong> {{ ong.local }}</p>
-            <p><strong>Horário de funcionamento:</strong> {{ ong.horario }}</p>
-          </div>
-          
-          <div class="descricao-instituicao">
-            <p>{{ ong.description }}</p>
-          </div>
-          
-          <div class="botao-container">
-            <button class="botao-doar" @click="abrirModal">Doar Agora</button>
-          </div>
-          <AnimatePresence>
-        <template v-if="modalAberto">
-          <!-- Fundo escuro -->
-          <motion.div
-            key="backdrop"
-            class="modal-backdrop"
-            :initial="{ opacity: 0 }"
-            :animate="{ opacity: 0.5 }"
-            :exit="{ opacity: 0 }"
-            :transition="{ duration: 0.3 }"
-          />
+  <AnimatePresence @exitComplete="onExitComplete">
+    <motion.div
+      v-if="!sair"
+      class="pagina-wrapper"
+      :initial="{ opacity: 0, scale: 0.95 }"
+      :animate="{ opacity: 1, scale: 1 }"
+      :exit="{ opacity: 0, scale: 0.8 }"
+      :transition="{ duration: 0.25, ease: 'easeInOut' }"
+    >
+      <div class="pagina-instituicao" v-if="ong">
+        <img @click="voltar" class="botao-voltar" src="/icons/voltar.png" alt="Voltar" />
 
-          <!-- Conteúdo -->
-          <motion.div
-            key="payment-modal"
-            class="modal-container"
-            :initial="{ opacity: 0, scale: 0.8 }"
-            :animate="{ opacity: 1, scale: 1 }"
-            :exit="{ opacity: 0, scale: 0.8 }"
-            :transition="{ duration: 0.25, ease: 'easeOut' }"
-          >
-            <PaymentComponent :show="modalAberto" @fechar="fecharModal"/>
-          </motion.div>
-        </template>
-      </AnimatePresence>
+        <div class="container-instituicao">
+          <div class="logo-container">
+            <img :src="ong.img" :alt="ong.title" class="logo-instituicao" />
+          </div>
+
+          <div class="info-instituicao">
+            <h1>{{ ong.title }}</h1>
+
+            <div class="detalhes-instituicao">
+              <p><strong>Filtros:</strong> {{ ong.filtros.join(', ') }}</p>
+              <p><strong>Contato:</strong> {{ ong.telefone }}</p>
+              <p><strong>Endereço:</strong> {{ ong.local }}</p>
+              <p><strong>Horário de funcionamento:</strong> {{ ong.horario }}</p>
+            </div>
+
+            <div class="descricao-instituicao">
+              <p>{{ ong.description }}</p>
+            </div>
+
+            <div class="botao-container">
+              <button class="botao-doar" @click="abrirModal">Doar Agora</button>
+            </div>
+
+            <!-- Modal -->
+            <AnimatePresence>
+              <template v-if="modalAberto">
+                <motion.div
+                  key="backdrop"
+                  class="modal-backdrop"
+                  :initial="{ opacity: 0 }"
+                  :animate="{ opacity: 0.5 }"
+                  :exit="{ opacity: 0 }"
+                  :transition="{ duration: 0.3 }"
+                />
+                <motion.div
+                  key="payment-modal"
+                  class="modal-container"
+                  :initial="{ opacity: 0, scale: 0.8 }"
+                  :animate="{ opacity: 1, scale: 1 }"
+                  :exit="{ opacity: 0, scale: 0.8 }"
+                  :transition="{ duration: 0.25, ease: 'easeOut' }"
+                >
+                  <PaymentComponent :show="modalAberto" @fechar="fecharModal"/>
+                </motion.div>
+              </template>
+            </AnimatePresence>
+
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-    <p>ONG não encontrada.</p>
-    </div>
-  </motion.div>
-  
+
+      <div v-else>
+        <p>ONG não encontrada.</p>
+      </div>
+    </motion.div>
+  </AnimatePresence>
 </template>
 
 <style scoped>
-.pagina-instituicao {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+/* Layout da página */
+.pagina-wrapper {
+  width: 100%;
+  min-height: 100vh;
 }
 
+/* Fundo escuro do modal */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -111,6 +119,7 @@ const ong = ongs.find(o => o.id === ongId)
   z-index: 900;
 }
 
+/* Container centralizado do modal */
 .modal-container {
   position: fixed;
   inset: 0;
@@ -118,6 +127,12 @@ const ong = ongs.find(o => o.id === ongId)
   align-items: center;
   justify-content: center;
   z-index: 1000;
+}
+
+.pagina-instituicao {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }
 
 .botao-voltar {
@@ -220,5 +235,4 @@ h1 {
 .botao-doar:hover {
   background-color: #3367d6;
 }
-
 </style>

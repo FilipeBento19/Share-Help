@@ -150,4 +150,160 @@
     
 }
 
+@media (max-width: 1200px) {
+    .content-wrapper {
+        gap: 30px;
+    }
+    
+    .text-content {
+        padding: 30px;
+    }
+    
+    .title {
+        font-size: 2.3rem;
+    }
+    
+    .content-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .content-wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        
+    }
+    
+    .map-image{
+      height: 400px;
+    }
+
+    .text-content {
+        padding: 25px;
+    }
+    
+    .title {
+        font-size: 2.1rem;
+    }
+    
+    .content-title {
+        font-size: 1.6rem;
+    }
+    
+    .description p {
+        font-size: 0.95rem;
+    }
+    
+    .access-button {
+        padding: 12px 24px 12px 24px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .text-content {
+        padding: 30px 20px;
+        order: 2;
+    }
+    
+    .map-image-container {
+        order: 1;
+    }
+    
+    .title {
+        font-size: 1.9rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+    
+    .content-title {
+        font-size: 1.5rem;
+    }
+    
+    .description p {
+        font-size: 0.9rem;
+    }
+    
+    .access-button {
+        padding: 11px 22px;
+        font-size: 0.95rem;
+    }
+    
+    .map-note {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .mapa-section {
+        padding: 30px 15px;
+    }
+    
+    .text-content {
+        padding: 20px 15px;
+    }
+    
+    .title {
+        font-size: 1.7rem;
+    }
+    
+    .subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .content-title {
+        font-size: 1.4rem;
+    }
+    
+    .description p {
+        font-size: 0.85rem;
+    }
+    
+    .access-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        margin-left: 95px;
+    }
+    
+    .map-note {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .content-title {
+        font-size: 1.3rem;
+    }
+    
+    .description p {
+        font-size: 0.8rem;
+    }
+    
+    .access-button {
+        padding: 9px 18px;
+        font-size: 0.85rem;
+    }
+    
+    .map-note {
+        font-size: 0.75rem;
+    }
+}
+
 </style>
