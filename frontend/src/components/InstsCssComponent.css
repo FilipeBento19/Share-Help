@@ -18,16 +18,24 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7)); 
+  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7));
   z-index: 1;
   animation: gradientBG 8s ease infinite;
   background-size: 300% 300%;
 }
 
 @keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .topo .banner {
@@ -66,7 +74,7 @@
   margin-bottom: 15px;
 }
 
-.sharehelp-recomenda > p {
+.sharehelp-recomenda>p {
   font-size: 1.1em;
   color: #555;
   margin-bottom: 40px;
@@ -261,7 +269,7 @@
   margin-bottom: 15px;
 }
 
-.instituicoes-disponiveis > p {
+.instituicoes-disponiveis>p {
   font-size: 1.1em;
   color: #555;
   margin-bottom: 50px;
@@ -284,6 +292,7 @@
   min-height: 450px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .institution-card:hover {
@@ -318,7 +327,7 @@
   font-size: 1.2em;
   font-weight: 600;
   color: #1f2937;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   line-height: 1.3;
 }
 
@@ -333,10 +342,117 @@
   font-size: 0.9em;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: auto;
 }
 
 .btn-doar-instituicao:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
+}
+
+@media (min-width: 768px) {
+  .recommendation-card {
+    flex-direction: row;
+  }
+
+  .card-left {
+    min-width: 200px;
+  }
+
+  .topo h1 {
+    font-size: 2.2rem;
+  }
+
+  .topo p {
+    font-size: 1.1rem;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .topo {
+    height: 35vh;
+    text-align: center;
+  }
+
+  .topo .banner {
+    padding-left: 0;
+    text-align: center;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .topo h1 {
+    font-size: 1.6rem;
+  }
+
+  .topo p {
+    max-width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .institutions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .recommendation-card{
+    display: block;
+  }
+  
+  .topo {
+    height: 30vh;
+  }
+
+  .topo h1 {
+    font-size: 1.4rem;
+  }
+
+  .institution-info {
+    padding: 15px;
+  }
+
+  .sharehelp-recomenda h2,
+  .instituicoes-disponiveis h2 {
+    font-size: 1.4rem;
+  }
+
+  .institution-logo {
+    height: 140px;
+  }
+
+  .institution-description{
+    display: none;
+  }
+
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 500px;
+  }
+
+  .time {
+    font-size: 1.2rem;
+  }
+
+  .card-right p{
+    font-size: 0.9em;
+    color: #6b7280;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-right h3 {
+    font-size: 1.2rem;
+  }
+
+  
 }
