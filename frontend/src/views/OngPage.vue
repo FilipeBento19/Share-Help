@@ -29,28 +29,29 @@ const ong = ongs.find(o => o.id === ongId)
 <template>
   <div class="pagina-instituicao" v-if="ong">
     <img @click="voltar" class="botao-voltar" src="/icons/voltar.png" alt="">
-    
+
     <div class="container-instituicao">
-      <div class="logo-container">  
+      <div class="logo-container">
         <img :src="ong.img" :alt="ong.title" class="logo-instituicao">
       </div>
-      
+
       <div class="info-instituicao">
         <h1>{{ ong.title }}</h1>
-        
+
         <div class="detalhes-instituicao">
           <p><strong>Filtros:</strong> {{ ong.filtros.join(', ') }}</p>
           <p><strong>Contato:</strong> {{ ong.telefone }}</p>
           <p><strong>Endereço:</strong> {{ ong.local }}</p>
           <p><strong>Horário de funcionamento:</strong> {{ ong.horario }}</p>
         </div>
-        
+
         <div class="descricao-instituicao">
           <p>{{ ong.description }}</p>
         </div>
-        
+
         <div class="botao-container">
           <button class="botao-doar" @click="abrirModal">Doar Agora</button>
+          <a href=""><img src="/icons/heart-light-full.svg" alt="" style="width: 40px; margin: 0 0 0 15px;"></a>
         </div>
         <PaymentComponent ref="modalRef"/>
       </div>

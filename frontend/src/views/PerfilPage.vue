@@ -10,10 +10,6 @@
     <aside class="sidebar">
       <h2 class="sidebar-title">Gerenciamento de conta</h2>
       <nav class="sidebar-nav">
-        <a href="#" class="nav-item active">
-          <span class="nav-icon">👤</span>
-          Informações pessoais
-        </a>
         <a href="#" class="nav-item">
           <span class="nav-icon">🔐</span>
           Login e conta
@@ -31,33 +27,6 @@
 
     <main class="conteudo">
       <div>
-        <!-- Informações pessoais -->
-        <section id="info" class="secao">
-          <div id="backCinza">
-            <h2>Informações pessoais</h2>
-            <p>Essa informação é particular e não
-              será compartilhada com outras
-              pessoas. Configure suas informações
-              agora!</p>
-          </div>
-          <div>
-            <div class="grid">
-              <label for="user.name">
-                Nome verdadeiro
-                <input v-model="user.nome" />
-              </label>
-              <label for="user.telefone">
-                Telefone
-                <input v-model="user.telefone" />
-              </label>
-              <label for="user.data_nascimento">
-                Data de nascimento
-                <input v-model="user.data_nascimento" />
-              </label>
-            </div>
-            <button class="azul" @click="updateProfile">Salvar e Verificar</button>
-          </div>
-        </section>
 
         <!-- Login e conta -->
         <section id="login" class="secao">
@@ -124,7 +93,6 @@ import axios from "axios";
 const user = ref(null);
 const error = ref(null);
 const isLoading = ref(false);
-const success = ref("")
 
 const getProfile = async () => {
   isLoading.value = true;
@@ -164,25 +132,6 @@ onMounted(() => {
   getProfile();
 });
 
-const updateProfile = async () => {
-  isLoading.value = true
-  error.value = ""
-  success.value = ""
-
-  try {
-    const token = localStorage.getItem("access_token")
-    await axios.put("http://127.0.0.1:8000/api/perfil/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    success.value = "Perfil atualizado com sucesso!"
-  } catch {
-    error.value = "Erro ao atualizar perfil"
-  } finally {
-    isLoading.value = false
-  }
-}
 
 </script>
 
@@ -247,6 +196,7 @@ section {
   display: grid;
   grid-template-columns: 430px 1fr;
   gap: 2rem;
+  padding: 0 1.5vw 0 0;
   margin: 2rem auto;
   max-width: 1500px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
