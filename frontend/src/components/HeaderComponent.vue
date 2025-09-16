@@ -244,10 +244,6 @@ import { motion } from 'motion-v';
 }
 
 @media (max-width: 400px) {
-    .textinho {
-        display: none;
-    }
-    
     .main-nav ul {
         gap: 5px 12px;
     }

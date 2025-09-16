@@ -9,8 +9,8 @@ const companyInfo = {
 const quickLinks = [
   { name: 'Home', to: '/' },
   { name: 'Instituições', to: '/institution' },
-  { name: 'Mapa Interativo', to: '/' },
-  { name: 'Nossa equipe', to: '/' }
+  { name: 'Mapa Interativo', to: '/mapinterative' },
+  { name: 'Nossa equipe', to: '/ourteam' }
 ]
 
 const contactInfo = {

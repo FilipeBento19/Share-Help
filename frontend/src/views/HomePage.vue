@@ -350,6 +350,11 @@ const wordsLine2 = computed(() => line2.split(' '));
     .progress-text {
         font-size: 0.8rem;
     }
+
+    .line {
+    display: block;
+    margin-bottom: -20px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -397,11 +402,13 @@ const wordsLine2 = computed(() => line2.split(' '));
     .progress-text {
         font-size: 0.75rem;
     }
+
+    
+    
 }
 
 @media (max-width: 400px) {
     .causes-grid, .payment-grid, .escolher-coisas {
-        grid-template-columns: repeat(3, 1fr);
         gap: 8px;
     }
     
@@ -434,5 +441,6 @@ const wordsLine2 = computed(() => line2.split(' '));
         width: 30px;
         height: 30px;
     }
+
 }
 </style>
