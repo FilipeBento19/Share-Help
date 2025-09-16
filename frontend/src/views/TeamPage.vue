@@ -83,11 +83,10 @@ import FooterComponent from '@/components/FooterComponent.vue';
       </div>
     </div>
   </div>
-  <FooterComponent/>
+  <FooterComponent />
 </template>
 
 <style scoped>
-
 .nossa-equipe-container {
   display: flex;
   justify-content: center;
@@ -149,7 +148,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
   background: #fff;
   padding: 15px 20px;
   border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
 }
 
@@ -200,14 +199,114 @@ import FooterComponent from '@/components/FooterComponent.vue';
 .social-link.github {
   background-image: url('/icons/git.png');
 }
+
 .social-link.linkedin {
   background-image: url('/icons/linkedin.png');
 }
+
 .social-link.instagram {
   background-image: url('/icons/inst.png');
 }
 
 .social-link:hover {
   transform: scale(1.1);
+}
+
+@media (max-width: 1024px) {
+  .members-section {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding-top: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .equipe-content {
+    gap: 25px;
+    margin: 15px auto;
+    display: block;
+  }
+  
+  .team-image {
+    height: 180px;
+  }
+
+
+  .titulo-principal {
+    font-size: 1.4rem;
+  }
+
+  .members-section {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+  }
+
+  .membro-item {
+    padding: 15px;
+  }
+
+  .avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .nome {
+    font-size: 1rem;
+  }
+
+  .cargo {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .nossa-equipe-container {
+    padding: 15px;
+  }
+
+  .team-image {
+    height: 160px;
+  }
+
+  .titulo-principal {
+    font-size: 1.3rem;
+  }
+
+  .members-section {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .membro-item {
+    flex-direction: row;
+    text-align: left;
+    padding: 15px;
+  }
+
+  .avatar {
+    margin-bottom: 0;
+    margin-right: 15px;
+    width: 70px;
+    height: 80px;
+  }
+
+  .social-links {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 400px) {
+  .membro-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .avatar {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
 }
 </style>

@@ -513,5 +513,156 @@ const wordtext = computed(() => text.split(' '))
   transform: translateY(-1px);
 }
 
+@media (max-width: 1024px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .topo {
+    height: 45vh;
+  }
+  
+  .split-word {
+    font-size: 2.2rem;
+  }
+
+  
+  
+  .banner-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 500px;
+  }
+  
+  .topo {
+    height: 40vh;
+    text-align: center;
+  }
+  
+  .topo .banner {
+    padding: 0 5%;
+    text-align: center;
+  }
+
+  .institution-info {
+    padding: 15px;
+    
+  }
+  
+  .btn-doar-instituicao{
+    padding-bottom: 30px;
+  }
+
+  .split-word {
+    font-size: 1.8rem;
+    margin-right: 0.5rem;
+  }
+  
+  .banner-text {
+    max-width: 100%;
+    font-size: 0.95rem;
+    margin: 1rem auto 0;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 30px 4%;
+  }
+  
+  .instituicoes-disponiveis h2 {
+    font-size: 1.7rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+  
+  .institution-card {
+    min-height: 380px;
+  }
+  
+  .institution-image {
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topo {
+    height: 35vh;
+  }
+  
+  .split-word {
+    font-size: 1.5rem;
+  }
+  
+  .banner-text {
+    font-size: 0.9rem;
+  }
+  
+  .instituicoes-disponiveis h2 {
+    font-size: 1.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+  
+  .institution-info {
+    max-height: 280px;
+    flex: 1;
+  }
+  
+  .institution-info h4 {
+    font-size: 1rem;
+  }
+  
+  .institution-description {
+    font-size: 0.8rem;
+  }
+  
+  .meta-item {
+    font-size: 0.7rem;
+  }
+  
+  .btn-doar-instituicao {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .institution-description {
+  font-size: 0.9em;
+  color: #6b7280;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2.3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+}
+
+@media (max-width: 360px) {
+  .split-word {
+    font-size: 1.3rem;
+  }
+  
+  .banner-text {
+    font-size: 0.85rem;
+  }
+
+  
+  
+  .institution-card {
+    min-height: 400px;
+  }
+}
 
 </style>
