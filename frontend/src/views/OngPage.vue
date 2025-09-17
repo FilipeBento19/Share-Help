@@ -235,4 +235,10 @@ h1 {
 .botao-doar:hover {
   background-color: #3367d6;
 }
+
+@media (max-width: 480px) {
+  .container-instituicao{
+    display: block;
+  }
+}
 </style>
