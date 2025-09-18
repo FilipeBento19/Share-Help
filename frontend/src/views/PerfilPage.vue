@@ -80,7 +80,7 @@
             <!-- Quando for gráfico -->
             <template v-if="filtroTipo === 'Gráfico'">
               <div class="grafico-placeholder">
-                <p>Aqui futuramente entra o gráfico 📊</p>
+                <graficComponent v-model:filtro="filtroTipo" :doacoes="doacoes" />
               </div>
             </template>
 
@@ -180,6 +180,7 @@ import ongs from "@/data/ongsData";
 import FooterComponent from "@/components/FooterComponent.vue";
 const favoritas = ref([])
 const tipoTexto = ref("simplificada")
+import graficComponent from "@/components/graficComponent.vue";
 
 
 const user = ref(null);
@@ -284,7 +285,7 @@ const resumoPorOng = computed(() => {
 </script>
 
 <style scoped>
-.box-nao-logado{
+.box-nao-logado {
   width: 10vw;
   height: 1000vw;
 }
@@ -305,6 +306,7 @@ const resumoPorOng = computed(() => {
 
 /* Sidebar */
 .sidebar {
+  width: 420px;
 
   & h2 {
     color: #2563EB;
