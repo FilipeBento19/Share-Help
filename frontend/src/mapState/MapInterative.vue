@@ -194,8 +194,6 @@
               </div>
             </l-popup>
           </l-marker>
-
-          <l-control-zoom position="bottomright" />
         </l-map>
       </div>
     </main>
@@ -203,12 +201,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { LMap, LTileLayer, LControlZoom, LMarker, LIcon, LPopup } from '@vue-leaflet/vue-leaflet'
+import { ref, computed, nextTick } from 'vue'
+import { LMap, LTileLayer, LMarker, LIcon, LPopup } from '@vue-leaflet/vue-leaflet'
+import ongs from '@/data/ongsData.js'
 
 const zoom = ref(12)
 const center = ref([-26.3044, -48.8487])
 const termoPesquisa = ref('')
+
+// Referência para o mapa
+const map = ref(null)
 
 // Estado para controlar se a sidebar está escondida
 const sidebarEscondida = ref(false)
@@ -230,304 +232,46 @@ const filtros = ref({
 // Estado para controlar animações
 const pontosAnimando = ref(new Set())
 
-// Função para toggle da sidebar
-const toggleSidebar = () => {
+// Função para toggle da sidebar COM atualização do mapa
+const toggleSidebar = async () => {
   sidebarEscondida.value = !sidebarEscondida.value
+  
+  // Aguarda o DOM atualizar e depois força o mapa a recalcular seu tamanho
+  await nextTick()
+  
+  // Adiciona um pequeno delay para garantir que a transição CSS terminou
+  setTimeout(() => {
+    if (map.value && map.value.leafletObject) {
+      map.value.leafletObject.invalidateSize()
+    }
+  }, 350) // Tempo ligeiramente maior que a transição CSS (300ms)
 }
 
-const pontosDoacao = ref([
-  // ONGs para Crianças
-  {
-    id: 1,
-    nome: 'Associação de Amigos das Crianças do Lar Abdon Batista',
-    categoria: 'ONGs Crianças',
-    tipos: ['roupas', 'alimentos'],
-    endereco: 'R. Pres. Affonso Penna, 680 - Bucarein, Joinville - SC',
-    horario: '08:00 - 18:00',
-    telefone: '(47) 3422-6944',
-    coordenadas: [-26.3044, -48.8487],
-    descricao: 'Acolhemos crianças que não podem estar com suas famílias no momento.'
-  },
-  {
-    id: 2,
-    nome: 'OMUNGA Grife Social e Instituto',
-    categoria: 'ONGs Crianças',
-    tipos: ['livros'],
-    endereco: 'Rua Dona Francisca, 8300 - Sala 307 - Distrito Industrial',
-    horario: '08:30 - 17:30',
-    telefone: '(47) 33056716',
-    coordenadas: [-26.2744, -48.8187],
-    descricao: 'Organização que leva educação para comunidades vulneráveis.'
-  },
-  {
-    id: 3,
-    nome: 'Missão Criança Jardim Paraíso',
-    categoria: 'ONGs Crianças',
-    tipos: ['brinquedos', 'roupas'],
-    endereco: 'R. Crux, 450 - Jardim Paraíso, Joinville - SC',
-    horario: '08:00 - 17:00',
-    telefone: '(47) 39031827',
-    coordenadas: [-26.3244, -48.8687],
-    descricao: 'Há 28 anos transformando vidas no contraturno escolar.'
-  },
-  {
-    id: 4,
-    nome: 'Associação Ecos de Esperança',
-    categoria: 'ONGs Crianças',
-    tipos: ['roupas', 'brinquedos', 'alimentos'],
-    endereco: 'R. Osvaldo Valcanaia, 766 - Paranaguamirim, Joinville - SC',
-    horario: '08:00 - 17:00',
-    telefone: '(47) 34230104',
-    coordenadas: [-26.2844, -48.8787],
-    descricao: 'Instituição cristã dedicada à proteção de crianças e adolescentes.'
-  },
-  {
-    id: 5,
-    nome: 'Instituto Conforme',
-    categoria: 'ONGs Crianças',
-    tipos: ['roupas', 'brinquedos', 'alimentos'],
-    endereco: 'R. do Campo, 315 - Morro do Meio, Joinville - SC',
-    horario: '08:00 - 17:00',
-    telefone: '(47) 34266602',
-    coordenadas: [-26.3344, -48.8887],
-    descricao: 'Atendemos famílias em vulnerabilidade com projetos e palestras.'
-  },
-  {
-    id: 6,
-    nome: 'Associação Casa do Adalto',
-    categoria: 'ONGs Crianças',
-    tipos: ['roupas', 'alimentos'],
-    endereco: 'R. Inambu, 3.290 - Costa e Silva, Joinville - SC',
-    horario: '08:00 - 18:00',
-    telefone: '(47) 34381629',
-    coordenadas: [-26.2644, -48.8287],
-    descricao: 'Apoio às crianças e adolescentes com neoplasia.'
-  },
-  {
-    id: 7,
-    nome: 'Projeto Resgate',
-    categoria: 'ONGs Crianças',
-    tipos: ['roupas', 'brinquedos', 'livros'],
-    endereco: 'R. XV de Novembro, 780 - Centro, Joinville - SC',
-    horario: '13:00 - 18:00',
-    telefone: '(47) 996950330',
-    coordenadas: [-26.3000, -48.8450],
-    descricao: 'Oferecemos um ambiente acolhedor para fortalecer vínculos familiares.'
-  },
-  {
-    id: 8,
-    nome: 'Casa Lar Emanuel',
-    categoria: 'ONGs Crianças',
-    tipos: ['roupas', 'alimentos'],
-    endereco: 'Rua Padre Roma, 339 - João Costa, Joinville - SC',
-    horario: '08:00 - 18:00',
-    telefone: '(47) 3436-2999',
-    coordenadas: [-26.3144, -48.8387],
-    descricao: 'Acolhe crianças e adolescentes de 0 a 12 anos conforme o ECA.'
-  },
-  {
-    id: 9,
-    nome: 'Instituto Caranguejo',
-    categoria: 'ONGs Crianças',
-    tipos: ['roupas', 'alimentos'],
-    endereco: 'R. Ten. Antônio João, 4296 - Jardim Sofia, Joinville - SC',
-    horario: '08:00 - 18:00',
-    telefone: '(47) 3473-0772',
-    coordenadas: [-26.3444, -48.8987],
-    descricao: 'Instituto de Educação Ambiental com trabalhos pedagógicos.'
-  },
+// Computed para mapear os dados das ONGs para o formato do mapa
+const pontosDoacao = computed(() => {
+  return ongs.map(ong => ({
+    id: ong.id,
+    nome: ong.title,
+    categoria: mapearCategoria(ong.categoria),
+    tipos: ong.filtros,
+    endereco: ong.local,
+    horario: ong.horario,
+    telefone: ong.telefone,
+    coordenadas: ong.coordenadas,
+    descricao: ong.description,
+    img: ong.img
+  }))
+})
 
-  // ONGs para Idosos
-  {
-    id: 10,
-    nome: 'Lar do Idoso Betânia',
-    categoria: 'ONGs Idosos',
-    tipos: ['roupas'],
-    endereco: 'R. Dr. Plácido Olímpio de Oliveira, 565 - Bucarein',
-    horario: '08:00 - 17:00',
-    telefone: '(47) 34225258',
-    coordenadas: [-26.3044, -48.8587],
-    descricao: 'ILPI que oferece cuidados para até 50 idosos.'
-  },
-  {
-    id: 11,
-    nome: 'Ventura Residence - Residencial de Idosos',
-    categoria: 'ONGs Idosos',
-    tipos: ['alimentos'],
-    endereco: 'Av. Cel. Procópio Gomes, 669 - Bucarein',
-    horario: '07:00 - 19:00',
-    telefone: '(47) 30296600',
-    coordenadas: [-26.3144, -48.8687],
-    descricao: 'Residencial para hóspedes acima de 60 anos.'
-  },
-  {
-    id: 12,
-    nome: 'Associação Beneficente Lar Renascer',
-    categoria: 'ONGs Idosos',
-    tipos: ['roupas', 'livros', 'alimentos'],
-    endereco: 'R. Dep. Lauro Carneiro de Loyola, 836 - Iririú',
-    horario: 'Aberto 24H',
-    telefone: '(47) 3227-7910',
-    coordenadas: [-26.2844, -48.8387],
-    descricao: 'Acolhimento de mulheres idosas em vulnerabilidade social.'
-  },
-  {
-    id: 13,
-    nome: 'Centro Integrado João de Paula - Exército da Salvação',
-    categoria: 'ONGs Idosos',
-    tipos: ['alimentos', 'roupas'],
-    endereco: 'R. XV de Novembro, 3165 - Glória, Joinville - SC',
-    horario: '09:00 - 17:00',
-    telefone: '(47) 3453-0588',
-    coordenadas: [-26.3244, -48.8487],
-    descricao: 'Apoio a pessoas em vulnerabilidade, principalmente idosos.'
-  },
-  {
-    id: 14,
-    nome: 'Casa de Repouso Lar Aconchego',
-    categoria: 'ONGs Idosos',
-    tipos: ['alimentos', 'livros'],
-    endereco: 'R. Adhemar de Barros, 47 - Bucarein, Joinville - SC',
-    horario: 'Aberto 24H',
-    telefone: '(47) 99684-3724',
-    coordenadas: [-26.3044, -48.8687],
-    descricao: 'Ambiente acolhedor com acompanhamento 24h.'
-  },
-  {
-    id: 15,
-    nome: 'Casa de Repouso Bom Retiro',
-    categoria: 'ONGs Idosos',
-    tipos: ['alimentos', 'livros'],
-    endereco: 'R. Max Colin, 155 - Centro, Joinville - SC',
-    horario: '09:00 - 19:00',
-    telefone: '(47) 98494-7572',
-    coordenadas: [-26.3000, -48.8550],
-    descricao: 'Cuidado integral de pessoas idosas com atendimento humanizado.'
-  },
-  {
-    id: 16,
-    nome: 'Casa de Repouso SILOÉ',
-    categoria: 'ONGs Idosos',
-    tipos: ['alimentos', 'livros'],
-    endereco: 'R. Copacabana, 1109 - Floresta, Joinville - SC',
-    horario: '09:00 - 17:00',
-    telefone: '(47) 99668-7569',
-    coordenadas: [-26.3344, -48.8787],
-    descricao: 'Cuidado e bem-estar da pessoa idosa com atenção individualizada.'
-  },
-  {
-    id: 17,
-    nome: 'Ação Social Joinville',
-    categoria: 'ONGs Idosos',
-    tipos: ['roupas', 'alimentos'],
-    endereco: 'Av. Cel. Procópio Gomes, 219 - Bucarein, Joinville - SC',
-    horario: '08:00 - 17:00',
-    telefone: '(47) 3422-6204',
-    coordenadas: [-26.3144, -48.8587],
-    descricao: 'Trabalho dedicado ao cuidado de idosos em vulnerabilidade.'
-  },
-
-  // ONGs para Moradores de Rua
-  {
-    id: 18,
-    nome: 'Casa de Passagem Santo Egídio',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['roupas', 'alimentos'],
-    endereco: 'R. Alexandre Schlemm, 850 - Anita Garibaldi',
-    horario: '24H',
-    telefone: '(47) 997887356',
-    coordenadas: [-26.3244, -48.8487],
-    descricao: 'Casa que acolhe pessoas em situação de rua e migrantes.'
-  },
-  {
-    id: 19,
-    nome: 'Casa da Vó Joaquina',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['roupas', 'alimentos'],
-    endereco: 'R. Erivelto Martins, 669 - Ulysses Guimarães',
-    horario: '09:00 - 17:00',
-    telefone: '',
-    coordenadas: [-26.3344, -48.8787],
-    descricao: 'Fundada em 1994, atua no acolhimento de pessoas em vulnerabilidade.'
-  },
-  {
-    id: 20,
-    nome: 'Centro de Referência População em Situação de Rua',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['roupas', 'alimentos', 'brinquedos', 'livros'],
-    endereco: 'Rua Paraíba, 937 – Anita Garibaldi, Joinville – SC',
-    horario: '07:00 - 19:00',
-    telefone: '(47) 3422-7445',
-    coordenadas: [-26.3144, -48.8587],
-    descricao: 'Acolhimento garantindo acesso a direitos e reintegração social.'
-  },
-  {
-    id: 21,
-    nome: 'Centro de Atenção Psicossocial em Álcool e outras Drogas',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['alimentos', 'livros'],
-    endereco: 'Rua Doutor Plácido Olímpio de Oliveira, 1489 – Anita Garibaldi',
-    horario: '07:00 - 18:00',
-    telefone: '(47) 3423-3367',
-    coordenadas: [-26.3244, -48.8687],
-    descricao: 'Cuidado de pessoas com problemas relacionados ao uso de álcool e drogas.'
-  },
-  {
-    id: 22,
-    nome: 'Restaurante Popular Herbert José de Souza',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['alimentos'],
-    endereco: 'R. Urussanga, 442 - Bucarein, Joinville - SC',
-    horario: '09:00 - 19:00',
-    telefone: '(47) 3433-0153',
-    coordenadas: [-26.2944, -48.8687],
-    descricao: 'Oferece refeições saudáveis e acessíveis.'
-  },
-  {
-    id: 23,
-    nome: 'Restaurante Popular Zilda Arns',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['alimentos'],
-    endereco: 'Av. Alwino Hansen, 65 - Adhemar Garcia',
-    horario: '09:00 - 19:00',
-    telefone: '(47) 3804-0154',
-    coordenadas: [-26.3444, -48.8287],
-    descricao: 'Refeições nutritivas a preços populares promovendo dignidade.'
-  },
-  {
-    id: 24,
-    nome: 'Casa de Levi - Comunidade Eis-me Aqui',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['alimentos', 'roupas'],
-    endereco: 'Rua Voluntários da Pátria, 105 – Itaum, Joinville – SC',
-    horario: '17:00 - 19:00',
-    telefone: '(47) 9718-4655',
-    coordenadas: [-26.3144, -48.8787],
-    descricao: 'Iniciativa comunitária de acolhimento a pessoas em vulnerabilidade.'
-  },
-  {
-    id: 25,
-    nome: 'Centro de Atendimento às Famílias Carentes Sementes do Futuro',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['alimentos', 'livros', 'roupas', 'brinquedos'],
-    endereco: 'R. dos Comerciários, 116 - Petrópolis, Joinville - SC',
-    horario: '14:00 - 17:00',
-    telefone: '(47) 9989-4529',
-    coordenadas: [-26.3244, -48.8987],
-    descricao: 'Apoio a famílias com foco na proteção de crianças.'
-  },
-  {
-    id: 26,
-    nome: 'Associação de Apoio a Reabilitação de Pessoas Necessitadas',
-    categoria: 'ONGs Moradores de Rua',
-    tipos: ['livros', 'alimentos', 'roupas'],
-    endereco: 'R. Blumenau, 178 - Centro, Joinville - SC',
-    horario: '09:00 - 17:00',
-    telefone: '(47) 3029-1091',
-    coordenadas: [-26.3000, -48.8650],
-    descricao: 'Reabilitação social, emocional e física de pessoas em vulnerabilidade.'
+// Função para mapear as categorias do arquivo para o formato do mapa
+const mapearCategoria = (categoria) => {
+  const mapeamento = {
+    'criancas': 'ONGs Crianças',
+    'idosos': 'ONGs Idosos',
+    'moradores-de-rua': 'ONGs Moradores de Rua'
   }
-])
+  return mapeamento[categoria] || categoria
+}
 
 // Função para obter horário atual (simulado para demonstração)
 const obterHorarioAtual = () => {
@@ -539,7 +283,7 @@ const obterHorarioAtual = () => {
 
 // Função para verificar se está aberto agora
 const estaAbertoAgora = (horario) => {
-  if (horario.includes('24H') || horario.includes('Aberto 24H')) {
+  if (horario.includes('24H') || horario.includes('Aberto 24H') || horario.includes('Aberto 24h')) {
     return true
   }
 
@@ -561,7 +305,7 @@ const estaAbertoAgora = (horario) => {
 
 // Função para verificar se é 24h
 const eh24Horas = (horario) => {
-  return horario.includes('24H') || horario.includes('Aberto 24H')
+  return horario.includes('24H') || horario.includes('Aberto 24H') || horario.includes('Aberto 24h')
 }
 
 // Função para verificar se é horário comercial (8h-18h)
@@ -697,14 +441,6 @@ const formatarTipos = (tipos) => {
   box-sizing: border-box;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  color: #2d3748;
-  background: #f8fafc;
-  height: 100vh;
-  overflow: hidden;
-}
-
 .app-layout {
   display: flex;
   height: 100vh;
@@ -783,7 +519,7 @@ body {
 /* Botão de Mostrar (quando sidebar está escondida) */
 .sidebar-show-button {
   position: fixed;
-  top: 20px;
+  top: 850px;
   left: 20px;
   z-index: 1001;
   background: white;
@@ -1123,55 +859,249 @@ body {
   display: none !important;
 }
 
-  @media (max-width: 768px) {
-    .app-layout {
-      flex-direction: column;
-    }
+/* ===== RESPONSIVIDADE MELHORADA ===== */
 
-    .sidebar {
-      width: 100%;
-      height: auto;
-      max-height: 50vh;
-      overflow-y: auto;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 200;
-    }
-
-    .sidebar-hidden {
-      transform: translateY(-100%);
-    }
-
-    .sidebar-show-button {
-      top: 10px;
-      left: 10px;
-    }
-
-    .map-area {
-      margin-top: 0;
-    }
-
-    .map-expanded {
-      margin-left: 0;
-      margin-top: 0;
-    }
-
-    .map-container {
-      height: 100vh;
-    }
-
-    .search-wrapper {
-      top: 70px;
-      right: 10px;
-    }
-
-    .search-container {
-      min-width: 200px;
-    }
-
-    .sidebar-toggle .toggle-text {
-      display: none;
-    }
+/* Tablets grandes e laptops pequenos */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 280px;
   }
+  
+  .sidebar-content {
+    padding: 20px;
+  }
+  
+  .sidebar-title {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .filter-group {
+    margin-bottom: 24px;
+  }
+  
+  .search-container {
+    min-width: 240px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 240px;
+  }
+  
+  .sidebar-content {
+    padding: 16px;
+  }
+  
+  .sidebar-title {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-group {
+    margin-bottom: 20px;
+  }
+  
+  .filter-label {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .checkbox-item {
+    font-size: 13px;
+  }
+  
+  .checkbox-list {
+    gap: 10px;
+  }
+  
+  .search-wrapper {
+    top: 12px;
+    right: 12px;
+  }
+  
+  .search-container {
+    min-width: 200px;
+    padding: 6px 10px;
+  }
+  
+  .search-input {
+    font-size: 13px;
+  }
+  
+  .sidebar-toggle .toggle-text {
+    display: none;
+  }
+  
+  .popup-content {
+    min-width: 250px;
+  }
+}
+
+/* Smartphones grandes */
+@media (max-width: 640px) {
+  .sidebar {
+    width: 200px;
+  }
+  
+  .sidebar-content {
+    padding: 12px;
+  }
+  
+  .sidebar-title {
+    font-size: 14px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  
+  .filter-group {
+    margin-bottom: 16px;
+  }
+  
+  .filter-label {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  
+  .checkbox-item {
+    font-size: 12px;
+  }
+  
+  .checkbox-custom {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+  }
+  
+  .checkbox-list {
+    gap: 8px;
+  }
+  
+  .search-wrapper {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .search-container {
+    min-width: 160px;
+    padding: 5px 8px;
+  }
+  
+  .search-input {
+    font-size: 12px;
+  }
+  
+  .sidebar-show-button {
+    width: 40px;
+    height: 40px;
+    top: 15px;
+    left: 15px;
+  }
+  
+  .popup-content {
+    min-width: 200px;
+  }
+  
+  .popup-content h4 {
+    font-size: 14px;
+  }
+  
+  .popup-info p {
+    font-size: 12px;
+  }
+  
+  .route-button {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+/* Smartphones pequenos */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 180px;
+  }
+  
+  .sidebar-content {
+    padding: 10px;
+  }
+  
+  .sidebar-title {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  
+  .filter-group {
+    margin-bottom: 12px;
+  }
+  
+  .filter-label {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+  
+  .checkbox-item {
+    font-size: 11px;
+  }
+  
+  .checkbox-custom {
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+  }
+  
+  .search-container {
+    min-width: 140px;
+  }
+  
+  .search-input {
+    font-size: 11px;
+  }
+  
+  .sidebar-show-button {
+    width: 36px;
+    height: 36px;
+    top: 852px;
+    left: 12px;
+  }
+  
+  .popup-content {
+    min-width: 180px;
+  }
+  
+  .marker-circle {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .marker-icon {
+    font-size: 14px;
+  }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 360px) {
+  .sidebar {
+    width: 160px;
+  }
+  
+  .sidebar-content {
+    padding: 8px;
+  }
+  
+  .sidebar-title {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .search-container {
+    min-width: 120px;
+  }
+  
+  .popup-content {
+    min-width: 160px;
+  }
+}
 </style>
