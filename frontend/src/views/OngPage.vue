@@ -106,6 +106,21 @@ const onExitComplete = () => {
 </template>
 
 <style scoped>
+
+@media (max-width: 480px) {
+  .container-instituicao{
+    display: block;
+  }
+
+  .logo-container{
+    max-width: 500px;
+  }
+
+  .botao-doar{
+    width: 100%;
+  }
+}
+
 /* Layout da página */
 .pagina-wrapper {
   width: 100%;
@@ -237,17 +252,4 @@ h1 {
   background-color: #3367d6;
 }
 
-@media (max-width: 480px) {
-  .container-instituicao{
-    display: block;
-  }
-
-  .logo-container{
-    max-width: 500px;
-  }
-
-  .botao-doar{
-    width: 100%;
-  }
-}
 </style>

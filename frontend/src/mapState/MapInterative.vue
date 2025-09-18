@@ -436,6 +436,257 @@ const formatarTipos = (tipos) => {
 </script>
 
 <style>
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 280px;
+  }
+  
+  .sidebar-content {
+    padding: 20px;
+  }
+  
+  .sidebar-title {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .filter-group {
+    margin-bottom: 24px;
+  }
+  
+  .search-container {
+    min-width: 240px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 240px;
+  }
+  
+  .sidebar-content {
+    padding: 16px;
+  }
+  
+  .sidebar-title {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-group {
+    margin-bottom: 20px;
+  }
+  
+  .filter-label {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .checkbox-item {
+    font-size: 13px;
+  }
+  
+  .checkbox-list {
+    gap: 10px;
+  }
+  
+  .search-wrapper {
+    top: 12px;
+    right: 12px;
+  }
+  
+  .search-container {
+    min-width: 200px;
+    padding: 6px 10px;
+  }
+  
+  .search-input {
+    font-size: 13px;
+  }
+  
+  .sidebar-toggle .toggle-text {
+    display: none;
+  }
+  
+  .popup-content {
+    min-width: 250px;
+  }
+}
+
+/* Smartphones grandes */
+@media (max-width: 640px) {
+  .sidebar {
+    width: 200px;
+  }
+  
+  .sidebar-content {
+    padding: 12px;
+  }
+  
+  .sidebar-title {
+    font-size: 14px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  
+  .filter-group {
+    margin-bottom: 16px;
+  }
+  
+  .filter-label {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+  
+  .checkbox-item {
+    font-size: 12px;
+  }
+  
+  .checkbox-custom {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+  }
+  
+  .checkbox-list {
+    gap: 8px;
+  }
+  
+  .search-wrapper {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .search-container {
+    min-width: 160px;
+    padding: 5px 8px;
+  }
+  
+  .search-input {
+    font-size: 12px;
+  }
+  
+  .sidebar-show-button {
+    width: 40px;
+    height: 40px;
+    top: 15px;
+    left: 15px;
+  }
+  
+  .popup-content {
+    min-width: 200px;
+  }
+  
+  .popup-content h4 {
+    font-size: 14px;
+  }
+  
+  .popup-info p {
+    font-size: 12px;
+  }
+  
+  .route-button {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+/* Smartphones pequenos */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 180px;
+  }
+  
+  .sidebar-content {
+    padding: 10px;
+  }
+  
+  .sidebar-title {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  
+  .filter-group {
+    margin-bottom: 12px;
+  }
+  
+  .filter-label {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+  
+  .checkbox-item {
+    font-size: 11px;
+  }
+  
+  .checkbox-custom {
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+  }
+  
+  .search-container {
+    min-width: 140px;
+  }
+  
+  .search-input {
+    font-size: 11px;
+  }
+  
+  .sidebar-show-button {
+    width: 36px;
+    height: 36px;
+    top: 632px;
+    left: 25px;
+  }
+  
+  .popup-content {
+    min-width: 180px;
+  }
+  
+  .marker-circle {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .marker-icon {
+    font-size: 14px;
+  }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 360px) {
+  .sidebar {
+    width: 160px;
+  }
+  
+  .sidebar-content {
+    padding: 8px;
+  }
+  
+  .sidebar-title {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .search-container {
+    min-width: 120px;
+  }
+  
+  .popup-content {
+    min-width: 160px;
+  }
+
+  .sidebar-show-button {
+    width: 36px;
+    height: 36px;
+    top: 652px;
+    left: 12px;
+  }
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -891,253 +1142,5 @@ const formatarTipos = (tipos) => {
 /* ===== RESPONSIVIDADE MELHORADA ===== */
 
 /* Tablets grandes e laptops pequenos */
-@media (max-width: 1024px) {
-  .sidebar {
-    width: 280px;
-  }
-  
-  .sidebar-content {
-    padding: 20px;
-  }
-  
-  .sidebar-title {
-    font-size: 16px;
-    margin-bottom: 24px;
-  }
-  
-  .filter-group {
-    margin-bottom: 24px;
-  }
-  
-  .search-container {
-    min-width: 240px;
-  }
-}
 
-/* Tablets */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 240px;
-  }
-  
-  .sidebar-content {
-    padding: 16px;
-  }
-  
-  .sidebar-title {
-    font-size: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .filter-group {
-    margin-bottom: 20px;
-  }
-  
-  .filter-label {
-    font-size: 12px;
-    margin-bottom: 12px;
-  }
-  
-  .checkbox-item {
-    font-size: 13px;
-  }
-  
-  .checkbox-list {
-    gap: 10px;
-  }
-  
-  .search-wrapper {
-    top: 12px;
-    right: 12px;
-  }
-  
-  .search-container {
-    min-width: 200px;
-    padding: 6px 10px;
-  }
-  
-  .search-input {
-    font-size: 13px;
-  }
-  
-  .sidebar-toggle .toggle-text {
-    display: none;
-  }
-  
-  .popup-content {
-    min-width: 250px;
-  }
-}
-
-/* Smartphones grandes */
-@media (max-width: 640px) {
-  .sidebar {
-    width: 200px;
-  }
-  
-  .sidebar-content {
-    padding: 12px;
-  }
-  
-  .sidebar-title {
-    font-size: 14px;
-    margin-bottom: 16px;
-    line-height: 1.2;
-  }
-  
-  .filter-group {
-    margin-bottom: 16px;
-  }
-  
-  .filter-label {
-    font-size: 11px;
-    margin-bottom: 10px;
-  }
-  
-  .checkbox-item {
-    font-size: 12px;
-  }
-  
-  .checkbox-custom {
-    width: 14px;
-    height: 14px;
-    margin-right: 8px;
-  }
-  
-  .checkbox-list {
-    gap: 8px;
-  }
-  
-  .search-wrapper {
-    top: 10px;
-    right: 10px;
-  }
-  
-  .search-container {
-    min-width: 160px;
-    padding: 5px 8px;
-  }
-  
-  .search-input {
-    font-size: 12px;
-  }
-  
-  .sidebar-show-button {
-    width: 40px;
-    height: 40px;
-    top: 15px;
-    left: 15px;
-  }
-  
-  .popup-content {
-    min-width: 200px;
-  }
-  
-  .popup-content h4 {
-    font-size: 14px;
-  }
-  
-  .popup-info p {
-    font-size: 12px;
-  }
-  
-  .route-button {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-}
-
-/* Smartphones pequenos */
-@media (max-width: 480px) {
-  .sidebar {
-    width: 180px;
-  }
-  
-  .sidebar-content {
-    padding: 10px;
-  }
-  
-  .sidebar-title {
-    font-size: 13px;
-    margin-bottom: 12px;
-  }
-  
-  .filter-group {
-    margin-bottom: 12px;
-  }
-  
-  .filter-label {
-    font-size: 10px;
-    margin-bottom: 8px;
-  }
-  
-  .checkbox-item {
-    font-size: 11px;
-  }
-  
-  .checkbox-custom {
-    width: 12px;
-    height: 12px;
-    margin-right: 6px;
-  }
-  
-  .search-container {
-    min-width: 140px;
-  }
-  
-  .search-input {
-    font-size: 11px;
-  }
-  
-  .sidebar-show-button {
-    width: 36px;
-    height: 36px;
-    top: 632px;
-    left: 25px;
-  }
-  
-  .popup-content {
-    min-width: 180px;
-  }
-  
-  .marker-circle {
-    width: 20px;
-    height: 20px;
-  }
-  
-  .marker-icon {
-    font-size: 14px;
-  }
-}
-
-/* Telas muito pequenas */
-@media (max-width: 360px) {
-  .sidebar {
-    width: 160px;
-  }
-  
-  .sidebar-content {
-    padding: 8px;
-  }
-  
-  .sidebar-title {
-    font-size: 12px;
-    margin-bottom: 10px;
-  }
-  
-  .search-container {
-    min-width: 120px;
-  }
-  
-  .popup-content {
-    min-width: 160px;
-  }
-
-  .sidebar-show-button {
-    width: 36px;
-    height: 36px;
-    top: 652px;
-    left: 12px;
-  }
-}
 </style>

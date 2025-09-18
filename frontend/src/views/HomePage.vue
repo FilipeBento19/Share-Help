@@ -104,6 +104,166 @@ const wordsLine2 = computed(() => line2.split(' '));
 </template>
 
 <style scoped>
+@media (max-width: 1200px) {
+    .causes-grid, .payment-grid {
+        gap: 15px;
+    }
+    
+    .cause-card, .payment-card {
+        padding: 15px;
+    }
+    
+    .escolher-div {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    
+    .cause-title, .payment-title, .escolher-div h2 {
+        font-size: 1.1rem;
+    }
+    
+    .cause-description, .payment-description, .escolher-div p {
+        font-size: 0.5rem;
+    }
+    
+    .escolher-div img, .payment-icon {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    
+    .cause-card, .payment-card, .escolher-div {
+        padding: 12px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cause-title, .payment-title, .escolher-div h2 {
+        font-size: 1rem;
+    }
+    
+    .cause-description, .payment-description, .escolher-div p {
+        font-size: 0.8rem;
+    }
+    
+    .donate-button, .payment-button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .escolher-div img, .payment-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .progress-text {
+        font-size: 0.8rem;
+    }
+
+    .line {
+    display: block;
+    margin-bottom: -20px;
+    }
+}
+
+@media (max-width: 576px) {
+    
+    
+    .cause-card, .payment-card, .escolher-div {
+        padding: 10px;
+    }
+    
+    .section-title {
+        font-size: 1.7rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 30px;
+    }
+    
+    .cause-title, .payment-title, .escolher-div h2 {
+        font-size: 0.9rem;
+        margin: 10px 0;
+    }
+    
+    .cause-description, .payment-description, .escolher-div p {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+    
+    .donate-button, .payment-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+    
+    .escolher-div img, .payment-icon {
+        width: 35px;
+        height: 35px;
+        margin-bottom: 10px;
+    }
+    
+    .progress-bar {
+        height: 6px;
+        margin: 10px 0;
+    }
+    
+    .progress-text {
+        font-size: 0.75rem;
+    }
+
+    
+    
+}
+
+@media (max-width: 400px) {
+    .causes-grid, .payment-grid, .escolher-coisas {
+        gap: 8px;
+    }
+    
+    .cause-card, .payment-card, .escolher-div {
+        padding: 8px;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .cause-title, .payment-title, .escolher-div h2 {
+        font-size: 0.85rem;
+    }
+    
+    .cause-description, .payment-description, .escolher-div p {
+        font-size: 0.7rem;
+    }
+    
+    .donate-button, .payment-button {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+    }
+    
+    .escolher-div img, .payment-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+}
+
 .linetop{
   padding-bottom: 50px;
 }
@@ -284,163 +444,5 @@ const wordsLine2 = computed(() => line2.split(' '));
   padding-bottom: 4vw;
 }
 
-@media (max-width: 1200px) {
-    .causes-grid, .payment-grid {
-        gap: 15px;
-    }
-    
-    .cause-card, .payment-card {
-        padding: 15px;
-    }
-    
-    .escolher-div {
-        padding: 15px;
-    }
-}
 
-@media (max-width: 992px) {
-    
-    .cause-title, .payment-title, .escolher-div h2 {
-        font-size: 1.1rem;
-    }
-    
-    .cause-description, .payment-description, .escolher-div p {
-        font-size: 0.5rem;
-    }
-    
-    .escolher-div img, .payment-icon {
-        width: 50px;
-        height: 50px;
-    }
-}
-
-@media (max-width: 768px) {
-    
-    
-    .cause-card, .payment-card, .escolher-div {
-        padding: 12px;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-    }
-    
-    .section-subtitle {
-        font-size: 1rem;
-    }
-    
-    .cause-title, .payment-title, .escolher-div h2 {
-        font-size: 1rem;
-    }
-    
-    .cause-description, .payment-description, .escolher-div p {
-        font-size: 0.8rem;
-    }
-    
-    .donate-button, .payment-button {
-        padding: 8px 12px;
-        font-size: 0.85rem;
-    }
-    
-    .escolher-div img, .payment-icon {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .progress-text {
-        font-size: 0.8rem;
-    }
-
-    .line {
-    display: block;
-    margin-bottom: -20px;
-    }
-}
-
-@media (max-width: 576px) {
-    
-    
-    .cause-card, .payment-card, .escolher-div {
-        padding: 10px;
-    }
-    
-    .section-title {
-        font-size: 1.7rem;
-    }
-    
-    .section-subtitle {
-        font-size: 0.9rem;
-        margin-bottom: 30px;
-    }
-    
-    .cause-title, .payment-title, .escolher-div h2 {
-        font-size: 0.9rem;
-        margin: 10px 0;
-    }
-    
-    .cause-description, .payment-description, .escolher-div p {
-        font-size: 0.75rem;
-        line-height: 1.4;
-    }
-    
-    .donate-button, .payment-button {
-        padding: 6px 10px;
-        font-size: 0.8rem;
-    }
-    
-    .escolher-div img, .payment-icon {
-        width: 35px;
-        height: 35px;
-        margin-bottom: 10px;
-    }
-    
-    .progress-bar {
-        height: 6px;
-        margin: 10px 0;
-    }
-    
-    .progress-text {
-        font-size: 0.75rem;
-    }
-
-    
-    
-}
-
-@media (max-width: 400px) {
-    .causes-grid, .payment-grid, .escolher-coisas {
-        gap: 8px;
-    }
-    
-    .cause-card, .payment-card, .escolher-div {
-        padding: 8px;
-    }
-    
-    .section-title {
-        font-size: 1.5rem;
-    }
-    
-    .section-subtitle {
-        font-size: 0.85rem;
-    }
-    
-    .cause-title, .payment-title, .escolher-div h2 {
-        font-size: 0.85rem;
-    }
-    
-    .cause-description, .payment-description, .escolher-div p {
-        font-size: 0.7rem;
-    }
-    
-    .donate-button, .payment-button {
-        padding: 5px 8px;
-        font-size: 0.75rem;
-    }
-    
-    .escolher-div img, .payment-icon {
-        width: 30px;
-        height: 30px;
-    }
-
-}
 </style>
