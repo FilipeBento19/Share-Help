@@ -442,9 +442,7 @@ const formatarTipos = (tipos) => {
   box-sizing: border-box;
 }
 
-html, body {
-  overflow: hidden; /* Previne scroll da página */
-}
+
 
 .leaflet-control-zoom a {
   display: none;
