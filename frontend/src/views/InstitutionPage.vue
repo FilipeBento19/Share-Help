@@ -1,14 +1,25 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import FooterComponent from '@/components/FooterComponent.vue'
 import ongs from '@/data/ongsData'
+import { motion } from 'motion-v'
+import { useRoute } from 'vue-router'
+import { fromOng } from '@/data/globalState'
+
+// eslint-disable-next-line no-unused-vars
+const route = useRoute();
+
+
+onMounted(() => {
+  // reset após primeira animação
+  if (fromOng.value) fromOng.value = false
+})
+
 
 const availableInstitutions = computed(() => {
   return ongs
-  .filter((ong) => ong.id !== 'joao-de-paula')
-  .filter((ong) => ong.id !== 'bom-retiro')
-    .filter((ong) => ong.id !== 'sementes-do-futuro')
-    .map((ong) => ({
+    .filter(ong => !['joao-de-paula', 'bom-retiro', 'sementes-do-futuro'].includes(ong.id))
+    .map(ong => ({
       id: ong.id,
       name: ong.title,
       description: ong.description,
@@ -21,69 +32,89 @@ const availableInstitutions = computed(() => {
     }))
 })
 
-
+const text = "Instituições Disponíveis"
+const wordtext = computed(() => text.split(' '))
 </script>
 
 <template>
-  <main>
-    <div class="topo">
-      <div class="overlay"></div>
-      <div class="banner">
-        <h1>Instituições disponíveis</h1>
-        <p>
-          Cada valor doado muda o futuro de quem realmente precisa. Sua contribuição, por menor que pareça, leva esperança, transforma vidas e abre oportunidades
-        </p>
-      </div>
-    </div>
-
-    <section class="instituicoes-disponiveis">
-      <h2>Instituições disponíveis</h2>
-      <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
-
-      <div class="institutions-grid">
-        <div
-          v-for="institution in availableInstitutions"
-          :key="institution.id"
-          class="institution-card"
-        >
-          <div class="institution-image">
-            <img :src="institution.image" :alt="institution.name" />
-          </div>
-          <div class="institution-info">
-            <h4>{{ institution.name }}</h4>
-            <p class="institution-description">{{ institution.description }}</p>
-
-            <div class="institution-meta">
-              <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
-              <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
-              <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
-              <div class="meta-item filtros-container">
-                <strong>Aceita:</strong>
-                <div class="filtros-list">
-                  <span
-                    v-for="filtro in institution.filtros"
-                    :key="filtro"
-                    class="filtro-tag-small"
-                  >
-                    {{ filtro }}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <router-link :to="`/institution/${institution.id}`"><button class="btn-doar-instituicao" > Doar para esta instituição </button></router-link>
-          </div>
+    <main>
+      <!-- Banner e conteúdo igual ao seu código anterior -->
+      <div class="topo">
+        <div class="overlay"></div>
+        <div class="banner">
+          <motion.div
+            v-for="(word, i) in wordtext"
+            :key="'line1-' + i"
+            class="split-word"
+            :initial="{ opacity: 0, y: 10 }"
+            :while-in-view="{ opacity: 1, y: 0 }"
+            :viewport="{ once: false }"
+            :transition="{ duration: 0.5, delay: i*0.05 }"
+          >
+            {{ word }}
+          </motion.div>
+          <p>
+            Cada valor doado muda o futuro de quem realmente precisa. Sua contribuição, por menor que pareça, leva esperança, transforma vidas e abre oportunidades
+          </p>
         </div>
       </div>
-    </section>
+      <motion.div
+        :initial="{ opacity: 0, scale: 0.95 }"
+        :animate="{ opacity: 1, scale: 1 }"
+        :transition="{ duration: 0.2, ease: 'easeInOut' }"
+      >
+        <section class="instituicoes-disponiveis">
+          <h2>Instituições disponíveis</h2>
+          <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
 
-    <section>
+          <div class="institutions-grid">
+            <div
+              v-for="institution in availableInstitutions"
+              :key="institution.id"
+              class="institution-card"
+            >
+              <div class="institution-image">
+                <img :src="institution.image" :alt="institution.name" />
+              </div>
+              <div class="institution-info">
+                <h4>{{ institution.name }}</h4>
+                <p class="institution-description">{{ institution.description }}</p>
+
+                <div class="institution-meta">
+                  <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
+                  <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
+                  <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
+                  <div class="meta-item filtros-container">
+                    <strong>Aceita:</strong>
+                    <div class="filtros-list">
+                      <span
+                        v-for="filtro in institution.filtros"
+                        :key="filtro"
+                        class="filtro-tag-small"
+                      >
+                        {{ filtro }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <router-link :to="`${$route.path}/${institution.id}`">
+                  <button class="btn-doar-instituicao">Doar para esta instituição</button>
+                </router-link>
+
+              </div>
+            </div>
+          </div>
+        </section>
+      </motion.div>
       <FooterComponent />
-    </section>
-  </main>
+    </main>
+  
 </template>
 
 <style scoped>
+
+
 /* Banner Principal */
 .topo {
   position: relative;
@@ -104,14 +135,22 @@ const availableInstitutions = computed(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7));
+  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7)); 
   z-index: 1;
+  animation: gradientBG 8s ease infinite;
+  background-size: 300% 300%;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .topo .banner {
   z-index: 2;
   position: relative;
-  max-width: 730px;
+  max-width: 800px;
   width: 100%;
   text-align: left;
   padding-left: 10%;
@@ -128,6 +167,22 @@ const availableInstitutions = computed(() => {
   font-size: 1.2em;
   margin-bottom: 30px;
   line-height: 1.5;
+}
+
+.animated-line {
+  display: flex;
+  gap: 2rem;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: 0.8rem;
+  font-size: 3.1rem;
+  font-weight: 900;
 }
 
 /* ShareHelp Recomenda */
@@ -321,51 +376,6 @@ const availableInstitutions = computed(() => {
   transform: translateY(-2px);
 }
 
-.institution-description {
-  font-size: 0.9em;
-  color: #6b7280;
-  margin-bottom: 15px;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.institution-meta {
-  margin-bottom: 15px;
-}
-
-.meta-item {
-  font-size: 0.8em;
-  color: #6b7280;
-  margin-bottom: 5px;
-}
-
-.meta-item strong {
-  color: #1f2937;
-}
-
-.filtros-container {
-  margin-top: 8px;
-}
-
-.filtros-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 5px;
-}
-
-.filtro-tag-small {
-  background: #e0e7ff;
-  color: #3730a3;
-  padding: 2px 6px;
-  border-radius: 8px;
-  font-size: 0.7em;
-  font-weight: 500;
-}
-
 /* Instituições Disponíveis */
 .instituicoes-disponiveis {
   padding: 60px 20px;
@@ -387,10 +397,11 @@ const availableInstitutions = computed(() => {
 
 .institutions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .institution-card {
@@ -399,7 +410,7 @@ const availableInstitutions = computed(() => {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   transition: all 0.3s ease;
-  min-height: 450px;
+  height: 520px; /* Altura fixa */
   display: flex;
   flex-direction: column;
 }
@@ -421,7 +432,6 @@ const availableInstitutions = computed(() => {
 .institution-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 .institution-info {
@@ -430,6 +440,7 @@ const availableInstitutions = computed(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .institution-info h4 {
@@ -438,6 +449,58 @@ const availableInstitutions = computed(() => {
   color: #1f2937;
   margin-bottom: 8px;
   line-height: 1.3;
+  height: 32px; /* Altura fixa para título */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.institution-description {
+  font-size: 0.9em;
+  color: #6b7280;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  height: 65px; /* Altura fixa para descrição */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.institution-meta {
+  flex: 1;
+  overflow: hidden;
+}
+
+.meta-item {
+  font-size: 0.8em;
+  color: #6b7280;
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+
+.meta-item strong {
+  color: #1f2937;
+}
+
+.filtros-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 5px;
+  max-height: 45px; /* Limita altura das tags */
+  overflow: hidden;
+}
+
+.filtro-tag-small {
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.7em;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .btn-doar-instituicao {
@@ -459,5 +522,186 @@ const availableInstitutions = computed(() => {
   transform: translateY(-1px);
 }
 
+
+@media (max-width: 1024px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    padding: 0 15px;
+  }
+  
+  .institution-card {
+    height: 480px;
+  }
+  
+  .topo {
+    height: 45vh;
+  }
+  
+  .split-word {
+    font-size: 2.2rem;
+  }
+
+  .banner-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    padding: 0 10px;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 30px 10px;
+  }
+  
+  .institution-card {
+    height: 450px;
+  }
+  
+  .institution-info {
+    padding: 15px;
+  }
+  
+  .institution-info h4 {
+    font-size: 1.1em;
+    height: 28px;
+  }
+  
+  .institution-description {
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
+  }
+  
+  .topo {
+    height: 40vh;
+    text-align: center;
+  }
+  
+  .topo .banner {
+    padding: 0 5%;
+    text-align: center;
+  }
+
+  .split-word {
+    font-size: 1.8rem;
+    margin-right: 0.5rem;
+  }
+  
+  .banner-text {
+    max-width: 100%;
+    font-size: 0.95rem;
+    margin: 1rem auto 0;
+  }
+  
+  .instituicoes-disponiveis h2 {
+    font-size: 1.7rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 350px;
+    padding: 0 5px;
+  }
+
+  .institution-image {
+    max-height: 160px;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 25px 5px;
+  }
+  
+  .institution-card {
+    height: 320px;
+  }
+
+  .institution-info h4 {
+    font-size: 1em;
+    height: 20px;
+    -webkit-line-clamp: 1;
+  }
+  
+  .institution-description {
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
+    margin-bottom: 4px;
+  }
+
+  .meta-item {
+    display: none;
+  }
+
+  .institution-meta{
+    display: none;
+  }
+
+  .filtros-list {
+    display: none;
+  }
+  
+  .btn-doar-instituicao {
+    padding: 3px 10px 8px 10px;
+    font-size: 0.8em;
+  }
+  
+  .topo {
+    height: 35vh;
+  }
+  
+  .split-word {
+    font-size: 1.7rem;
+    padding-bottom: 10px;
+  }
+  
+  .banner-text {
+    font-size: 0.9rem;
+  }
+  
+  .instituicoes-disponiveis h2 {
+    font-size: 1.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 360px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    padding: 0 10px;
+  }
+  
+  .split-word {
+    font-size: 1.3rem;
+  }
+  
+  .banner-text {
+    font-size: 0.85rem;
+  }
+
+  .institution-card {
+    min-height: 400px;
+  }
+}
 
 </style>

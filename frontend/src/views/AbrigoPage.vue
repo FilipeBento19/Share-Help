@@ -1,54 +1,60 @@
-    <script setup>
-    import { computed } from 'vue'
-    import FooterComponent from '@/components/FooterComponent.vue'
-    import ongs from '@/data/ongsData'
-    import '@/components/InstsCssComponent.css'
+<script setup>
+import { computed, onMounted } from 'vue'
+import FooterComponent from '@/components/FooterComponent.vue'
+import { createTimer } from '@/data/timeGlobal'
+import { motion } from 'motion-v'
+import ongs from '@/data/ongsData'
+import '@/components/InstsCssComponent.css'
 
-    const formatCurrency = (value) => {
-      return new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(value);
-    };
-
-    // Pegar a instituição recomendada (Ecos de Esperança)
-    const recommendedInstitution = computed(() => {
-      const ong = ongs.find((o) => o.id === 'casa-vo-joaquina')
-      return {
-        id: ong.id,
-        name: ong.title,
-        description: ong.description,
-        timeLeft: '12:23:01:09',
-        goal: 5000,
-        raised: 2800,
-        image: ong.img,
-        telefone: ong.telefone,
-        local: ong.local,
-        horario: ong.horario,
-        filtros: ong.filtros,
-        progress: ong.progress,
-      }
-    })
+const formatCurrency = (value) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value)
+}
 
 
-    const availableInstitutions = computed(() => {
-      return ongs
-        .filter((ong) => ong.id !== 'casa-vo-joaquina')
-        .filter((ong) => ong.categoria == 'moradores-de-rua')
-        .map((ong) => ({
-          id: ong.id,
-          name: ong.title,
-          description: ong.description,
-          image: ong.img,
-          telefone: ong.telefone,
-          local: ong.local,
-          horario: ong.horario,
-          filtros: ong.filtros,
-          categoria: ong.categoria,
-        }))
-    })
+const recommendedTimer = createTimer([11, 0, 1, 0], 'recommendedTimer')
+onMounted(() => {
+  recommendedTimer.startTimer()
+})
+
+const recommendedInstitution = computed(() => {
+  const ong = ongs.find((o) => o.id === 'casa-vo-joaquina')
+  return {
+    id: ong.id,
+    name: ong.title,
+    description: ong.description,
+    timeLeft: recommendedTimer.formattedTime.value,
+    goal: 5000,
+    raised: 2800,
+    image: ong.img,
+    telefone: ong.telefone,
+    local: ong.local,
+    horario: ong.horario,
+    filtros: ong.filtros,
+    progress: ong.progress,
+  }
+})
+
+const availableInstitutions = computed(() => {
+  return ongs
+    .filter((ong) => ong.id !== 'casa-vo-joaquina')
+    .filter((ong) => ong.categoria == 'moradores-de-rua')
+    .map((ong) => ({
+      id: ong.id,
+      name: ong.title,
+      description: ong.description,
+      image: ong.img,
+      telefone: ong.telefone,
+      local: ong.local,
+      horario: ong.horario,
+      filtros: ong.filtros,
+      categoria: ong.categoria,
+    }))
+})
 
     </script>
 
@@ -106,50 +112,55 @@
             </div>
           </div>
         </section>
+        <motion.div
+          :initial="{ opacity: 0, scale: 0.95 }"
+          :animate="{ opacity: 1, scale: 1 }"
+          :transition="{ duration: 0.2, ease: 'easeInOut' }"
+        >
+          <section class="instituicoes-disponiveis">
+            <h2>Instituições disponíveis</h2>
+            <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
 
-        <section class="instituicoes-disponiveis">
-          <h2>Instituições disponíveis</h2>
-          <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
+            <div class="institutions-grid">
+              <div
+                v-for="institution in availableInstitutions"
+                :key="institution.id"
+                class="institution-card"
+              >
+                <div class="institution-image">
+                  <img :src="institution.image" :alt="institution.name" />
+                </div>
+                <div class="institution-info">
+                  <h4>{{ institution.name }}</h4>
+                  <p class="institution-description">{{ institution.description }}</p>
 
-          <div class="institutions-grid">
-            <div
-              v-for="institution in availableInstitutions"
-              :key="institution.id"
-              class="institution-card"
-            >
-              <div class="institution-image">
-                <img :src="institution.image" :alt="institution.name" />
-              </div>
-              <div class="institution-info">
-                <h4>{{ institution.name }}</h4>
-                <p class="institution-description">{{ institution.description }}</p>
-
-                <div class="institution-meta">
-                  <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
-                  <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
-                  <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
-                  <div class="meta-item filtros-container">
-                    <strong>Aceita:</strong>
-                    <div class="filtros-list">
-                      <span
-                        v-for="filtro in institution.filtros"
-                        :key="filtro"
-                        class="filtro-tag-small"
-                      >
-                        {{ filtro }}
-                      </span>
+                  <div class="institution-meta">
+                    <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
+                    <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
+                    <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
+                    <div class="meta-item filtros-container">
+                      <strong>Aceita:</strong>
+                      <div class="filtros-list">
+                        <span
+                          v-for="filtro in institution.filtros"
+                          :key="filtro"
+                          class="filtro-tag-small"
+                        >
+                          {{ filtro }}
+                        </span>
+                      </div>
                     </div>
                   </div>
+
+                  <router-link :to="`${$route.path}/${institution.id}`">
+                    <button class="btn-doar-instituicao">Doar para esta instituição</button>
+                  </router-link>
+
                 </div>
-
-                <router-link :to="`${$route.path}/${institution.id}`">
-                  <button class="btn-doar-instituicao">Doar para esta instituição</button>
-                </router-link>
-
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </motion.div>
 
         <section>
           <FooterComponent />

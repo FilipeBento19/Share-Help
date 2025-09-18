@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import FooterComponent from '@/components/FooterComponent.vue'
+import { createTimer } from '@/data/timeGlobal'
 import ongs from '@/data/ongsData'
 import '@/components/InstsCssComponent.css'
 
@@ -10,17 +11,22 @@ const formatCurrency = (value) => {
     currency: 'BRL',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(value);
-};
+  }).format(value)
+}
 
-// Pegar a instituição recomendada (Ecos de Esperança)
+
+const recommendedTimer = createTimer([7, 0, 1, 0], 'recommendedTimer')
+onMounted(() => {
+  recommendedTimer.startTimer()
+})
+
 const recommendedInstitution = computed(() => {
   const ong = ongs.find((o) => o.id === 'lar-renascer')
   return {
     id: ong.id,
     name: ong.title,
     description: ong.description,
-    timeLeft: '12:23:01:09',
+    timeLeft: recommendedTimer.formattedTime.value,
     goal: 5000,
     raised: 2800,
     image: ong.img,

@@ -1,34 +1,20 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
+import { motion, AnimatePresence } from 'motion-v'
 import ongs from '@/data/ongsData'
 import PaymentComponent from '@/components/PaymentComponent.vue'
+import { fromOng } from '@/data/globalState'
 
-const modalRef = ref(null)
-
-const selectedOngId = ref(null)
-const donationModal = ref(null)
-const abrirModal = (ong) => {
-  modalRef.value.showModal = true
-  selectedOngId.value = ong
-  donationModal.value.showModal = true
-}
-
-const route = useRoute()
+const modalAberto = ref(false)
+const sair = ref(false)
 const router = useRouter()
+const route = useRoute()
 
-const ongId = (route.params.id)
-
-const voltar = () => {
-  if (window.history.length > 1) {
-    router.back()
-  } else {
-    router.push('/')
-  }
-}
-
+const ongId = route.params.id
 const ong = ongs.find(o => o.id === ongId)
 
+// Sistema de favoritos da cauebranch
 const isFavorited = ref(false)
 
 onMounted(() => {
@@ -50,47 +36,126 @@ const toggleFavorite = () => {
   localStorage.setItem('favoritas', JSON.stringify(saved))
 }
 
+// Sistema de modal
+const abrirModal = () => modalAberto.value = true
+const fecharModal = () => modalAberto.value = false
+
+// Sistema de navegação com animação
+const voltar = () => {
+  fromOng.value = true
+  sair.value = true // dispara animação
+}
+
+const onExitComplete = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    // fallback
+    router.push({ path: '/', query: { fromOng: true } })
+  }
+}
 </script>
 
 <template>
-  <div class="pagina-instituicao" v-if="ong">
-    <img @click="voltar" class="botao-voltar" src="/icons/voltar.png" alt="">
+  <AnimatePresence @exitComplete="onExitComplete">
+    <motion.div
+      v-if="!sair"
+      class="pagina-wrapper"
+      :initial="{ opacity: 0, scale: 0.95 }"
+      :animate="{ opacity: 1, scale: 1 }"
+      :exit="{ opacity: 0, scale: 0.8 }"
+      :transition="{ duration: 0.25, ease: 'easeInOut' }"
+    >
+      <div class="pagina-instituicao" v-if="ong">
+        <img @click="voltar" class="botao-voltar" src="/icons/voltar.png" alt="Voltar" />
 
-    <div class="container-instituicao">
-      <div class="logo-container">
-        <img :src="ong.img" :alt="ong.title" class="logo-instituicao">
+        <div class="container-instituicao">
+          <div class="logo-container">
+            <img :src="ong.img" :alt="ong.title" class="logo-instituicao" />
+          </div>
+
+          <div class="info-instituicao">
+            <h1>{{ ong.title }}</h1>
+
+            <div class="detalhes-instituicao">
+              <p><strong>Filtros:</strong> {{ ong.filtros.join(', ') }}</p>
+              <p><strong>Contato:</strong> {{ ong.telefone }}</p>
+              <p><strong>Endereço:</strong> {{ ong.local }}</p>
+              <p><strong>Horário de funcionamento:</strong> {{ ong.horario }}</p>
+            </div>
+
+            <div class="descricao-instituicao">
+              <p>{{ ong.description }}</p>
+            </div>
+
+            <div class="botao-container">
+              <button class="botao-doar" @click="abrirModal">Doar Agora</button>
+              <img @click="toggleFavorite"
+                :src="isFavorited ? '/icons/heart-solid-full.svg' : '/icons/heart-light-full.svg'" 
+                alt="favoritar"
+                class="button-heart" />
+            </div>
+
+            <!-- Modal com animações -->
+            <AnimatePresence>
+              <template v-if="modalAberto">
+                <motion.div
+                  key="backdrop"
+                  class="modal-backdrop"
+                  :initial="{ opacity: 0 }"
+                  :animate="{ opacity: 0.5 }"
+                  :exit="{ opacity: 0 }"
+                  :transition="{ duration: 0.3 }"
+                />
+                <motion.div
+                  key="payment-modal"
+                  class="modal-container"
+                  :initial="{ opacity: 0, scale: 0.8 }"
+                  :animate="{ opacity: 1, scale: 1 }"
+                  :exit="{ opacity: 0, scale: 0.8 }"
+                  :transition="{ duration: 0.25, ease: 'easeOut' }"
+                >
+                  <PaymentComponent :ong="ong" :show="modalAberto" @fechar="fecharModal"/>
+                </motion.div>
+              </template>
+            </AnimatePresence>
+
+          </div>
+        </div>
+      </div>  
+
+      <div v-else>
+        <p>ONG não encontrada.</p>
       </div>
-
-      <div class="info-instituicao">
-        <h1>{{ ong.title }}</h1>
-
-        <div class="detalhes-instituicao">
-          <p><strong>Filtros:</strong> {{ ong.filtros.join(', ') }}</p>
-          <p><strong>Contato:</strong> {{ ong.telefone }}</p>
-          <p><strong>Endereço:</strong> {{ ong.local }}</p>
-          <p><strong>Horário de funcionamento:</strong> {{ ong.horario }}</p>
-        </div>
-
-        <div class="descricao-instituicao">
-          <p>{{ ong.description }}</p>
-        </div>
-
-        <div class="botao-container">
-          <button class="botao-doar" @click="abrirModal(ong)">Doar Agora</button>
-          <img @click="toggleFavorite"
-            :src="isFavorited ? '/icons/heart-solid-full.svg' : '/icons/heart-light-full.svg'" alt="favoritar"
-            class="button-heart" />
-        </div>
-        <PaymentComponent ref="modalRef" :ong="ong"/>
-      </div>
-    </div>
-  </div>
-  <div v-else>
-    <p>ONG não encontrada.</p>
-  </div>
+    </motion.div>
+  </AnimatePresence>
 </template>
 
 <style scoped>
+/* Layout da página */
+.pagina-wrapper {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Fundo escuro do modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 900;
+}
+
+/* Container centralizado do modal */
+.modal-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
 .pagina-instituicao {
   max-width: 1200px;
   margin: 2rem auto;
@@ -180,6 +245,7 @@ h1 {
 .botao-container {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .botao-doar {
@@ -203,11 +269,34 @@ h1 {
   margin-left: 15px;
   cursor: pointer;
   transition: transform 0.3s ease-in;
-
-
 }
 
 .button-heart:hover {
   transform: scale(1.2);
+}
+
+@media (max-width: 480px) {
+  .container-instituicao {
+    display: block;
+  }
+
+  .logo-container {
+    max-width: 500px;
+  }
+
+  .botao-doar {
+    width: 100%;
+  }
+
+  .botao-container {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .button-heart {
+    margin-left: 0;
+    align-self: center;
+  }
 }
 </style>

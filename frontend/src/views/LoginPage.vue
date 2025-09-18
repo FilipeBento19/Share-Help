@@ -128,6 +128,9 @@ const resendCode = () => {
 </template>
 
 <style scoped>
+
+
+
 .page-container {
   position: relative;
   width: 100vw;
@@ -244,4 +247,209 @@ const resendCode = () => {
   color: #ffffff;
   font-size: 12px;
 }
+
+@media (max-width: 1024px) {
+  .main-card {
+    max-width: 480px;
+    padding: 35px;
+    min-height: 450px;
+  }
+  
+  .main-card.slide-left {
+    transform: translateX(20vw);
+  }
+  
+  .side-text.desktop-only h1 {
+    font-size: 4rem;
+  }
+  
+  .footer-text {
+    font-size: 11px;
+    bottom: 30px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .main-card {
+    max-width: 420px;
+    padding: 30px;
+    min-height: 400px;
+  }
+  
+  .main-card.slide-left {
+    transform: translateX(15vw);
+  }
+  
+  .side-text.desktop-only {
+    left: 5%;
+  }
+  
+  .side-text.desktop-only h1 {
+    font-size: 3.5rem;
+  }
+  
+  .footer-text {
+    font-size: 10px;
+    bottom: 25px;
+    padding-left: 10px;
+  }
+}
+
+/* Smartphones grandes */
+@media (max-width: 640px) {
+  .page-container {
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  .main-card {
+    max-width: 100%;
+    padding: 25px;
+    min-height: 350px;
+    margin: 0 20px;
+  }
+  
+  /* Desabilita animação lateral em mobile */
+  .main-card.slide-left {
+    transform: translateX(0);
+  }
+  
+  /* Esconde texto lateral no mobile */
+  .side-text.desktop-only {
+    display: none;
+  }
+  
+  /* Mostra texto em cima no mobile */
+  .mobile-header-text {
+    display: block;
+  }
+  
+  .mobile-header-text h1 {
+    font-size: 2.2rem;
+  }
+  
+  .back-to-login span {
+    font-size: 13px;
+  }
+  
+  .back-login-link {
+    font-size: 13px;
+  }
+  
+  .footer-text {
+    font-size: 9px;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 0;
+  }
+}
+
+/* Smartphones médios */
+@media (max-width: 480px) {
+  .page-container {
+    padding: 15px;
+  }
+  
+  .main-card {
+    padding: 20px;
+    min-height: 320px;
+    margin: 0 15px;
+    border-radius: 3px;
+  }
+
+  .side-text {
+    padding-bottom: 42vh;
+  }
+
+  .side-text h1 {
+    font-size: 3.1rem;
+  }
+  
+  .mobile-header-text {
+    top: 6%;
+  }
+  
+  .mobile-header-text h1 {
+    font-size: 1.8rem;
+
+  }
+  
+  .back-to-login {
+    margin-top: 15px;
+  }
+  
+  .back-to-login span {
+    font-size: 12px;
+  }
+  
+  .back-login-link {
+    font-size: 12px;
+  }
+  
+  .footer-text {
+    font-size: 8px;
+    bottom: 10px;
+  }
+}
+
+/* Smartphones pequenos */
+@media (max-width: 360px) {
+  .page-container {
+    padding: 10px;
+  }
+  
+  .main-card {
+    padding: 15px;
+    min-height: 300px;
+    margin: 0 10px;
+  }
+  
+  .mobile-header-text {
+    top: 5%;
+  }
+  
+  .mobile-header-text h1 {
+    font-size: 1.5rem;
+  }
+  
+  .back-to-login {
+    margin-top: 10px;
+  }
+  
+  .back-to-login span {
+    font-size: 11px;
+  }
+  
+  .back-login-link {
+    font-size: 11px;
+  }
+  
+  .footer-text {
+    font-size: 7px;
+    bottom: 8px;
+  }
+}
+
+/* Smartphones muito pequenos */
+@media (max-width: 320px) {
+  .main-card {
+    padding: 12px;
+    min-height: 280px;
+    margin: 0 8px;
+  }
+  
+  .mobile-header-text h1 {
+    font-size: 1.3rem;
+  }
+  
+  .footer-text {
+    font-size: 6px;
+    bottom: 5px;
+  }
+}
+
+
 </style>

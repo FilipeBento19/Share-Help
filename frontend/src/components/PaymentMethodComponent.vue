@@ -30,7 +30,7 @@ const props = defineProps({
             <h2>PIX</h2>
           </div>
           <p>Doação instantânea via PIX. Rápido, seguro e sem taxas.</p>
-          <button class="button button-pix">Doar via PIX</button>
+          <router-link to="/institution"><button class="button button-pix">Doar via PIX</button></router-link>
         </div>
       </motion.div>
 
@@ -46,7 +46,7 @@ const props = defineProps({
             <h2>Cartão de crédito</h2>
           </div>
           <p>Doação única ou recorrente no cartão de crédito.</p>
-          <button class="button button-cartao">Doar no Cartão</button>
+          <router-link to="/institution"><button class="button button-cartao">Doar no Cartão</button></router-link>
         </div>
       </motion.div>
 
@@ -62,7 +62,7 @@ const props = defineProps({
             <h2>Doação Física</h2>
           </div>
           <p>Roupas, alimentos, brinquedos e outros itens.</p>
-          <button class="button button-fisica">Agendar Coleta</button>
+          <router-link to="/mapinterative"><button class="button button-fisica">Agendar Coleta</button></router-link>
         </div>
       </motion.div>
     </div>
