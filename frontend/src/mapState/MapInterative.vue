@@ -205,6 +205,7 @@ import { ref, computed, nextTick } from 'vue'
 import { LMap, LTileLayer, LMarker, LIcon, LPopup } from '@vue-leaflet/vue-leaflet'
 import ongs from '@/data/ongsData.js'
 
+
 const zoom = ref(12)
 const center = ref([-26.3044, -48.8487])
 const termoPesquisa = ref('')
@@ -441,11 +442,41 @@ const formatarTipos = (tipos) => {
   box-sizing: border-box;
 }
 
+html, body {
+  overflow: hidden; /* Previne scroll da página */
+}
+
+.leaflet-control-zoom a {
+  display: none;
+  text-decoration: none !important;
+  outline: none !important;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Previne o comportamento de "jump" dos botões de zoom */
+.leaflet-control-zoom a:focus,
+.leaflet-control-zoom a:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Garante que os controles não afetem o scroll da página */
+.leaflet-control-container {
+  pointer-events: auto;
+  display: none;
+}
+
+.leaflet-control {
+  pointer-events: auto;
+}
+
 .app-layout {
   display: flex;
   height: 100vh;
   width: 100vw;
   position: relative;
+  overflow: hidden;
 }
 
 .sidebar {
