@@ -395,7 +395,7 @@ const wordtext = computed(() => text.split(' '))
 
 .institutions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   max-width: 1400px;
   margin: 0 auto;
@@ -408,7 +408,7 @@ const wordtext = computed(() => text.split(' '))
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   transition: all 0.3s ease;
-  height: 500px; /* Altura fixa */
+  height: 520px; /* Altura fixa */
   display: flex;
   flex-direction: column;
 }
@@ -430,7 +430,6 @@ const wordtext = computed(() => text.split(' '))
 .institution-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 .institution-info {
@@ -468,7 +467,6 @@ const wordtext = computed(() => text.split(' '))
 }
 
 .institution-meta {
-  margin-bottom: 15px;
   flex: 1;
   overflow: hidden;
 }
@@ -482,10 +480,6 @@ const wordtext = computed(() => text.split(' '))
 
 .meta-item strong {
   color: #1f2937;
-}
-
-.filtros-container {
-  margin-top: 8px;
 }
 
 .filtros-list {
@@ -620,15 +614,19 @@ const wordtext = computed(() => text.split(' '))
     max-width: 350px;
     padding: 0 5px;
   }
+
+  .institution-image {
+    max-height: 160px;
+  }
   
   .instituicoes-disponiveis {
     padding: 25px 5px;
   }
   
   .institution-card {
-    height: 380px;
+    height: 320px;
   }
-  
+
   .institution-info h4 {
     font-size: 1em;
     height: 20px;
@@ -636,12 +634,17 @@ const wordtext = computed(() => text.split(' '))
   }
   
   .institution-description {
-    font-size: 0.8em;
-    height: 50px;
-    -webkit-line-clamp: 2;
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
+    margin-bottom: 4px;
   }
 
   .meta-item {
+    display: none;
+  }
+
+  .institution-meta{
     display: none;
   }
 
@@ -659,7 +662,8 @@ const wordtext = computed(() => text.split(' '))
   }
   
   .split-word {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+    padding-bottom: 10px;
   }
   
   .banner-text {

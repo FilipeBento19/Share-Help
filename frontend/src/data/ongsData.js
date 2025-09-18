@@ -27,7 +27,7 @@ const ongs = [
   {
     id: 'missao-crianca-jardim-paraiso',
     categoria: 'criancas',
-    title: 'Missão Criança Jardim Paraíso',
+    title: 'Missão Criança',
     description: 'Há 28 anos, o Projeto Missão Criança tem transformado vidas no Jardim Paraíso, oferecendo 250 vagas no contraturno escolar para crianças e adolescentes. Movido pelo amor de Deus, o projeto promove desenvolvimento social, emocional e espiritual, em um ambiente seguro e acolhedor. Mais do que reforço escolar e oficinas, o Missão Criança oferece esperança, orientação e apoio às famílias, impactando toda a comunidade.',
     filtros: ['brinquedos', 'roupas'],
     telefone: '(47) 3903-1827',
@@ -39,7 +39,7 @@ const ongs = [
   {
     id: 'ecos-esperanca',
     categoria: 'criancas',
-    title: 'Associação Ecos de Esperança',
+    title: 'Ecos de Esperança',
     description: 'Instituição cristã, não-governamental e sem fins lucrativos, dedicada à proteção integral de crianças e adolescentes e à promoção de seus direitos. Nossa missão é lutar por igualdade, justiça social e dignidade para todos, fundamentados nos princípios do Evangelho de Cristo.',
     filtros: ['roupas', 'brinquedos', 'alimentos'],
     telefone: '(47) 3423-0104',
@@ -137,7 +137,7 @@ const ongs = [
   {
     id: 'lar-renascer',
     categoria: 'idosos',
-    title: 'Ass. Beneficente Lar Renascer',
+    title: 'Beneficente Lar Renascer',
     description: 'Organização dedicada ao acolhimento e cuidado de mulheres idosas em situação de vulnerabilidade, oferecendo dignidade, proteção e qualidade de vida.',
     filtros: ['roupas', 'livros', 'alimentos'],
     telefone: '(47) 3227-7910',
