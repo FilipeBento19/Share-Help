@@ -1092,8 +1092,8 @@ const formatarTipos = (tipos) => {
   .sidebar-show-button {
     width: 36px;
     height: 36px;
-    top: 782px;
-    left: 12px;
+    top: 652px;
+    left: 25px;
   }
   
   .popup-content {
@@ -1131,6 +1131,13 @@ const formatarTipos = (tipos) => {
   
   .popup-content {
     min-width: 160px;
+  }
+
+  .sidebar-show-button {
+    width: 36px;
+    height: 36px;
+    top: 652px;
+    left: 12px;
   }
 }
 </style>
