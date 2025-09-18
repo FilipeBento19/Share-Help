@@ -10,6 +10,7 @@ const selectedValue = ref('')
 const customValue = ref('')
 const donationType = ref('unica')
 const selectedPayment = ref('')
+const showThankYou = ref(false) // Novo estado
 
 const predefinedValues = [25, 50, 100, 200]
 
@@ -18,7 +19,7 @@ const selectValue = (value) => {
   customValue.value = ''
 }
 
-const selectCustomValue = () => {
+const selectCustomValue = () => { 
   selectedValue.value = 'custom'
 }
 
@@ -33,13 +34,22 @@ const finalizeDonation = () => {
     tipo: donationType.value,
     pagamento: selectedPayment.value
   })
-  emit('fechar')
+  
+  // Mostrar mensagem de agradecimento
+  showThankYou.value = true
+  
+  // Fechar automaticamente após 3 segundos
+  setTimeout(() => {
+    showThankYou.value = false
+    emit('fechar')
+  }, 3000)
 }
 </script>
 
 <template>
   <div v-if="props.show" class="overlay">
-    <div class="divprimary">
+    <!-- Modal principal de doação -->
+    <div v-if="!showThankYou" class="divprimary">
       <div class="header">
         <button class="back-button" @click="$emit('fechar')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -125,6 +135,19 @@ const finalizeDonation = () => {
         </div>
       </div>
     </div>
+
+    <!-- Mini caixinha de agradecimento -->
+    <div v-if="showThankYou" class="thank-you-box">
+      <div class="thank-you-content">
+        <div class="thank-you-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Obrigado pela sua doação!</h3>
+        <p>Sua contribuição faz a diferença</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -141,6 +164,60 @@ const finalizeDonation = () => {
   justify-content: center;
   z-index: 999;
   padding: 20px;
+}
+
+/* MINI CAIXINHA DE AGRADECIMENTO */
+.thank-you-box {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  animation: thankYouFadeIn 0.3s ease-out;
+  max-width: 320px;
+  width: 90%;
+}
+
+.thank-you-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.thank-you-icon {
+  width: 64px;
+  height: 64px;
+  background: #E8F5E8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.thank-you-box h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.thank-you-box p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+@keyframes thankYouFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .divprimary {
@@ -397,6 +474,57 @@ const finalizeDonation = () => {
   color: #999;
   cursor: not-allowed;
   transform: none;
+}
+
+/* RESPONSIVIDADE PARA A CAIXINHA DE AGRADECIMENTO */
+@media (max-width: 480px) {
+  .thank-you-box {
+    padding: 32px 24px;
+    max-width: 280px;
+  }
+  
+  .thank-you-icon {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .thank-you-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .thank-you-box h3 {
+    font-size: 18px;
+  }
+  
+  .thank-you-box p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .thank-you-box {
+    padding: 28px 20px;
+    max-width: 260px;
+  }
+  
+  .thank-you-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .thank-you-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .thank-you-box h3 {
+    font-size: 16px;
+  }
+  
+  .thank-you-box p {
+    font-size: 12px;
+  }
 }
 
 /* ===== RESPONSIVIDADE - APENAS DIMINUINDO PROPORCIONALMENTE ===== */
