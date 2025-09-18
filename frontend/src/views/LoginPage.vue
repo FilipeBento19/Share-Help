@@ -361,11 +361,11 @@ const resendCode = () => {
   }
 
   .side-text {
-    padding-bottom: 35vh;
+    padding-bottom: 42vh;
   }
 
   .side-text h1 {
-    font-size: 3.5rem;
+    font-size: 3.1rem;
   }
   
   .mobile-header-text {
