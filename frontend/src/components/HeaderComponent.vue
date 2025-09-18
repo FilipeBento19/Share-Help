@@ -49,7 +49,7 @@ import { motion } from 'motion-v';
             :whileTap="{ scale: 0.1 }"
             class="box"
           >
-          <li class="login"><router-link to="/login"><img src="/icons/login.png" alt=""></router-link></li>
+          <li class="login"><router-link to="/perfil"><img src="/icons/login.png" alt=""></router-link></li>
           </motion.div>
         </ul>
       </nav>
@@ -76,10 +76,10 @@ import { motion } from 'motion-v';
 
 .logo {
   display: flex;
-  align-items: center; 
-  gap: 10px; 
-  font-size: 1.5em; 
-  font-weight: 700; 
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5em;
+  font-weight: 700;
 }
 
 .logo img {
@@ -97,7 +97,7 @@ import { motion } from 'motion-v';
 
 .textinho {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   line-height: 0.8;
 }
 
@@ -157,11 +157,11 @@ import { motion } from 'motion-v';
     .main-nav ul {
         gap: 20px;
     }
-    
+
     .logo h1 {
         font-size: 1rem;
     }
-    
+
     .logo img {
         height: 45px;
     }
@@ -171,15 +171,15 @@ import { motion } from 'motion-v';
     .main-nav ul {
         gap: 15px;
     }
-    
+
     .logo h1 {
         font-size: 1.3rem;
     }
-    
+
     .logo img {
         height: 40px;
     }
-    
+
     .main-nav li a {
         font-size: 0.9em;
     }
@@ -189,27 +189,27 @@ import { motion } from 'motion-v';
     .header-content {
         flex-wrap: wrap;
     }
-    
+
     .main-nav {
         width: 100%;
         order: 3;
         margin-top: 15px;
     }
-    
+
     .main-nav ul {
         justify-content: center;
         flex-wrap: wrap;
         gap: 10px 20px;
     }
-    
+
     .logo h1 {
         font-size: 1rem;
     }
-    
+
     .logo img {
         height: 35px;
     }
-    
+
     .logo .slogan {
         font-size: 0.6em;
     }
@@ -220,23 +220,23 @@ import { motion } from 'motion-v';
         padding-left: 115px;
         gap: 8px;
     }
-    
+
     .logo h1 {
         font-size: 1rem;
     }
-    
+
     .logo img {
         height: 30px;
     }
-    
+
     .main-nav ul {
         gap: 8px 10px;
     }
-    
+
     .main-nav li a {
         font-size: 0.85em;
     }
-    
+
     .login img {
         width: 20px;
         height: 20px;
@@ -247,7 +247,7 @@ import { motion } from 'motion-v';
     .main-nav ul {
         gap: 5px 12px;
     }
-    
+
     .main-nav li a {
         font-size: 0.8em;
     }
