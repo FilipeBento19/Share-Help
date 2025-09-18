@@ -437,7 +437,6 @@ const formatarTipos = (tipos) => {
 
 <style>
 
-
 .leaflet-control-zoom a {
   display: none;
   text-decoration: none !important;

@@ -2,7 +2,7 @@
 // Componente apenas visual - sem funcionalidade de modal
 </script>
 
-<template>
+<template >
   <div class="mapa-container">
     <div class="mapa-section">
       <h1 class="title">Mapa interativo</h1>
@@ -42,6 +42,9 @@
 </template>
 
 <style scoped>
+
+
+
 .mapa-container {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   min-height: 100vh;
