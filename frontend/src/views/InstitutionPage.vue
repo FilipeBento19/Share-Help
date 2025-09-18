@@ -275,6 +275,13 @@ const wordtext = computed(() => text.split(' '))
 }
 
 @media (max-width: 360px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    padding: 0 10px;
+  }
+  
   .split-word {
     font-size: 1.3rem;
   }
