@@ -95,13 +95,14 @@ const onExitComplete = () => {
 
           </div>
         </div>
-      </div>
+      </div>  
 
       <div v-else>
         <p>ONG não encontrada.</p>
       </div>
     </motion.div>
   </AnimatePresence>
+  
 </template>
 
 <style scoped>
@@ -234,5 +235,19 @@ h1 {
 
 .botao-doar:hover {
   background-color: #3367d6;
+}
+
+@media (max-width: 480px) {
+  .container-instituicao{
+    display: block;
+  }
+
+  .logo-container{
+    max-width: 500px;
+  }
+
+  .botao-doar{
+    width: 100%;
+  }
 }
 </style>

@@ -183,7 +183,6 @@ const wordtext = computed(() => text.split(' '))
   font-weight: 900;
 }
 
-
 /* ShareHelp Recomenda */
 .sharehelp-recomenda {
   padding: 60px 20px;
@@ -375,51 +374,6 @@ const wordtext = computed(() => text.split(' '))
   transform: translateY(-2px);
 }
 
-.institution-description {
-  font-size: 0.9em;
-  color: #6b7280;
-  margin-bottom: 15px;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.institution-meta {
-  margin-bottom: 15px;
-}
-
-.meta-item {
-  font-size: 0.8em;
-  color: #6b7280;
-  margin-bottom: 5px;
-}
-
-.meta-item strong {
-  color: #1f2937;
-}
-
-.filtros-container {
-  margin-top: 8px;
-}
-
-.filtros-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 5px;
-}
-
-.filtro-tag-small {
-  background: #e0e7ff;
-  color: #3730a3;
-  padding: 2px 6px;
-  border-radius: 8px;
-  font-size: 0.7em;
-  font-weight: 500;
-}
-
 /* Instituições Disponíveis */
 .instituicoes-disponiveis {
   padding: 60px 20px;
@@ -441,10 +395,11 @@ const wordtext = computed(() => text.split(' '))
 
 .institutions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .institution-card {
@@ -453,7 +408,7 @@ const wordtext = computed(() => text.split(' '))
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   transition: all 0.3s ease;
-  min-height: 450px;
+  height: 520px; /* Altura fixa */
   display: flex;
   flex-direction: column;
 }
@@ -475,7 +430,6 @@ const wordtext = computed(() => text.split(' '))
 .institution-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 .institution-info {
@@ -484,6 +438,7 @@ const wordtext = computed(() => text.split(' '))
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .institution-info h4 {
@@ -492,6 +447,58 @@ const wordtext = computed(() => text.split(' '))
   color: #1f2937;
   margin-bottom: 8px;
   line-height: 1.3;
+  height: 32px; /* Altura fixa para título */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.institution-description {
+  font-size: 0.9em;
+  color: #6b7280;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  height: 65px; /* Altura fixa para descrição */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.institution-meta {
+  flex: 1;
+  overflow: hidden;
+}
+
+.meta-item {
+  font-size: 0.8em;
+  color: #6b7280;
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+
+.meta-item strong {
+  color: #1f2937;
+}
+
+.filtros-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 5px;
+  max-height: 45px; /* Limita altura das tags */
+  overflow: hidden;
+}
+
+.filtro-tag-small {
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.7em;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .btn-doar-instituicao {
@@ -516,7 +523,13 @@ const wordtext = computed(() => text.split(' '))
 @media (max-width: 1024px) {
   .institutions-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 25px;
+    max-width: 900px;
+    padding: 0 15px;
+  }
+  
+  .institution-card {
+    height: 480px;
   }
   
   .topo {
@@ -527,8 +540,6 @@ const wordtext = computed(() => text.split(' '))
     font-size: 2.2rem;
   }
 
-  
-  
   .banner-text {
     font-size: 1rem;
   }
@@ -538,7 +549,31 @@ const wordtext = computed(() => text.split(' '))
   .institutions-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    max-width: 500px;
+    max-width: 600px;
+    padding: 0 10px;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 30px 10px;
+  }
+  
+  .institution-card {
+    height: 450px;
+  }
+  
+  .institution-info {
+    padding: 15px;
+  }
+  
+  .institution-info h4 {
+    font-size: 1.1em;
+    height: 28px;
+  }
+  
+  .institution-description {
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
   }
   
   .topo {
@@ -549,15 +584,6 @@ const wordtext = computed(() => text.split(' '))
   .topo .banner {
     padding: 0 5%;
     text-align: center;
-  }
-
-  .institution-info {
-    padding: 15px;
-    
-  }
-  
-  .btn-doar-instituicao{
-    padding-bottom: 30px;
   }
 
   .split-word {
@@ -571,10 +597,6 @@ const wordtext = computed(() => text.split(' '))
     margin: 1rem auto 0;
   }
   
-  .instituicoes-disponiveis {
-    padding: 30px 4%;
-  }
-  
   .instituicoes-disponiveis h2 {
     font-size: 1.7rem;
   }
@@ -583,23 +605,65 @@ const wordtext = computed(() => text.split(' '))
     font-size: 0.95rem;
     margin-bottom: 30px;
   }
-  
-  .institution-card {
-    min-height: 380px;
-  }
-  
-  .institution-image {
-    height: 160px;
-  }
 }
 
 @media (max-width: 480px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 350px;
+    padding: 0 5px;
+  }
+
+  .institution-image {
+    max-height: 160px;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 25px 5px;
+  }
+  
+  .institution-card {
+    height: 320px;
+  }
+
+  .institution-info h4 {
+    font-size: 1em;
+    height: 20px;
+    -webkit-line-clamp: 1;
+  }
+  
+  .institution-description {
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
+    margin-bottom: 4px;
+  }
+
+  .meta-item {
+    display: none;
+  }
+
+  .institution-meta{
+    display: none;
+  }
+
+  .filtros-list {
+    display: none;
+  }
+  
+  .btn-doar-instituicao {
+    padding: 3px 10px 8px 10px;
+    font-size: 0.8em;
+  }
+  
   .topo {
     height: 35vh;
   }
   
   .split-word {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+    padding-bottom: 10px;
   }
   
   .banner-text {
@@ -614,39 +678,6 @@ const wordtext = computed(() => text.split(' '))
     font-size: 0.9rem;
     margin-bottom: 25px;
   }
-  
-  .institution-info {
-    max-height: 280px;
-    flex: 1;
-  }
-  
-  .institution-info h4 {
-    font-size: 1rem;
-  }
-  
-  .institution-description {
-    font-size: 0.8rem;
-  }
-  
-  .meta-item {
-    font-size: 0.7rem;
-  }
-  
-  .btn-doar-instituicao {
-    padding: 8px 10px;
-    font-size: 0.8rem;
-  }
-  
-  .institution-description {
-  font-size: 0.9em;
-  color: #6b7280;
-  margin-bottom: 15px;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2.3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 }
 
 @media (max-width: 360px) {
@@ -658,11 +689,8 @@ const wordtext = computed(() => text.split(' '))
     font-size: 0.85rem;
   }
 
-  
-  
   .institution-card {
     min-height: 400px;
   }
 }
-
 </style>

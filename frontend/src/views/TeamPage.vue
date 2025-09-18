@@ -7,17 +7,24 @@ import FooterComponent from '@/components/FooterComponent.vue';
   <div class="nossa-equipe-container">
     <div class="equipe-content">
       <!-- Card da imagem grande -->
-      <div class="image-card">
-        <img src="/icons/equipe.jpg" alt="Imagem da equipe" class="team-image">
-        <div class="card-footer">
-          <h1 class="titulo-principal">Equipe Sharehelp</h1>
+      <div class="down">
+        <div class="image-card">
+          <img src="/icons/equipe.jpg" alt="Imagem da equipe" class="team-image">
+          <div class="card-footer">
+            <h1 class="titulo-principal">Equipe Sharehelp</h1>
+          </div>
         </div>
+        <div class="ourhistory">  
+          <h1>Nossa Historia</h1>
+          <p>Nossa equipe nasceu da vontade em comum de ajudar quem precisa. Sempre tivemos o desejo de doar para ONGs locais de Joinville, mas não sabíamos exatamente onde ou como fazer isso. A partir dessa dificuldade, surgiu a ideia de criar um site que facilitasse tanto a comunicação quanto as doações entre moradores e instituições de caridade da cidade. Com apenas 5 amigos, trabalhamos juntos por 2 meses no desenvolvimento do projeto para o hackathon do IFC Campus Araquari, onde estudamos. Foi uma jornada desafiadora, mas muito gratificante, que uniu nossa paixão por tecnologia e solidariedade em uma iniciativa capaz de transformar pequenas ações em grandes impactos para a comunidade.</p>
+        </div>
+
       </div>
 
       <!-- Membros da equipe -->
       <div class="members-section">
         <div class="membro-item">
-          <img src="/icons/arthurteam.png" alt="Arthur Cândido Benk" class="avatar">
+          <img src="/icons/arthurteam.jpg" alt="Arthur Cândido Benk" class="avatar">
           <div class="info-container">
             <h3 class="nome">Arthur Cândido Benk</h3>
             <p class="cargo">UI/UX - Design Figma</p>
@@ -43,7 +50,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
         </div>
 
         <div class="membro-item">
-          <img src="/icons/filipeteam.png" alt="Filipe Bento dos Santos" class="avatar">
+          <img src="/icons/filipeteam.jpg" alt="Filipe Bento dos Santos" class="avatar">
           <div class="info-container">
             <h3 class="nome">Filipe Bento dos Santos</h3>
             <p class="cargo">Frontend</p>
@@ -97,13 +104,18 @@ import FooterComponent from '@/components/FooterComponent.vue';
 .equipe-content {
   display: flex;
   gap: 40px;
-  width: 95%;
+  width: 80%;
   max-width: 1400px;
   margin: 40px auto;
 }
 
-/* Card da imagem */
-.image-card {
+.down{
+  flex-direction: column;
+}
+
+/* Our history */
+
+.ourhistory {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -111,17 +123,44 @@ import FooterComponent from '@/components/FooterComponent.vue';
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-  max-height: 40vh;
+  height: 40vh;
+  max-width: 568.688px;
+  padding: 15px 20px 20px 20px;
 }
+
+.ourhistory h1 {
+  font-size: 1.7rem;
+  font-weight: 580;
+  color: #2563eb;
+}
+
+.ourhistory p {
+  font-weight: 400;
+  font-size: 1.0rem;
+}
+
+
+/* Card da imagem */
+.image-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  max-height: 40vh;
+  margin-bottom: 15px;
+}
+
 
 .team-image {
   width: 100%;
   height: 320px;
-  object-fit: cover;
+  
 }
 
 .card-footer {
-  padding: 20px;
+  padding-left: 20px;
   text-align: left;
 }
 
@@ -225,7 +264,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
     margin: 15px auto;
     display: block;
   }
-  
+
   .team-image {
     height: 180px;
   }
@@ -292,6 +331,11 @@ import FooterComponent from '@/components/FooterComponent.vue';
   .social-links {
     justify-content: flex-start;
   }
+
+  .ourhistory {
+    max-height: 300px;
+    overflow-y: auto;
+  }
 }
 
 @media (max-width: 400px) {
@@ -299,6 +343,8 @@ import FooterComponent from '@/components/FooterComponent.vue';
     flex-direction: column;
     text-align: center;
   }
+
+  
 
   .avatar {
     margin-right: 0;
