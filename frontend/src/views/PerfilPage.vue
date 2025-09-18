@@ -1,6 +1,7 @@
   <template>
     <!-- Verificação se usuário está logado -->
     <div v-if="!user && !isLoading" class="box-nao-logado">
+
     </div>
 
     <div class="main-container" v-else>
@@ -283,6 +284,11 @@ const resumoPorOng = computed(() => {
 </script>
 
 <style scoped>
+.box-nao-logado{
+  width: 10vw;
+  height: 1000vw;
+}
+
 .main-container {
   max-width: 1500px;
   margin: 0 auto;
@@ -336,7 +342,7 @@ const resumoPorOng = computed(() => {
       color: #2563EB;
     }
 
-    .nav-icon{
+    .nav-icon {
       width: 34px;
     }
   }
