@@ -30,6 +30,7 @@ const routes = [
     path: '/perfil',
     name: 'Perfil',
     component: PerfilPage,
+    meta: { requiresAuth: true }
   },
   {
     path: '/mapinterative',
@@ -119,6 +120,16 @@ const router = createRouter({
       return { left: 0, top: 0 }
     }
   },
+})
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('access_token')
+
+  if (to.meta.requiresAuth && !token) { 
+    next('/login') // redireciona para login
+  } else {
+    next()
+  }
 })
 
 export default router

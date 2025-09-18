@@ -1,8 +1,6 @@
   <template>
     <!-- Verificação se usuário está logado -->
     <div v-if="!user && !isLoading" class="box-nao-logado">
-      <p>Você não está logado.</p>
-      <router-link to="/login">Ir para Login</router-link>
     </div>
 
     <div class="main-container" v-else>
@@ -10,16 +8,15 @@
       <aside class="sidebar">
         <h2 class="sidebar-title">Gerenciamento de conta</h2>
         <nav class="sidebar-nav">
-          <a href="#" class="nav-item">
-            <span class="nav-icon">🔐</span>
+          <a href="#login" class="nav-item">
+            <img src="/public/icons/key-solid-full.svg" alt="" class="nav-icon">
             Login e conta
           </a>
-          <a href="#" class="nav-item">
-            <span class="nav-icon">⭐</span>
-            ONGs favoritadas
+          <a href="#ongs" class="nav-item">
+            <img src="/public/icons/star-solid-full.svg" alt="" class="nav-icon"> ONGs favoritadas
           </a>
-          <a href="#" class="nav-item">
-            <span class="nav-icon">📊</span>
+          <a href="#doacoes" class="nav-item">
+            <img src="/public/icons/signal-solid-full.svg" alt="" class="nav-icon">
             Registros de doação
           </a>
         </nav>
@@ -48,11 +45,11 @@
               </label>
               <label for="">
                 Senha
-                <input type="password" />
+                <input type="password" placeholder="••••••••" />
               </label>
               <label for="">
                 Confirmar senha
-                <input type="password" />
+                <input type="password" placeholder="••••••••" />
               </label>
               <div class="acoes">
                 <button @click="logout" class="vermelho">Desconectar</button>
@@ -169,12 +166,17 @@
         </div>
       </main>
     </div>
+    <div>
+      <FooterComponent />
+    </div>
   </template>
 
 <script setup>
+import Swal from "sweetalert2"
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import ongs from "@/data/ongsData";
+import FooterComponent from "@/components/FooterComponent.vue";
 const favoritas = ref([])
 const tipoTexto = ref("simplificada")
 
@@ -213,8 +215,14 @@ const logout = () => {
   localStorage.removeItem("refresh_token");
   localStorage.removeItem("keepLoggedIn");
   user.value = null;
-  alert("Você saiu da conta.");
-  window.location.href = "/login";
+  Swal.fire({
+    icon: 'info',
+    title: 'Você saiu da conta',
+    timer: 2000,            // 2 segundos
+    showConfirmButton: false
+  }); setTimeout(() => {
+    window.location.href = "/perfil"
+  }, 2200)
 };
 
 const favoritasList = computed(() => {
@@ -328,6 +336,9 @@ const resumoPorOng = computed(() => {
       color: #2563EB;
     }
 
+    .nav-icon{
+      width: 34px;
+    }
   }
 }
 

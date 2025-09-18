@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue"
 import axios from "axios"
+import Swal from "sweetalert2"
 defineEmits(['createAccount'])
 
 
@@ -32,10 +33,32 @@ const login = async () => {
       localStorage.removeItem("keepLoggedIn")
     }
 
-    error.value = null
-    alert("Login realizado com sucesso!")
+    Swal.fire({
+      title: "Login realizado!",
+      text: "Bem-vindo de volta!",
+      icon: "success",
+      timer: 2000,
+      showConfirmButton: false,
+      background: "#ffffff",
+      color: "#111827"
+    })
+
+    // Redireciona após o alerta fechar
+    setTimeout(() => {
+      window.location.href = "/perfil"
+    }, 2200)
   } catch {
     error.value = "Usuário ou senha incorretos."
+
+    Swal.fire({
+      title: "Erro",
+      text: "Usuário ou senha incorretos.",
+      icon: "error",
+      confirmButtonText: "Tentar novamente",
+      confirmButtonColor: "#DC2626",
+      background: "#ffffff",
+      color: "#111827"
+    })
   } finally {
     isLoading.value = false
   }
@@ -48,35 +71,19 @@ const login = async () => {
 
     <!-- Usuário -->
     <div class="input-group">
-      <input
-        v-model="email"
-        type="text"
-        placeholder="Nome de Usuário"
-        class="input-field"
-        :disabled="isLoading"
-      />
+      <input v-model="email" type="text" placeholder="Nome de Usuário" class="input-field" :disabled="isLoading" />
     </div>
 
     <!-- Senha -->
     <div class="input-group">
-      <input
-        v-model="password"
-        type="password"
-        placeholder="Senha"
-        class="input-field"
-        :disabled="isLoading"
-        @keyup.enter="login"
-      />
+      <input v-model="password" type="password" placeholder="Senha" class="input-field" :disabled="isLoading"
+        @keyup.enter="login" />
     </div>
 
     <!-- Checkbox manter login -->
     <div class="checkbox-group">
       <label class="checkbox-label">
-        <input
-          v-model="keepLoggedIn"
-          type="checkbox"
-          class="checkbox"
-        />
+        <input v-model="keepLoggedIn" type="checkbox" class="checkbox" />
         <span class="checkbox-text">Manter login</span>
       </label>
     </div>
@@ -85,12 +92,7 @@ const login = async () => {
     <div v-if="error" class="error-message">{{ error }}</div>
 
     <!-- Botão -->
-    <button
-      @click="login"
-      :disabled="isLoading"
-      class="submit-button"
-      :class="{ 'loading': isLoading }"
-    >
+    <button @click="login" :disabled="isLoading" class="submit-button" :class="{ 'loading': isLoading }">
       <div class="arrow-icon">
         <img src="/icons/enviarlogin.png" alt="login" />
       </div>
@@ -197,9 +199,12 @@ const login = async () => {
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.7;
   }

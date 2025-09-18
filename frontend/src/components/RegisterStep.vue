@@ -1,6 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import axios from 'axios'
+import Swal from "sweetalert2"
+
 
 // Estado
 const step = ref(1)
@@ -108,7 +110,16 @@ const handleNext = async () => {
         username: data.value.username,
         password: data.value.password
       })
-      alert('Usuário registrado com sucesso!')
+      await Swal.fire({
+        title: "Cadastro concluído!",
+        text: "Sua conta foi criada com sucesso. Faça login para continuar.",
+        icon: "success",
+        confirmButtonText: "Fazer login",
+        confirmButtonColor: "#4F46E5",
+        background: "#ffffff",
+        color: "#111827"
+      })
+      window.location.href = "/login"
       step.value = 1
       data.value = {
         email: '',
@@ -126,8 +137,8 @@ const handleNext = async () => {
       error.value = err.message || 'Erro inesperado'
     }
   } finally {
-  isLoading.value = false
-}
+    isLoading.value = false
+  }
 }
 
 const handleResend = async () => {
