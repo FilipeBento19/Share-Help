@@ -3,7 +3,7 @@ const ongs = [
   {
     id: 'lar-abdon-batista',
     categoria: 'criancas',
-    title: 'Associação de Amigos das Crianças do Lar Abdon Batista',
+    title: 'Lar Abdon Batista',
     description: 'Toda criança merece um lar seguro e cheio de carinho. No Lar Abdon Batista, acolhemos aquelas que, por diferentes motivos, não podem estar com suas famílias no momento. Aqui, elas encontram proteção, cuidado e oportunidades para um novo começo. Nosso maior compromisso é oferecer um ambiente acolhedor enquanto trabalhamos para fortalecer seus vínculos familiares e garantir um futuro com mais segurança e esperança.',
     filtros: ['roupas', 'alimentos'],
     telefone: '(47) 3422-6944',
@@ -16,7 +16,7 @@ const ongs = [
   {
     id: 'omunga',
     categoria: 'criancas',
-    title: 'OMUNGA Grife Social e Instituto',
+    title: 'OMUNGA',
     description: 'A OMUNGA é uma organização social de Joinville que nasceu como uma grife em 2013 e hoje atua como instituto, levando educação para comunidades vulneráveis no Brasil e na África. Por meio da venda de produtos, doações e projetos, a OMUNGA implementa bibliotecas, capacita professores e incentiva a leitura. Seu nome, de origem angolana, significa "união". Já impactou milhares de criancas e educadores em regiões como o sertão nordestino, Amazônia e Angola.',
     filtros: ['livros'],
     telefone: '(47) 33056716',
@@ -29,7 +29,7 @@ const ongs = [
   {
     id: 'missao-crianca-jardim-paraiso',
     categoria: 'criancas',
-    title: 'Missão Criança Jardim Paraíso',
+    title: 'Missão Criança',
     description: 'Há 28 anos, o Projeto Missão Criança tem transformado vidas no Jardim Paraíso, oferecendo 250 vagas no contraturno escolar para crianças e adolescentes. Movido pelo amor de Deus, o projeto promove desenvolvimento social, emocional e espiritual, em um ambiente seguro e acolhedor. Mais do que reforço escolar e oficinas, o Missão Criança oferece esperança, orientação e apoio às famílias, impactando toda a comunidade.',
     filtros: ['brinquedos', 'roupas'],
     telefone: '(47) 39031827',
@@ -42,7 +42,7 @@ const ongs = [
   {
     id: 'ecos-esperanca',
     categoria: 'criancas',
-    title: 'Associação Ecos de Esperança',
+    title: 'Ecos de Esperança',
     description: 'Instituição cristã, não-governamental e sem fins lucrativos, dedicada à proteção integral de crianças e adolescentes e à promoção de seus direitos. Nossa missão é lutar por igualdade, justiça social e dignidade para todos, fundamentados nos princípios do Evangelho de Cristo.',
     filtros: ['roupas', 'brinquedos', 'alimentos'],
     telefone: '(47) 34230104',
@@ -68,7 +68,7 @@ const ongs = [
   {
     id: 'casa-do-adalto',
     categoria: 'criancas',
-    title: 'Associação Casa do Adalto',
+    title: 'Casa do Adalto',
     description: 'Instituição de apoio a crianças e adolescentes com neoplasia, fundada em 2002 em memória de Adalto, diagnosticado com câncer aos 4 anos. Atua de forma beneficente, oferecendo acolhimento e suporte.',
     filtros: ['roupas', 'alimentos'],
     telefone: '(47) 34381629',
@@ -135,7 +135,7 @@ const ongs = [
   {
     id: 'ventura-residence',
     categoria: 'idosos',
-    title: 'Ventura Residence - Residencial de Idosos',
+    title: 'Ventura Residencial',
     description: 'Residencial especializado em cuidados de saúde, nutrição, fisioterapia e apoio social para idosos. Ambiente humanizado e profissional.',
     filtros: ['alimentos'],
     telefone: '(47) 30296600',
@@ -148,7 +148,7 @@ const ongs = [
   {
     id: 'lar-renascer',
     categoria: 'idosos',
-    title: 'Associação Beneficente Lar Renascer',
+    title: 'Lar Renascer',
     description: 'Organização dedicada ao acolhimento e cuidado de mulheres idosas em situação de vulnerabilidade, oferecendo dignidade, proteção e qualidade de vida.',
     filtros: ['roupas', 'livros', 'alimentos'],
     telefone: '(47) 3227-7910',
@@ -161,7 +161,7 @@ const ongs = [
   {
     id: 'joao-de-paula',
     categoria: 'idosos',
-    title: 'Centro Integrado João de Paula - Exército da Salvação',
+    title: 'Exército da Salvação',
     description: 'Instituição que oferece apoio e desenvolvimento social, com foco em idosos e imigrantes. Trabalha para promover envelhecimento saudável e autonomia.',
     filtros: ['alimentos', 'roupas'],
     telefone: '(47) 3453-0588',
@@ -174,7 +174,7 @@ const ongs = [
   {
     id: 'lar-aconchego',
     categoria: 'idosos',
-    title: 'Casa de Repouso Lar Aconchego',
+    title: 'Lar Aconchego',
     description: 'Ambiente acolhedor com acompanhamento 24h por profissionais de saúde. Oferece atividades de bem-estar e atendimento humanizado.',
     filtros: ['alimentos', 'livros'],
     telefone: '(47) 99684-3724',
@@ -187,7 +187,7 @@ const ongs = [
   {
     id: 'bom-retiro',
     categoria: 'idosos',
-    title: 'Casa de Repouso Bom Retiro',
+    title: 'Repouso Bom Retiro',
     description: 'Espaço dedicado ao cuidado integral de idosos, com equipe disponível 24h, oferecendo conforto e atenção especializada.',
     filtros: ['alimentos', 'livros'],
     telefone: '(47) 98494-7572',
@@ -241,7 +241,7 @@ const ongs = [
   {
     id: 'casa-santo-egidio',
     categoria: 'moradores-de-rua',
-    title: 'Casa de Passagem Santo Egídio',
+    title: 'Passagem Santo Egídio',
     description: 'Casa de passagem que acolhe pessoas em situação de rua, migrantes e egressos do sistema prisional. Encaminhamentos feitos pelo Centro Pop de Joinville.',
     filtros: ['roupas', 'alimentos'],
     telefone: '(47) 997887356',
@@ -267,7 +267,7 @@ const ongs = [
   {
     id: 'crepsr',
     categoria: 'moradores-de-rua',
-    title: 'Centro de Referência População em Situação de Rua',
+    title: 'Centro Pop',
     description: 'Somos um espaço de acolhimento e atendimento voltado à população em situação de rua. Trabalhamos para garantir acesso a direitos, promover autonomia e reintegração social. Oferecemos apoio psicossocial, orientação e encaminhamentos para diversos serviços. Valorizamos o cuidado, o respeito e a escuta ativa. Nosso compromisso é com a dignidade e a inclusão.',
     filtros: ['roupas', 'alimentos', 'brinquedos', 'livros'],
     telefone: '(47) 3422-7445',
@@ -280,7 +280,7 @@ const ongs = [
   {
     id: 'restaurante-herbert',
     categoria: 'moradores-de-rua',
-    title: 'Restaurante Popular Herbert José de Souza',
+    title: 'Restaurante Popular UND1',
     description: 'Oferecemos refeições saudáveis e acessíveis à população, com foco em segurança alimentar e inclusão. Trabalhamos para garantir que todos tenham acesso a uma alimentação digna e equilibrada. Atendemos principalmente pessoas em situação de vulnerabilidade. Prezamos pela qualidade dos alimentos e pelo atendimento humanizado. Nosso objetivo é combater a fome com respeito e cuidado.',
     filtros: ['alimentos'],
     telefone: '(47) 3433-0153',
@@ -293,7 +293,7 @@ const ongs = [
   {
     id: 'restaurante-zilda',
     categoria: 'moradores-de-rua',
-    title: 'Restaurante Popular Zilda Arns',
+    title: 'Restaurante Popular UND2',
     description: 'Somos um restaurante voltado a oferecer refeições nutritivas a preços populares, promovendo dignidade por meio da alimentação. Buscamos atender quem mais precisa com respeito, qualidade e acolhimento. Nossa equipe trabalha para garantir refeições seguras, equilibradas e saborosas. Valorizamos o direito à alimentação como base para a cidadania. Acreditamos que ninguém deve passar fome.',
     filtros: ['alimentos'],
     telefone: '(47) 3804-0154',
@@ -306,7 +306,7 @@ const ongs = [
   {
     id: 'casa-de-levi',
     categoria: 'moradores-de-rua',
-    title: 'Casa de Levi - Comunidade Eis-me Aqui',
+    title: 'Comunidade Eis-me Aqui',
     description: 'Somos uma iniciativa comunitária voltada ao acolhimento de pessoas em situação de vulnerabilidade. Atuamos com empatia, escuta e apoio às famílias que enfrentam dificuldades. Acreditamos na transformação social por meio do cuidado com o próximo. Trabalhamos para restaurar a dignidade e a esperança de quem nos procura. Nossa missão é ser presença e apoio nos momentos mais difíceis.',
     filtros: ['alimentos', 'roupas'],
     telefone: '(47) 9718-4655',
@@ -319,7 +319,7 @@ const ongs = [
   {
     id: 'sementes-do-futuro',
     categoria: 'moradores-de-rua',
-    title: 'Centro de Atendimento às Famílias Carentes Sementes do Futuro',
+    title: 'AACC',
     description: 'Trabalhamos para apoiar famílias em situação de vulnerabilidade com ações que promovem dignidade e desenvolvimento. Atuamos com foco na proteção de crianças, apoio aos responsáveis e fortalecimento de vínculos. Acreditamos na educação, na solidariedade e no cuidado como ferramentas de transformação. Nosso ambiente é acolhedor, seguro e voltado ao bem-estar. Somos sementes de esperança para o futuro.',
     filtros: ['alimentos', 'livros', 'roupas', 'brinquedos'],
     telefone: '(47) 9989-4529',
@@ -332,7 +332,7 @@ const ongs = [
   {
     id: 'aaprn',
     categoria: 'moradores-de-rua',
-    title: 'Associação de Apoio a Reabilitação de Pessoas Necessitadas',
+    title: 'AACC',
     description: 'Somos uma entidade dedicada à reabilitação social, emocional e física de pessoas em situação de vulnerabilidade. Oferecemos acolhimento, orientação e atividades que promovem autonomia e autoestima. Trabalhamos com empatia e responsabilidade, valorizando cada história e trajetória. Buscamos restaurar vidas por meio do apoio contínuo e da escuta ativa. Acreditamos na superação com dignidade.',
     filtros: ['livros', 'alimentos', 'roupas'],
     telefone: '(47) 3029-1091',
@@ -345,7 +345,7 @@ const ongs = [
   {
     id: 'caps',
     categoria: 'moradores-de-rua',
-    title: 'Centro de Atenção Psicossocial em Álcool e outras Drogas',
+    title: 'CAPS',
     description: 'Atuamos no cuidado integral de pessoas que enfrentam problemas relacionados ao uso de álcool e outras drogas. Oferecemos atendimento multiprofissional, terapias em grupo e acompanhamento individual. Acreditamos na recuperação por meio do vínculo e da escuta qualificada. Nosso espaço é aberto, acolhedor e sem julgamentos. Trabalhamos pela saúde mental com dignidade e respeito.',
     filtros: ['alimentos', 'livros'],
     telefone: '(47) 3423-3367',

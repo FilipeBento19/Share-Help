@@ -33,7 +33,7 @@ const finalizeDonation = () => {
     tipo: donationType.value,
     pagamento: selectedPayment.value
   })
-  emit('fechar') // agora avisa o pai
+  emit('fechar')
 }
 </script>
 
@@ -140,6 +140,7 @@ const finalizeDonation = () => {
   align-items: center;
   justify-content: center;
   z-index: 999;
+  padding: 20px;
 }
 
 .divprimary {
@@ -151,35 +152,7 @@ const finalizeDonation = () => {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1000;
-}
-
-.open-button {
-  background: #4285F4;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.open-button:hover {
-  background: #3367D6;
-}
-
-.divprimary {
-  width: 90%;
-  max-width: 900px;
-  height: auto;
-  min-height: 500px;
-  background: linear-gradient(180deg, #E8E7FF 0%, #F8F9FA 100%);
-  padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  border-radius: 12px;
-  margin: 20px auto;
-  position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .header {
@@ -196,7 +169,6 @@ const finalizeDonation = () => {
   display: flex;
   gap: 30px;
   padding-top: 60px;
-  /* Space for the header */
   min-height: 400px;
 }
 
@@ -356,8 +328,6 @@ const finalizeDonation = () => {
   padding-top: 3px;
 }
 
-
-
 .payment-info {
   flex: 1;
 }
@@ -427,5 +397,589 @@ const finalizeDonation = () => {
   color: #999;
   cursor: not-allowed;
   transform: none;
+}
+
+/* ===== RESPONSIVIDADE - APENAS DIMINUINDO PROPORCIONALMENTE ===== */
+
+/* Tablets grandes */
+@media (max-width: 1024px) {
+  .overlay {
+    padding: 16px;
+  }
+  
+  .divprimary {
+    max-width: 800px;
+    padding: 18px;
+    border-radius: 10px;
+  }
+  
+  .header {
+    top: 18px;
+    left: 18px;
+    margin-bottom: 28px;
+  }
+  
+  .content-wrapper {
+    gap: 26px;
+    padding-top: 54px;
+    min-height: 360px;
+  }
+  
+  .valor h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .value-grid {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  
+  .value-button {
+    padding: 18px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+  
+  .custom-value {
+    margin-bottom: 28px;
+  }
+  
+  .custom-input {
+    padding: 18px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+  
+  .donation-type {
+    margin-bottom: 36px;
+  }
+  
+  .donation-type h3 {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+  
+  .radio-group {
+    gap: 20px;
+  }
+  
+  .radio-label {
+    font-size: 15px;
+  }
+  
+  .form h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .payment-options {
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  
+  .payment-option {
+    padding: 14px 18px;
+    border-radius: 10px;
+  }
+  
+  .payment-icon {
+    width: 28px;
+    height: 28px;
+    margin-right: 14px;
+  }
+  
+  .payment-name {
+    font-size: 15px;
+  }
+  
+  .payment-desc {
+    font-size: 13px;
+  }
+  
+  .finalize-button {
+    padding: 14px 20px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .overlay {
+    padding: 12px;
+  }
+  
+  .divprimary {
+    max-width: 700px;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  
+  .header {
+    top: 16px;
+    left: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .back-button {
+    padding: 6px;
+  }
+  
+  .back-button svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .content-wrapper {
+    gap: 22px;
+    padding-top: 48px;
+    min-height: 320px;
+  }
+  
+  .valor h1 {
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
+  
+  .value-grid {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .value-button {
+    padding: 16px;
+    font-size: 15px;
+    border-radius: 8px;
+  }
+  
+  .custom-value {
+    margin-bottom: 24px;
+  }
+  
+  .custom-input {
+    padding: 16px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+  
+  .donation-type {
+    margin-bottom: 32px;
+  }
+  
+  .donation-type h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .radio-group {
+    gap: 18px;
+  }
+  
+  .radio-option input[type="radio"] {
+    transform: scale(1.1);
+    margin-right: 6px;
+  }
+  
+  .radio-label {
+    font-size: 14px;
+  }
+  
+  .form h2 {
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+  
+  .payment-options {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .payment-option {
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
+  
+  .payment-icon {
+    width: 26px;
+    height: 26px;
+    margin-right: 12px;
+  }
+  
+  .payment-name {
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  
+  .payment-desc {
+    font-size: 12px;
+  }
+  
+  .radio-indicator {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .radio-indicator.active::after {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .finalize-button {
+    padding: 12px 18px;
+    font-size: 14px;
+    border-radius: 8px;
+    gap: 6px;
+  }
+  
+  .finalize-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Smartphones grandes */
+@media (max-width: 640px) {
+  .overlay {
+    padding: 10px;
+  }
+  
+  .divprimary {
+    max-width: 600px;
+    padding: 14px;
+  }
+  
+  .header {
+    top: 14px;
+    left: 14px;
+  }
+  
+  .content-wrapper {
+    gap: 18px;
+    padding-top: 42px;
+    min-height: 280px;
+  }
+  
+  .valor h1 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  
+  .value-grid {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  
+  .value-button {
+    padding: 14px;
+    font-size: 14px;
+  }
+  
+  .custom-value {
+    margin-bottom: 20px;
+  }
+  
+  .custom-input {
+    padding: 14px;
+    font-size: 13px;
+  }
+  
+  .donation-type {
+    margin-bottom: 28px;
+  }
+  
+  .donation-type h3 {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  
+  .radio-group {
+    gap: 16px;
+  }
+  
+  .radio-label {
+    font-size: 13px;
+  }
+  
+  .form h2 {
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+  
+  .payment-options {
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  
+  .payment-option {
+    padding: 10px 14px;
+  }
+  
+  .payment-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .payment-name {
+    font-size: 13px;
+  }
+  
+  .payment-desc {
+    font-size: 11px;
+  }
+  
+  .radio-indicator {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .radio-indicator.active::after {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .finalize-button {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .finalize-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  .overlay {
+    padding: 8px;
+  }
+  
+  .divprimary {
+    max-width: 500px;
+    padding: 12px;
+  }
+  
+  .header {
+    top: 12px;
+    left: 12px;
+  }
+  
+  .content-wrapper {
+    gap: 14px;
+    padding-top: 36px;
+    min-height: 240px;
+  }
+  
+  .valor h1 {
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+  
+  .value-grid {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .value-button {
+    padding: 12px;
+    font-size: 13px;
+  }
+  
+  .custom-value {
+    margin-bottom: 16px;
+  }
+  
+  .custom-input {
+    padding: 12px;
+    font-size: 12px;
+  }
+  
+  .donation-type {
+    margin-bottom: 24px;
+  }
+  
+  .donation-type h3 {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .radio-group {
+    gap: 14px;
+  }
+  
+  .radio-option input[type="radio"] {
+    transform: scale(1);
+    margin-right: 4px;
+  }
+  
+  .radio-label {
+    font-size: 12px;
+  }
+  
+  .form h2 {
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  
+  .payment-options {
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  
+  .payment-option {
+    padding: 8px 12px;
+  }
+  
+  .payment-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+  
+  .payment-name {
+    font-size: 12px;
+  }
+  
+  .payment-desc {
+    font-size: 10px;
+  }
+  
+  .radio-indicator {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .radio-indicator.active::after {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .finalize-button {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+  
+  .finalize-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Smartphones pequenos */
+@media (max-width: 360px) {
+  .overlay {
+    padding: 6px;
+  }
+  
+  .divprimary {
+    max-width: 400px;
+    padding: 10px;
+  }
+  
+  .header {
+    top: 10px;
+    left: 10px;
+  }
+  
+  .back-button {
+    padding: 4px;
+  }
+  
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .content-wrapper {
+    gap: 12px;
+    padding-top: 32px;
+    min-height: 200px;
+  }
+  
+  .valor h1 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .value-grid {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  
+  .value-button {
+    padding: 10px;
+    font-size: 12px;
+  }
+  
+  .custom-value {
+    margin-bottom: 14px;
+  }
+  
+  .custom-input {
+    padding: 10px;
+    font-size: 11px;
+  }
+  
+  .donation-type {
+    margin-bottom: 20px;
+  }
+  
+  .donation-type h3 {
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  
+  .radio-group {
+    gap: 12px;
+  }
+  
+  .radio-label {
+    font-size: 11px;
+  }
+  
+  .form h2 {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  
+  .payment-options {
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+  
+  .payment-option {
+    padding: 6px 10px;
+  }
+  
+  .payment-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+  }
+  
+  .payment-name {
+    font-size: 11px;
+  }
+  
+  .payment-desc {
+    font-size: 9px;
+  }
+  
+  .radio-indicator {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .finalize-button {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  
+  .finalize-button svg {
+    width: 12px;
+    height: 12px;
+  }
 }
 </style>
