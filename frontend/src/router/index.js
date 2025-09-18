@@ -8,7 +8,7 @@ import CriancaPage from '../views/CriancaPage.vue'
 import IdososPage from '../views/IdososPage.vue'
 import OngPage from '../views/OngPage.vue'
 import PerfilPage from '../views/PerfilPage.vue'
-import MapInterativePage from '../views/MapInterative.vue'
+import MapInterative from '../mapState/MapInterative.vue'
 import TeamPage from '../views/TeamPage.vue'
 
 const routes = [
@@ -34,7 +34,7 @@ const routes = [
   {
     path: '/mapinterative',
     name: 'Map',
-    component: MapInterativePage,
+    component: MapInterative,
   },
   {
     path: '/ourteam',

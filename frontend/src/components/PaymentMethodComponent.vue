@@ -10,9 +10,6 @@ const props = defineProps({
     default: () => ({})
   }
 });
-
-
-
 </script>
 
 <template>
@@ -127,7 +124,6 @@ const props = defineProps({
   margin-bottom: 16px;
 }
 
-
 .doacao-img {
   display: flex;
   flex-direction: column;
@@ -188,4 +184,232 @@ const props = defineProps({
   background: linear-gradient(135deg, #4285f4 0%, #3367d6 100%);
 }
 
+/* ===== RESPONSIVIDADE - APENAS DIMINUINDO PROPORCIONALMENTE ===== */
+
+/* Tablets grandes */
+@media (max-width: 1024px) {
+  .formas-doar-container {
+    padding: 8px 16px;
+  }
+  
+  .cards-container {
+    gap: 25px;
+  }
+  
+  .doacao-card {
+    width: 260px;
+    min-height: 260px;
+    padding: 26px 22px 22px 22px;
+    border-radius: 10px;
+  }
+  
+  .card-icon {
+    width: 55px;
+    height: 55px;
+    margin-bottom: 14px;
+  }
+  
+  .doacao-img {
+    padding-bottom: 14px;
+  }
+  
+  .doacao-card h2 {
+    font-size: 1.2rem;
+  }
+  
+  .doacao-card p {
+    font-size: 0.9rem;
+    margin: 14px 0 20px 0;
+  }
+  
+  .button {
+    padding: 11px 20px;
+    font-size: 0.9rem;
+    max-width: 180px;
+    border-radius: 7px;
+  }
+
+  
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .formas-doar-container {
+    padding: 6px 14px;
+  }
+  
+  .cards-container {
+    gap: 20px;
+    
+  }
+  
+  .doacao-card {
+    width: 240px;
+    min-height: 240px;
+    padding: 22px 18px 18px 18px;
+    border-radius: 8px;
+  }
+  
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 12px;
+  }
+  
+  .doacao-img {
+    padding-bottom: 12px;
+  }
+  
+  .doacao-card h2 {
+    font-size: 1.1rem;
+  }
+  
+  .doacao-card p {
+    font-size: 0.85rem;
+    margin: 12px 0 18px 0;
+  }
+  
+  .button {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    max-width: 160px;
+    border-radius: 6px;
+  }
+
+  
+
+}
+
+/* Smartphones grandes */
+@media (max-width: 640px) {
+  .formas-doar-container {
+    padding: 4px 12px;
+  }
+  
+  .cards-container {
+    gap: 16px;
+    
+  }
+  
+  .doacao-card {
+    width: 220px;
+    min-height: 220px;
+    padding: 18px 16px 16px 16px;
+  }
+  
+  .card-icon {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 10px;
+  }
+  
+  .doacao-img {
+    padding-bottom: 10px;
+  }
+  
+  .doacao-card h2 {
+    font-size: 1rem;
+  }
+  
+  .doacao-card p {
+    font-size: 0.8rem;
+    margin: 10px 0 16px 0;
+  }
+  
+  .button {
+    padding: 9px 16px;
+    font-size: 0.8rem;
+    max-width: 140px;
+  }
+  
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  .formas-doar-container {
+    padding: 2px 10px;
+    
+  }
+  
+  .cards-container {
+    gap: 12px;
+    
+  }
+  
+  .doacao-card {
+    width: 200px;
+    min-height: 200px;
+    padding: 16px 14px 14px 14px;
+    
+  }
+  
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+  }
+  
+  .doacao-img {
+    padding-bottom: 8px;
+  }
+  
+  .doacao-card h2 {
+    font-size: 0.9rem;
+  }
+  
+  .doacao-card p {
+    font-size: 0.75rem;
+    margin: 8px 0 14px 0;
+  }
+  
+  .button {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+    max-width: 120px;
+  }
+}
+
+/* Smartphones pequenos */
+@media (max-width: 360px) {
+  .formas-doar-container {
+    padding: 2px 8px;
+  }
+  
+  .cards-container {
+    gap: 10px;
+    
+  }
+  
+  .doacao-card {
+    width: 180px;
+    min-height: 180px;
+    padding: 14px 12px 12px 12px;
+  }
+  
+  .card-icon {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 6px;
+  }
+  
+  .doacao-img {
+    padding-bottom: 6px;
+  }
+  
+  .doacao-card h2 {
+    font-size: 0.8rem;
+  }
+  
+  .doacao-card p {
+    font-size: 0.7rem;
+    margin: 6px 0 12px 0;
+  }
+  
+  .button {
+    padding: 7px 12px;
+    font-size: 0.7rem;
+    max-width: 100px;
+  }
+  
+}
 </style>
