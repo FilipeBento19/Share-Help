@@ -1,19 +1,23 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import ongs from '@/data/ongsData'
 import PaymentComponent from '@/components/PaymentComponent.vue'
 
 const modalRef = ref(null)
 
-const abrirModal = () => {
+const selectedOngId = ref(null)
+const donationModal = ref(null)
+const abrirModal = (ong) => {
   modalRef.value.showModal = true
+  selectedOngId.value = ong
+  donationModal.value.showModal = true
 }
 
 const route = useRoute()
 const router = useRouter()
 
-const ongId = route.params.id
+const ongId = (route.params.id)
 
 const voltar = () => {
   if (window.history.length > 1) {
@@ -24,6 +28,28 @@ const voltar = () => {
 }
 
 const ong = ongs.find(o => o.id === ongId)
+
+const isFavorited = ref(false)
+
+onMounted(() => {
+  const saved = JSON.parse(localStorage.getItem('favoritas') || '[]')
+  isFavorited.value = saved.includes(ongId)
+})
+
+const toggleFavorite = () => {
+  let saved = JSON.parse(localStorage.getItem('favoritas') || '[]')
+
+  if (saved.includes(ongId)) {
+    saved = saved.filter(id => id !== ongId)
+    isFavorited.value = false
+  } else {
+    saved.push(ongId)
+    isFavorited.value = true
+  }
+
+  localStorage.setItem('favoritas', JSON.stringify(saved))
+}
+
 </script>
 
 <template>
@@ -50,10 +76,12 @@ const ong = ongs.find(o => o.id === ongId)
         </div>
 
         <div class="botao-container">
-          <button class="botao-doar" @click="abrirModal">Doar Agora</button>
-          <a href=""><img src="/icons/heart-light-full.svg" alt="" style="width: 40px; margin: 0 0 0 15px;"></a>
+          <button class="botao-doar" @click="abrirModal(ong)">Doar Agora</button>
+          <img @click="toggleFavorite"
+            :src="isFavorited ? '/icons/heart-solid-full.svg' : '/icons/heart-light-full.svg'" alt="favoritar"
+            class="button-heart" />
         </div>
-        <PaymentComponent ref="modalRef"/>
+        <PaymentComponent ref="modalRef" :ong="ong"/>
       </div>
     </div>
   </div>
@@ -90,7 +118,7 @@ const ong = ongs.find(o => o.id === ongId)
   margin-top: 1rem;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -170,4 +198,16 @@ h1 {
   background-color: #3367d6;
 }
 
+.button-heart {
+  width: 40px;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in;
+
+
+}
+
+.button-heart:hover {
+  transform: scale(1.2);
+}
 </style>

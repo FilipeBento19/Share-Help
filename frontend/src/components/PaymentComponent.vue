@@ -1,133 +1,147 @@
-<script setup>
-import { ref } from 'vue'
+  <script setup>
+  import { ref } from 'vue'
 
-const showModal = ref(false)
-
-const selectedValue = ref('')
-const customValue = ref('')
-const donationType = ref('unica')
-const selectedPayment = ref('')
-
-const predefinedValues = [25, 50, 100, 200]
-
-const selectValue = (value) => {
-  selectedValue.value = value
-  customValue.value = ''
-}
-
-const selectCustomValue = () => {
-  selectedValue.value = 'custom'
-}
-
-const selectPayment = (method) => {
-  selectedPayment.value = method
-}
-
-const finalizeDonation = () => {
-  const amount = selectedValue.value === 'custom' ? customValue.value : selectedValue.value
-  console.log('Finalizando doação:', {
-    valor: amount,
-    tipo: donationType.value,
-    pagamento: selectedPayment.value
+  const props = defineProps({
+    ong: {
+      type: Object,
+      required: true
+    }
   })
-  showModal.value = false
-}
 
-defineExpose({
-  showModal // expõe para o pai poder abrir/fechar
-})
+  const showModal = ref(false)
+  const selectedValue = ref('')
+  const customValue = ref('')
+  const donationType = ref('unica')
+  const selectedPayment = ref('')
+  const predefinedValues = [25, 50, 100, 200]
+
+  const selectValue = (value) => {
+    selectedValue.value = value
+    customValue.value = ''
+  }
+  const selectCustomValue = () => {
+    selectedValue.value = 'custom'
+  }
+  const selectPayment = (method) => {
+    selectedPayment.value = method
+  }
+  const finalizeDonation = () => {
+    const amount = selectedValue.value === 'custom' ? Number(customValue.value) : Number(selectedValue.value)
+
+    const donation = {
+      ongId: props.ongId,
+      ongNome: props.ong.title,
+      tipo: donationType.value,
+      valor: amount,
+      pagamento: selectedPayment.value,
+      data: new Date().toISOString()
+    }
+
+    // Salva no localStorage
+    let saved = JSON.parse(localStorage.getItem('doacoes') || '[]')
+    saved.push(donation)
+    localStorage.setItem('doacoes', JSON.stringify(saved))
+
+    console.log('✅ Doação registrada:', donation)
+
+    showModal.value = false
+  }
+
+  defineExpose({ showModal })
 </script>
 
-<template>
-  <div v-if="showModal" class="overlay">
-    <div class="divprimary">
-      <div class="header">
-        <button class="back-button" @click="showModal = false">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="content-wrapper">
-        <div class="valor">
-          <h1>Escolha o valor</h1>
-
-          <div class="value-grid">
-            <button v-for="value in predefinedValues" :key="value" class="value-button"
-              :class="{ active: selectedValue === value }" @click="selectValue(value)">
-              R$ {{ value }}
-            </button>
-          </div>
-
-          <div class="custom-value">
-            <input v-model="customValue" @focus="selectCustomValue" type="number" placeholder="Outro valor"
-              class="custom-input" />
-          </div>
-
-          <div class="donation-type">
-            <h3>Tipo de doação</h3>
-            <div class="radio-group">
-              <label class="radio-option">
-                <input v-model="donationType" type="radio" value="unica" />
-                <span class="radio-label">Única</span>
-              </label>
-              <label class="radio-option">
-                <input v-model="donationType" type="radio" value="mensal" />
-                <span class="radio-label">Mensal</span>
-              </label>
-            </div>
-          </div>
+  <template>
+    <div v-if="showModal" class="overlay">
+      <div class="divprimary">
+        <div class="header">
+          <button class="back-button" @click="showModal = false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <h2>Doando para: {{ ong?.title }}</h2>
         </div>
 
-        <div class="form">
-          <h2>Forma de pagamento</h2>
+        <div class="content-wrapper">
+          <div class="valor">
+            <h1>Escolha o valor</h1>
 
-          <div class="payment-options">
-            <button class="payment-option" :class="{ active: selectedPayment === 'pix' }" @click="selectPayment('pix')">
-              <div class="payment-icon"><img src="/icons/pix.png" alt=""></div>
-              <div class="payment-info">
-                <div class="payment-name">PIX</div>
-                <div class="payment-desc">Instantâneo e seguro</div>
-              </div>
-              <div class="radio-indicator" :class="{ active: selectedPayment === 'pix' }"></div>
-            </button>
+            <div class="value-grid">
+              <button v-for="value in predefinedValues" :key="value" class="value-button"
+                :class="{ active: selectedValue === value }" @click="selectValue(value)">
+                R$ {{ value }}
+              </button>
+            </div>
 
-            <button class="payment-option" :class="{ active: selectedPayment === 'card' }"
-              @click="selectPayment('card')">
-              <div class="payment-icon"><img src="/icons/cartao.png" alt=""></div>
-              <div class="payment-info">
-                <div class="payment-name">Cartão de Crédito</div>
-                <div class="payment-desc">Visa, Mastercard, Elo</div>
-              </div>
-              <div class="radio-indicator" :class="{ active: selectedPayment === 'card' }"></div>
-            </button>
+            <div class="custom-value">
+              <input v-model="customValue" @focus="selectCustomValue" type="number" placeholder="Outro valor"
+                class="custom-input" />
+            </div>
 
-            <button class="payment-option" :class="{ active: selectedPayment === 'transfer' }"
-              @click="selectPayment('transfer')">
-              <div class="payment-icon"><img src="/icons/debito.png" alt=""></div>
-              <div class="payment-info">
-                <div class="payment-name">Débito Online</div>
-                <div class="payment-desc">Transferência bancária</div>
+            <div class="donation-type">
+              <h3>Tipo de doação</h3>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input v-model="donationType" type="radio" value="unica" />
+                  <span class="radio-label">Única</span>
+                </label>
+                <label class="radio-option">
+                  <input v-model="donationType" type="radio" value="mensal" />
+                  <span class="radio-label">Mensal</span>
+                </label>
               </div>
-              <div class="radio-indicator" :class="{ active: selectedPayment === 'transfer' }"></div>
-            </button>
+            </div>
           </div>
 
-          <button class="finalize-button" @click="finalizeDonation" :disabled="!selectedValue || !selectedPayment">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                fill="currentColor" />
-            </svg>
-            Finalizar Doação
-          </button>
+          <div class="form">
+            <h2>Forma de pagamento</h2>
+
+            <div class="payment-options">
+              <button class="payment-option" :class="{ active: selectedPayment === 'pix' }"
+                @click="selectPayment('pix')">
+                <div class="payment-icon"><img src="/icons/pix.png" alt=""></div>
+                <div class="payment-info">
+                  <div class="payment-name">PIX</div>
+                  <div class="payment-desc">Instantâneo e seguro</div>
+                </div>
+                <div class="radio-indicator" :class="{ active: selectedPayment === 'pix' }"></div>
+              </button>
+
+              <button class="payment-option" :class="{ active: selectedPayment === 'card' }"
+                @click="selectPayment('card')">
+                <div class="payment-icon"><img src="/icons/cartao.png" alt=""></div>
+                <div class="payment-info">
+                  <div class="payment-name">Cartão de Crédito</div>
+                  <div class="payment-desc">Visa, Mastercard, Elo</div>
+                </div>
+                <div class="radio-indicator" :class="{ active: selectedPayment === 'card' }"></div>
+              </button>
+
+              <button class="payment-option" :class="{ active: selectedPayment === 'transfer' }"
+                @click="selectPayment('transfer')">
+                <div class="payment-icon"><img src="/icons/debito.png" alt=""></div>
+                <div class="payment-info">
+                  <div class="payment-name">Débito Online</div>
+                  <div class="payment-desc">Transferência bancária</div>
+                </div>
+                <div class="radio-indicator" :class="{ active: selectedPayment === 'transfer' }"></div>
+              </button>
+            </div>
+
+            <button class="finalize-button" @click="finalizeDonation" :disabled="!selectedValue || !selectedPayment">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  fill="currentColor" />
+              </svg>
+              Finalizar Doação
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</template>
+  </template>
 
 <style scoped>
 /* FUNDO ESCURECIDO */
