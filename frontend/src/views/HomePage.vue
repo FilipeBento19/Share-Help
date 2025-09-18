@@ -71,17 +71,17 @@ const wordsLine2 = computed(() => line2.split(' '));
       <div class="escolher-div">
         <img src="/icons/seguranca.png" alt="">
         <h2>Segurança garantida</h2>
-        <p>Acompanhe em tempo real como sua doação <br> está sendo utilizada</p>
+        <p>Receba relatórios e gráficos detalhados sobre suas doações e onde seu dinheiro foi investido</p>
       </div>
       <div class="escolher-div">
         <img src="/icons/praticidade.png" alt="">
         <h2>Praticidade</h2>
-        <p>Receba relatórios detalhados sobre suas<br> doações</p>
+        <p>Acompanhe em tempo real o suporte que a comunidade dá as fundações</p>
       </div>
       <div class="escolher-div">
         <img src="/icons/doacoes.png" alt="">
         <h2>Doações Recorrentes</h2>
-        <p>Configure doações automáticas mensais ou <br>anuais</p>
+        <p>Configure doações únicas ou mensais, para facilitar seu ato ajuda</p>
       </div>
     </div>
     </section>
@@ -244,6 +244,14 @@ const wordsLine2 = computed(() => line2.split(' '));
         font-size: 0.85rem;
     }
     
+    .formas-desc p {
+      width: 60%;
+    }
+
+    .formas-desc {
+      justify-items: center;
+    }
+
     .cause-title, .payment-title, .escolher-div h2 {
         font-size: 0.85rem;
     }

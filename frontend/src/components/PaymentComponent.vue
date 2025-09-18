@@ -133,7 +133,9 @@ const finalizeDonation = () => {
             Finalizar Doação
           </button>
         </div>
+        
       </div>
+      <p class="msgzinha">doações efetuadas sem conta serão consideradas anônimas</p>
     </div>
 
     <!-- Mini caixinha de agradecimento -->
@@ -476,6 +478,11 @@ const finalizeDonation = () => {
   transform: none;
 }
 
+.msgzinha {
+    font-size: 0.8rem;
+    color: #818181;
+  }
+
 /* RESPONSIVIDADE PARA A CAIXINHA DE AGRADECIMENTO */
 @media (max-width: 480px) {
   .thank-you-box {
@@ -525,6 +532,7 @@ const finalizeDonation = () => {
   .thank-you-box p {
     font-size: 12px;
   }
+  
 }
 
 /* ===== RESPONSIVIDADE - APENAS DIMINUINDO PROPORCIONALMENTE ===== */
@@ -993,6 +1001,13 @@ const finalizeDonation = () => {
     width: 14px;
     height: 14px;
   }
+
+  .msgzinha {
+    padding-top: 4px;
+    font-size: 0.7rem;
+    color: #818181;
+  }
+
 }
 
 /* Smartphones pequenos */
