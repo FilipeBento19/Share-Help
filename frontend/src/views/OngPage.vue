@@ -1,15 +1,12 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { motion, AnimatePresence } from 'motion-v'
 import ongs from '@/data/ongsData'
 import PaymentComponent from '@/components/PaymentComponent.vue'
 import { fromOng } from '@/data/globalState'
 
 const modalAberto = ref(false)
-const abrirModal = () => modalAberto.value = true
-const fecharModal = () => modalAberto.value = false
-
 const sair = ref(false)
 const router = useRouter()
 const route = useRoute()
@@ -17,7 +14,33 @@ const route = useRoute()
 const ongId = route.params.id
 const ong = ongs.find(o => o.id === ongId)
 
+// Sistema de favoritos da cauebranch
+const isFavorited = ref(false)
 
+onMounted(() => {
+  const saved = JSON.parse(localStorage.getItem('favoritas') || '[]')
+  isFavorited.value = saved.includes(ongId)
+})
+
+const toggleFavorite = () => {
+  let saved = JSON.parse(localStorage.getItem('favoritas') || '[]')
+
+  if (saved.includes(ongId)) {
+    saved = saved.filter(id => id !== ongId)
+    isFavorited.value = false
+  } else {
+    saved.push(ongId)
+    isFavorited.value = true
+  }
+
+  localStorage.setItem('favoritas', JSON.stringify(saved))
+}
+
+// Sistema de modal
+const abrirModal = () => modalAberto.value = true
+const fecharModal = () => modalAberto.value = false
+
+// Sistema de navegação com animação
 const voltar = () => {
   fromOng.value = true
   sair.value = true // dispara animação
@@ -67,9 +90,13 @@ const onExitComplete = () => {
 
             <div class="botao-container">
               <button class="botao-doar" @click="abrirModal">Doar Agora</button>
+              <img @click="toggleFavorite"
+                :src="isFavorited ? '/icons/heart-solid-full.svg' : '/icons/heart-light-full.svg'" 
+                alt="favoritar"
+                class="button-heart" />
             </div>
 
-            <!-- Modal -->
+            <!-- Modal com animações -->
             <AnimatePresence>
               <template v-if="modalAberto">
                 <motion.div
@@ -88,14 +115,14 @@ const onExitComplete = () => {
                   :exit="{ opacity: 0, scale: 0.8 }"
                   :transition="{ duration: 0.25, ease: 'easeOut' }"
                 >
-                  <PaymentComponent :show="modalAberto" @fechar="fecharModal"/>
+                  <PaymentComponent :ong="ong" :show="modalAberto" @fechar="fecharModal"/>
                 </motion.div>
               </template>
             </AnimatePresence>
 
           </div>
         </div>
-      </div>
+      </div>  
 
       <div v-else>
         <p>ONG não encontrada.</p>
@@ -156,7 +183,7 @@ const onExitComplete = () => {
   margin-top: 1rem;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -218,6 +245,7 @@ h1 {
 .botao-container {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .botao-doar {
@@ -236,9 +264,39 @@ h1 {
   background-color: #3367d6;
 }
 
+.button-heart {
+  width: 40px;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in;
+}
+
+.button-heart:hover {
+  transform: scale(1.2);
+}
+
 @media (max-width: 480px) {
-  .container-instituicao{
+  .container-instituicao {
     display: block;
+  }
+
+  .logo-container {
+    max-width: 500px;
+  }
+
+  .botao-doar {
+    width: 100%;
+  }
+
+  .botao-container {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .button-heart {
+    margin-left: 0;
+    align-self: center;
   }
 }
 </style>

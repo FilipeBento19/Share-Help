@@ -1,290 +1,316 @@
-<template>
-  <div class="account-management">
+  <template>
+    <!-- Verificação se usuário está logado -->
+    <div v-if="!user && !isLoading" class="box-nao-logado">
 
-    <div class="main-container">
+    </div>
+
+    <div class="main-container" v-else>
       <!-- Sidebar -->
-      <section class="sidebar">
-        <h2>Gerenciamento de conta</h2>
-        <nav>
-          <a href="#" class=" active">
-            <span class="fa-solid fa-infoPerfil" style="color: #2563eb;"></span>
-            Informações pessoais
-          </a>
-          <a href="#" class=" ">
-            <span class="fa-solid fa-key" style="color: #2563eb;"></span>
+      <aside class="sidebar">
+        <h2 class="sidebar-title">Gerenciamento de conta</h2>
+        <nav class="sidebar-nav">
+          <a href="#login" class="nav-item">
+            <img src="/public/icons/key-solid-full.svg" alt="" class="nav-icon">
             Login e conta
           </a>
-          <a href="#" class=" ">
-            <span class="fa-solid fa-heart" style="color: #2563eb;"></span>
-            ONGs favoritadas
+          <a href="#ongs" class="nav-item">
+            <img src="/public/icons/star-solid-full.svg" alt="" class="nav-icon"> ONGs favoritadas
           </a>
-          <a href="#" class=" ">
-            <span class="fa-solid fa-chart-simple" style="color: #2563eb;"></span>
+          <a href="#doacoes" class="nav-item">
+            <img src="/public/icons/signal-solid-full.svg" alt="" class="nav-icon">
             Registros de doação
           </a>
         </nav>
-      </section>
+      </aside>
 
-      <!-- Main Content -->
-      <main class="main-content">
-        <!-- Loading State -->
-        <div v-if="isLoading" class="loading-state">
-          <div class="spinner"></div>
-          <p>Carregando informações...</p>
-        </div>
+      <main class="conteudo">
+        <div>
 
-        <!-- Error State -->
-        <div v-else-if="error" class="error-state">
-          <div class="error-icon">⚠️</div>
-          <h3>Erro ao carregar dados</h3>
-          <p>{{ error }}</p>
-          <button class="btn-secondary" @click="getProfile">Tentar novamente</button>
-        </div>
-
-        <!-- Content Sections -->
-        <div v-else class="content-sections">
-          <!-- Personal Information -->
-          <section class="conteudoPerfil">
-            <div class="conteudoEsquerda">
-              <h3>Informações pessoais</h3>
+          <!-- Login e conta -->
+          <section id="login" class="secao">
+            <div id="backCinza">
+              <h2>Login e conta</h2>
               <p>Essa informação é particular e não
                 será compartilhada com outras
                 pessoas. Configure suas informações
                 agora!</p>
             </div>
-            <div class="conteudoDireita">
-              <div class="infoPerfil">
-                <div class="infoPerfil-item">
-                  <label>Nome completo</label>
-                  <p>{{ user?.nome || 'Não informado' }}</p>
-                </div>
-                <div class="infoPerfil-item">
-                  <label>Email</label>
-                  <p>{{ user?.email || 'Não informado' }}</p>
-                </div>
-                <div class="infoPerfil-item">
-                  <label>Nome de usuário</label>
-                  <p>{{ user?.username || 'Não informado' }}</p>
-                </div>
-              </div>
-              <button class="btn-outline">Editar informações</button>
-            </div>
-          </section>
-
-          <!-- Login and Account -->
-          <section class="conteudoPerfil">
-            <div class="conteudoEsquerda">
-              <h3>Login e conta</h3>
-              <p class="card-subtitle">Gerencie sua senha e configurações de segurança da conta</p>
-            </div>
-            <div class="conteudo direita">
-              <div class="account-actions">
-                <div class="action-item">
-                  <div class="action-infoPerfil">
-                    <h4>Senha</h4>
-                    <p>Última alteração: Não disponível</p>
-                  </div>
-                  <button class="btn-outline">Alterar</button>
-                </div>
-                <div class="action-item">
-                  <div class="action-infoPerfil">
-                    <h4>Email</h4>
-                    <p>{{ user?.email }}</p>
-                  </div>
-                  <button class="btn-outline">Alterar email</button>
-                </div>
-              </div>
-              <div class="danger-zone">
-                <button class="btn-danger" @click="logout">Desconectar</button>
-                <button class="btn-outline">Excluir e encerrar</button>
+            <div class="grid">
+              <label for="user.username">
+                Nome de usuário
+                <input v-model="user.username" />
+              </label>
+              <label for="user.email">
+                Email
+                <input v-model="user.email" />
+              </label>
+              <label for="">
+                Senha
+                <input type="password" placeholder="••••••••" />
+              </label>
+              <label for="">
+                Confirmar senha
+                <input type="password" placeholder="••••••••" />
+              </label>
+              <div class="acoes">
+                <button @click="logout" class="vermelho">Desconectar</button>
+                <button class="azul">Salvar e Verificar</button>
               </div>
             </div>
           </section>
 
-          <!-- Favorite NGOs -->
-          <section class="conteudoPerfil">
-            <div class="conteudoEsquerda">
-              <h3>ONGs favoritadas</h3>
-            </div>
-            <div class="conteudo direita">
-              <div class="favorites-grid">
-                <div class="favorite-item">
-                  <div class="favorite-logo">🏠</div>
-                  <span class="favorite-name">Lar dos Idosos</span>
-                </div>
-                <div class="favorite-item">
-                  <div class="favorite-logo">❤️</div>
-                  <span class="favorite-name">Instituto do Coração</span>
-                </div>
-                <div class="favorite-item placeholder">
-                  <div class="favorite-logo">+</div>
-                  <span class="favorite-name">Adicionar</span>
-                </div>
+          <!-- Ongs favoritas -->
+          <section id="ongs" class="favoritas">
+            <h2>Ongs favoritas</h2>
+            <div v-if="favoritasList.length" class="lista-ongs">
+              <div v-for="ong in favoritasList" :key="ong.id" class="ong-item">
+                <img :src="ong.img" :alt="ong.title" class="ong" />
+                <button class="heart" @click="unfavorite(ong.id)" aria-label="Remover dos favoritos">
+                  <img src="/icons/heart-solid-full.svg" alt="desfavoritar" />
+                </button>
               </div>
             </div>
+            <p v-else>Você ainda não favoritou nenhuma ONG.</p>
           </section>
 
-          <!-- Donation Records -->
-          <section class="conteudoPerfil">
-            <div class="conteudoEsquerda">
-              <h3>Registros de doação</h3>
-            </div>
-            <div class="conteudo direita">
-              <div class="chart-container">
-                <div class="chart-header">
-                  <span>Últimos meses</span>
-                  <select class="chart-select">
-                    <option>Últimos 12 meses</option>
-                    <option>Este ano</option>
-                  </select>
-                </div>
-                <div class="chart">
-                  <div class="chart-bars">
-                    <div class="bar" style="height: 80%">
-                      <div class="bar-value">R$ 250</div>
-                    </div>
-                    <div class="bar" style="height: 60%">
-                      <div class="bar-value">R$ 180</div>
-                    </div>
-                    <div class="bar" style="height: 40%">
-                      <div class="bar-value">R$ 120</div>
-                    </div>
-                    <div class="bar" style="height: 90%">
-                      <div class="bar-value">R$ 300</div>
-                    </div>
-                  </div>
-                  <div class="chart-labels">
-                    <span>Jun</span>
-                    <span>Jul</span>
-                    <span>Ago</span>
-                    <span>Set</span>
-                  </div>
-                </div>
-                <div class="chart-summary">
-                  <div class="summary-item">
-                    <span class="summary-label">Total doado</span>
-                    <span class="summary-value">R$ 1.250,00</span>
-                  </div>
-                  <div class="summary-item">
-                    <span class="summary-label">Doações este mês</span>
-                    <span class="summary-value">3</span>
-                  </div>
-                </div>
+          <!-- Registros de doação -->
+          <section id="doacoes" class="doacoes">
+            <h2>Registros de doação</h2>
+
+            <!-- Quando for gráfico -->
+            <template v-if="filtroTipo === 'Gráfico'">
+              <div class="grafico-placeholder">
+                <graficComponent v-model:filtro="filtroTipo" :doacoes="doacoes" />
               </div>
-            </div>
+            </template>
+
+            <!-- Quando for texto -->
+            <template v-else>
+              <div v-if="doacoes.length" class="grafico doacoes-grid">
+                <div class="registros-conteiner">
+                  <!-- Lista detalhada -->
+                  <div class="registros" v-if="tipoTexto === 'detalhada'">
+                    <h2>Lista detalhada</h2>
+                    <table>
+                      <tr class="titulos">
+                        <th>Ong</th>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                      </tr>
+                      <tr v-for="(d, index) in doacoes" :key="index" class="infos">
+                        <th>{{ d.ongNome }}</th>
+                        <th>{{ new Date(d.data).toLocaleDateString() }}</th>
+                        <th>{{ d.tipo }}</th>
+                        <th>{{ d.valor }} R$</th>
+                      </tr>
+                    </table>
+                    <p class="preco">Valor total: {{doacoes.reduce((a, b) => a + b.valor, 0)}} R$</p>
+                  </div>
+
+                  <!-- Resumo -->
+                  <div class="registros" v-if="tipoTexto === 'simplificada'">
+                    <h2>Resumo por ONG</h2>
+                    <table>
+                      <tr class="titulos">
+                        <th>Ong</th>
+                        <th>Quantidade de doações</th>
+                        <th>Valor</th>
+                      </tr>
+                      <tr v-for="(r, i) in resumoPorOng" :key="i" class="infos">
+                        <th>{{ r.ong }}</th>
+                        <th>{{ r.quantidade }}</th>
+                        <th>{{ r.valor }} R$</th>
+                      </tr>
+                    </table>
+                    <p class="preco">Valor total: {{doacoes.reduce((a, b) => a + b.valor, 0)}} R$</p>
+                  </div>
+                </div>
+
+                <!-- Filtros -->
+                <aside class="filtros">
+                  <h3>Filtros</h3>
+
+                  <label>
+                    Tipo de registro:
+                    <select v-model="filtroTipo">
+                      <option value="">Texto</option>
+                      <option value="Gráfico">Gráfico</option>
+                    </select>
+                  </label>
+
+                  <p>Tipo de texto:</p>
+                  <label class="input">
+                    <input type="radio" value="simplificada" v-model="tipoTexto" />
+                    Simplificada
+
+                    <input type="radio" value="detalhada" v-model="tipoTexto" />
+                    Detalhada
+                  </label>
+
+                  <label>
+                    Faixa de tempo:
+                    <select v-model="filtroTempo">
+                      <option value="30">Últimos 30 dias</option>
+                      <option value="90">Últimos 3 meses</option>
+                      <option value="365">Último ano</option>
+                      <option value="all">Todos</option>
+                    </select>
+                  </label>
+                </aside>
+              </div>
+
+              <!-- Nenhuma doação -->
+              <p v-else>Nenhuma doação registrada ainda.</p>
+            </template>
           </section>
         </div>
       </main>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>📊 DonateWay</h4>
-          <p>Conectando corações generosos com causas que transformam o mundo.</p>
-          <div class="social-links">
-            <a href="#" class="social-link">📘</a>
-            <a href="#" class="social-link">📷</a>
-            <a href="#" class="social-link">🐦</a>
-          </div>
-        </div>
-        <div class="footer-section">
-          <h5>Links Rápidos</h5>
-          <ul>
-            <li><a href="#">Como funciona</a></li>
-            <li><a href="#">ONGs parceiras</a></li>
-            <li><a href="#">Sobre nós</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h5>Contato</h5>
-          <ul>
-            <li>📧 contato@donateway.org</li>
-            <li>📞 (11) 9999-9999</li>
-            <li>📍 São Paulo, SP</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2024 DonateWay. Todos os direitos reservados.</p>
-      </div>
-    </footer>
-  </div>
-</template>
+    <div>
+      <FooterComponent />
+    </div>
+  </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
-import axios from "axios"
+import Swal from "sweetalert2"
+import { ref, onMounted, computed } from "vue";
+import axios from "axios";
+import ongs from "@/data/ongsData";
+import FooterComponent from "@/components/FooterComponent.vue";
+const favoritas = ref([])
+const tipoTexto = ref("simplificada")
+import graficComponent from "@/components/graficComponent.vue";
 
-const user = ref(null)
-const error = ref(null)
-const isLoading = ref(false)
+
+const user = ref(null);
+const error = ref(null);
+const isLoading = ref(false);
 
 const getProfile = async () => {
-  isLoading.value = true
-  error.value = null
+  isLoading.value = true;
+  error.value = null;
 
   try {
-    const token = localStorage.getItem("access_token")
+    const token = localStorage.getItem("access_token");
     if (!token) {
-      error.value = "Você não está logado."
-      return
+      error.value = "Você não está logado.";
+      return;
     }
 
     const response = await axios.get("http://127.0.0.1:8000/api/perfil/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
+    });
 
-    user.value = response.data
+    user.value = response.data;
   } catch {
-    error.value = "Erro ao carregar perfil. Verifique seu login."
+    error.value = "Erro ao carregar perfil. Verifique seu login.";
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
-}
+};
 
 const logout = () => {
-  localStorage.removeItem("access_token")
-  localStorage.removeItem("refresh_token")
-  localStorage.removeItem("keepLoggedIn")
-  user.value = null
-  alert("Você saiu da conta.")
-  window.location.href = "/login"
-}
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("keepLoggedIn");
+  user.value = null;
+  Swal.fire({
+    icon: 'info',
+    title: 'Você saiu da conta',
+    timer: 2000,            // 2 segundos
+    showConfirmButton: false
+  }); setTimeout(() => {
+    window.location.href = "/perfil"
+  }, 2200)
+};
+
+const favoritasList = computed(() => {
+  return ongs.filter(o => favoritas.value.includes(o.id))
+})
 
 onMounted(() => {
   getProfile()
+
+  //favoritos
+  favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
+
+  //doacoa
+  doacoes.value = JSON.parse(localStorage.getItem('doacoes') || '[]')
+
+  // ouvinte para atualizar se outra aba/modulo mudou o localStorage
+  window.addEventListener('storage', () => {
+    favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
+  })
+
+  // opcional: evento custom para atualizações dentro da mesma aba
+  window.addEventListener('favoritasUpdated', () => {
+    favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
+  })
 })
+
+function unfavorite(id) {
+  let saved = JSON.parse(localStorage.getItem('favoritas') || '[]')
+  if (saved.includes(id)) {
+    saved = saved.filter(i => i !== id)
+    localStorage.setItem('favoritas', JSON.stringify(saved))
+    favoritas.value = saved
+  }
+}
+
+//Doacoes
+const filtroTipo = ref(""); // Texto ou Gráfico
+
+const doacoes = ref([]);
+
+const resumoPorOng = computed(() => {
+  const resumo = {};
+  doacoes.value.forEach((d) => {
+    if (!resumo[d.ongNome]) {
+      resumo[d.ongNome] = { quantidade: 0, valorTotal: 0 };
+    }
+    resumo[d.ongNome].quantidade += 1;
+    resumo[d.ongNome].valorTotal += d.valor;
+  });
+
+  return Object.entries(resumo).map(([ong, dados]) => ({
+    ong,
+    quantidade: dados.quantidade,
+    valor: dados.valorTotal,
+  }));
+});
+
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.box-nao-logado {
+  width: 10vw;
+  height: 1000vw;
 }
 
-/* Main Container */
 .main-container {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 32px;
-  padding: 32px 24px;
+  grid-template-columns: 300px 1fr;
+  gap: 160px;
+  padding: 32px 0;
   min-height: calc(100vh - 200px);
 }
 
-/* Sidebar */
+.conteudo {
+  margin-top: 7vw;
+}
 
+/* Sidebar */
 .sidebar {
+  width: 420px;
 
   & h2 {
-    color: #3b82f6;
-    font-size: 28px;
+    color: #2563EB;
+    font-size: 3rem;
     font-weight: 700;
     margin-bottom: 32px;
     line-height: 1.2;
@@ -299,11 +325,12 @@ onMounted(() => {
       display: flex;
       align-items: center;
       gap: 12px;
+      margin: 0 0 0 1vw;
       padding: 12px 16px;
       border-radius: 10px;
       text-decoration: none;
       color: #64748b;
-      font-weight: 500;
+      font-size: 1.2rem;
       transition: all 0.2s;
     }
 
@@ -314,432 +341,244 @@ onMounted(() => {
 
     a.active {
       background: #eff6ff;
-      color: #3b82f6;
+      color: #2563EB;
     }
 
+    .nav-icon {
+      width: 34px;
+    }
   }
 }
 
-/* Loading and Error States */
-.loading-state,
-.error-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 24px;
-  text-align: center;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f1f5f9;
-  border-top: 4px solid #3b82f6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.error-state {
-  color: #dc2626;
-
-  & button {
-    background: #6b7280;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  & button:hover {
-    background: #4b5563;
-  }
-}
-
-.error-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-}
-
-/* Content Cards */
-.conteudoPerfil {
-  display: flex;
-  background: white;
-  border-radius: 16px;
+section {
+  display: grid;
+  grid-template-columns: 430px 1fr;
+  gap: 2rem;
+  padding: 0 1.5vw 0 0;
+  margin: 2rem auto;
+  max-width: 1500px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
 
-.conteudoEsquerda {
-  background: #F3F3F3;
-  margin-bottom: 24px;
+  & #backCinza {
+    background-color: #F3F3F3;
+    padding: 2vw 2vw;
 
-  & h3 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1e293b;
-    margin-bottom: 8px;
-  }
+    & h2 {
+      color: #2563EB;
+      font-size: 2rem;
+      font-weight: 700;
 
-  & p {
-    color: #64748b;
-    font-size: 16px;
-  }
-}
-
-
-
-/* Info Grid */
-.conteudoDireita {
-border-radius: 20vw;
-
-  & .infoPerfil {
-    
-
-    & label {
-      display: block;
-      font-weight: 600;
-      color: #374151;
-      margin-bottom: 8px;
     }
 
     & p {
-      color: #6b7280;
-      font-size: 16px;
-      padding: 12px 0;
-      border-bottom: 1px solid #e5e7eb;
+      color: #666B73;
+      font-size: 1rem;
+    }
+  }
+
+  /* Inputs */
+  div.grid {
+    padding: 2vw 0 1vw 0;
+
+    & label {
+      color: #2563EB;
+      font-weight: 700;
+      font-size: 13px;
     }
 
+    & input {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.6rem;
+      padding: 0.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      background: #f9fafb;
+    }
+
+    & input:focus {
+      outline: none;
+      border-color: #5588f7;
+    }
   }
 
   & button {
-    background: transparent;
-    border: 2px solid #e5e7eb;
-    color: #374151;
-    padding: 10px 20px;
-    border-radius: 8px;
+    margin: 0 1vw 1vw 0;
+    padding: 0.6rem 1rem;
     font-weight: 600;
+    border-radius: 0.5rem;
     cursor: pointer;
-    transition: all 0.2s;
+    border: none;
+    transition: background 0.2s ease;
   }
 
-  & button:hover {
-    border-color: #3b82f6;
-    color: #3b82f6;
+  & button.azul {
+    background: white;
+    color: #2563EB;
+    border: #2563EB solid 1.5px;
+  }
+
+  & button.azul:hover {
+    background: #d3e1ff;
+  }
+
+  & button.vermelho {
+    background: white;
+    color: #dc2626;
+    border: #dc2626 solid 1.5px;
+  }
+
+  & button.vermelho:hover {
+    background: #ffefef;
   }
 }
 
-/* Buttons */
 
 
+/* Botões */
 
 
-.btn-danger {
-  background: #dc2626;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-danger:hover {
-  background: #b91c1c;
-}
-
-/* Account Actions */
-.account-actions {
-  margin-bottom: 32px;
-}
-
-.action-item {
+/* Ongs Favoritas */
+.favoritas {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid #e5e7eb;
+  gap: 1rem;
+  flex-direction: column;
+  padding: 15px 30px;
+
+  & h2 {
+    color: #2563EB;
+    font-weight: 600;
+
+  }
+
+  & .lista-ongs {
+    display: flex;
+
+    & .ong-item {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    & img.ong {
+      margin: 0 1vw 0 0;
+      width: 120px;
+      height: 110px;
+      background: white;
+      border-radius: 0.75vw;
+      box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.658);
+      padding: 0.5rem;
+    }
+
+    & button.heart {
+      position: absolute;
+      padding: 0;
+      top: 4vw;
+      right: -17px;
+      width: 50px;
+      height: 50px;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    & button.heart:hover {
+      transform: scale(1.05)
+    }
+  }
+
+
 }
 
-.action-infoPerfil h4 {
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 4px;
-}
 
-.action-infoPerfil p {
-  color: #64748b;
-  font-size: 14px;
-}
 
-.danger-zone {
+/* Registros */
+
+.doacoes {
   display: flex;
-  gap: 16px;
-  padding-top: 24px;
-  border-top: 1px solid #fee2e2;
+  gap: 1rem;
+  flex-direction: column;
+  padding: 15px 30px;
+  background-color: #F3F3F3;
+
+  & h2 {
+    font-size: 1.5rem;
+    color: #2563EB;
+    font-weight: 600;
+  }
 }
 
-/* Favorites */
-.favorites-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px;
-}
-
-.favorite-item {
+.registros {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  border: 2px solid #e5e7eb;
+  gap: 1.5rem;
+  background-color: white;
+  padding: 1vw;
+  border-radius: 20px;
+  font-size: 1.1rem;
+
+  & tr.titulos th {
+    font-weight: 900;
+    color: #22438C;
+  }
+
+  & .preco {
+    font-weight: 900;
+    color: #22438C;
+  }
+
+  & .infos {
+    font-weight: 900;
+    color: #2563EB;
+  }
+}
+
+.filtros {
+  background: #f9fafb;
   border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.favorite-item:hover {
-  border-color: #3b82f6;
-}
-
-.favorite-item.placeholder {
-  border-style: dashed;
-  opacity: 0.7;
-}
-
-.favorite-logo {
-  width: 48px;
-  height: 48px;
-  background: #f1f5f9;
-  border-radius: 50%;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  margin-bottom: 12px;
+  flex-direction: column;
+  gap: 1rem;
+
+  & p {
+    font-weight: 600;
+    color: #0051ff;
+  }
 }
 
-.favorite-name {
-  font-weight: 500;
-  color: #374151;
-  text-align: center;
-  font-size: 14px;
-}
-
-/* Chart */
-.chart-container {
-  max-width: 600px;
-}
-
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.chart-select {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: white;
-}
-
-.chart {
-  margin-bottom: 24px;
-}
-
-.chart-bars {
-  display: flex;
-  align-items: end;
-  gap: 16px;
-  height: 200px;
-  margin-bottom: 12px;
-}
-
-.bar {
-  flex: 1;
-  background: #3b82f6;
-  border-radius: 4px 4px 0 0;
-  position: relative;
-  min-height: 20px;
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  padding-top: 8px;
-}
-
-.bar-value {
-  color: white;
-  font-size: 12px;
+.filtros label {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: 2rem;
   font-weight: 600;
+  color: #002880;
+  align-items: baseline;
+  justify-items: center;
 }
 
-.chart-labels {
-  display: flex;
-  gap: 16px;
-}
-
-.chart-labels span {
-  flex: 1;
-  text-align: center;
-  color: #64748b;
-  font-size: 14px;
-}
-
-.chart-summary {
+.filtros label.input {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  padding: 20px;
-  background: #f8fafc;
-  border-radius: 10px;
+  grid-template-columns: 0.2fr 0fr;
+  gap: 1rem;
+  font-weight: 600;
+  color: #002880;
+  justify-items: start
 }
 
-.summary-item {
-  text-align: center;
-}
-
-.summary-label {
-  display: block;
-  color: #64748b;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.summary-value {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1e293b;
-}
-
-/* Footer */
-.footer {
-  background: #1e293b;
-  color: white;
-  margin-top: 80px;
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 48px;
-  padding: 48px 24px;
-}
-
-.footer-section h4 {
-  font-size: 20px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.footer-section h5 {
-  font-size: 16px;
-  margin-bottom: 16px;
-  color: #cbd5e1;
-}
-
-.footer-section p {
-  color: #94a3b8;
-  line-height: 1.6;
-  margin-bottom: 16px;
-}
-
-.footer-section ul {
-  list-style: none;
-}
-
-.footer-section ul li {
-  margin-bottom: 8px;
-}
-
-.footer-section ul li a {
-  color: #94a3b8;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-section ul li a:hover {
-  color: white;
-}
-
-.social-links {
-  display: flex;
-  gap: 12px;
-}
-
-.social-link {
-  width: 40px;
-  height: 40px;
-  background: #334155;
+.filtros select {
+  margin-top: 4px;
+  padding: 0.4rem;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition: background 0.2s;
 }
 
-.social-link:hover {
-  background: #475569;
-}
-
-.footer-bottom {
-  border-top: 1px solid #334155;
-  padding: 24px;
-  text-align: center;
-  color: #94a3b8;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .main-container {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 24px 16px;
-  }
-
-  .sidebar {
-    order: 2;
-  }
-
-  .main-content {
-    order: 1;
-  }
-
-  .conteudoPerfil {
-    padding: 24px;
-  }
-
-  .footer-content {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 32px 16px;
-  }
-
-  .infor {
-    grid-template-columns: 1fr;
-  }
-
-  .danger-zone {
-    flex-direction: column;
-  }
+.doacoes-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
 }
 </style>
