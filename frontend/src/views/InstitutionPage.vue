@@ -114,186 +114,6 @@ const wordtext = computed(() => text.split(' '))
 
 <style scoped>
 
-@media (max-width: 1024px) {
-  .institutions-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    max-width: 900px;
-    padding: 0 15px;
-  }
-  
-  .institution-card {
-    height: 480px;
-  }
-  
-  .topo {
-    height: 45vh;
-  }
-  
-  .split-word {
-    font-size: 2.2rem;
-  }
-
-  .banner-text {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .institutions-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 600px;
-    padding: 0 10px;
-  }
-  
-  .instituicoes-disponiveis {
-    padding: 30px 10px;
-  }
-  
-  .institution-card {
-    height: 450px;
-  }
-  
-  .institution-info {
-    padding: 15px;
-  }
-  
-  .institution-info h4 {
-    font-size: 1.1em;
-    height: 28px;
-  }
-  
-  .institution-description {
-    font-size: 0.85em;
-    height: 60px;
-    -webkit-line-clamp: 3;
-  }
-  
-  .topo {
-    height: 40vh;
-    text-align: center;
-  }
-  
-  .topo .banner {
-    padding: 0 5%;
-    text-align: center;
-  }
-
-  .split-word {
-    font-size: 1.8rem;
-    margin-right: 0.5rem;
-  }
-  
-  .banner-text {
-    max-width: 100%;
-    font-size: 0.95rem;
-    margin: 1rem auto 0;
-  }
-  
-  .instituicoes-disponiveis h2 {
-    font-size: 1.7rem;
-  }
-  
-  .section-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 30px;
-  }
-}
-
-@media (max-width: 480px) {
-  .institutions-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    max-width: 350px;
-    padding: 0 5px;
-  }
-
-  .institution-image {
-    max-height: 160px;
-  }
-  
-  .instituicoes-disponiveis {
-    padding: 25px 5px;
-  }
-  
-  .institution-card {
-    height: 320px;
-  }
-
-  .institution-info h4 {
-    font-size: 1em;
-    height: 20px;
-    -webkit-line-clamp: 1;
-  }
-  
-  .institution-description {
-    font-size: 0.85em;
-    height: 60px;
-    -webkit-line-clamp: 3;
-    margin-bottom: 4px;
-  }
-
-  .meta-item {
-    display: none;
-  }
-
-  .institution-meta{
-    display: none;
-  }
-
-  .filtros-list {
-    display: none;
-  }
-  
-  .btn-doar-instituicao {
-    padding: 3px 10px 8px 10px;
-    font-size: 0.8em;
-  }
-  
-  .topo {
-    height: 35vh;
-  }
-  
-  .split-word {
-    font-size: 1.7rem;
-    padding-bottom: 10px;
-  }
-  
-  .banner-text {
-    font-size: 0.9rem;
-  }
-  
-  .instituicoes-disponiveis h2 {
-    font-size: 1.5rem;
-  }
-  
-  .section-subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 25px;
-  }
-}
-
-@media (max-width: 360px) {
-  .institutions-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 600px;
-    padding: 0 10px;
-  }
-  
-  .split-word {
-    font-size: 1.3rem;
-  }
-  
-  .banner-text {
-    font-size: 0.85rem;
-  }
-
-  .institution-card {
-    min-height: 400px;
-  }
-}
 
 /* Banner Principal */
 .topo {
@@ -700,6 +520,188 @@ const wordtext = computed(() => text.split(' '))
 .btn-doar-instituicao:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
+}
+
+
+@media (max-width: 1024px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    padding: 0 15px;
+  }
+  
+  .institution-card {
+    height: 480px;
+  }
+  
+  .topo {
+    height: 45vh;
+  }
+  
+  .split-word {
+    font-size: 2.2rem;
+  }
+
+  .banner-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    padding: 0 10px;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 30px 10px;
+  }
+  
+  .institution-card {
+    height: 450px;
+  }
+  
+  .institution-info {
+    padding: 15px;
+  }
+  
+  .institution-info h4 {
+    font-size: 1.1em;
+    height: 28px;
+  }
+  
+  .institution-description {
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
+  }
+  
+  .topo {
+    height: 40vh;
+    text-align: center;
+  }
+  
+  .topo .banner {
+    padding: 0 5%;
+    text-align: center;
+  }
+
+  .split-word {
+    font-size: 1.8rem;
+    margin-right: 0.5rem;
+  }
+  
+  .banner-text {
+    max-width: 100%;
+    font-size: 0.95rem;
+    margin: 1rem auto 0;
+  }
+  
+  .instituicoes-disponiveis h2 {
+    font-size: 1.7rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 350px;
+    padding: 0 5px;
+  }
+
+  .institution-image {
+    max-height: 160px;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 25px 5px;
+  }
+  
+  .institution-card {
+    height: 320px;
+  }
+
+  .institution-info h4 {
+    font-size: 1em;
+    height: 20px;
+    -webkit-line-clamp: 1;
+  }
+  
+  .institution-description {
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
+    margin-bottom: 4px;
+  }
+
+  .meta-item {
+    display: none;
+  }
+
+  .institution-meta{
+    display: none;
+  }
+
+  .filtros-list {
+    display: none;
+  }
+  
+  .btn-doar-instituicao {
+    padding: 3px 10px 8px 10px;
+    font-size: 0.8em;
+  }
+  
+  .topo {
+    height: 35vh;
+  }
+  
+  .split-word {
+    font-size: 1.7rem;
+    padding-bottom: 10px;
+  }
+  
+  .banner-text {
+    font-size: 0.9rem;
+  }
+  
+  .instituicoes-disponiveis h2 {
+    font-size: 1.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 360px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    padding: 0 10px;
+  }
+  
+  .split-word {
+    font-size: 1.3rem;
+  }
+  
+  .banner-text {
+    font-size: 0.85rem;
+  }
+
+  .institution-card {
+    min-height: 400px;
+  }
 }
 
 </style>

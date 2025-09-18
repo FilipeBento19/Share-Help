@@ -1,246 +1,5 @@
 /* Banner Principal */
 
-@media (min-width: 1025px) {
-  .recommendation-card {
-    flex-direction: row;
-  }
-
-  .card-left {
-    min-width: 200px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .institutions-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    max-width: 900px;
-    padding: 0 15px;
-  }
-  
-  .institution-card {
-    height: 480px;
-  }
-  
-  .topo {
-    height: 45vh;
-  }
-  
-  .split-word {
-    font-size: 2.2rem;
-  }
-
-  .recommendation-card {
-    flex-direction: row;
-  }
-
-  .card-left {
-    min-width: 200px;
-  }
-
-  .topo h1 {
-    font-size: 2.2rem;
-  }
-
-  .topo p {
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .institutions-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 600px;
-    padding: 0 10px;
-  }
-  
-  .instituicoes-disponiveis {
-    padding: 30px 10px;
-  }
-  
-  .institution-card {
-    height: 450px;
-  }
-  
-  .institution-info {
-    padding: 15px;
-  }
-  
-  .institution-info h4 {
-    font-size: 1.1em;
-    height: 28px;
-  }
-  
-  .institution-description {
-    font-size: 0.85em;
-    height: 60px;
-    -webkit-line-clamp: 3;
-  }
-  
-  .topo {
-    height: 40vh;
-    text-align: center;
-  }
-  
-  .topo .banner {
-    padding: 0 5%;
-    text-align: center;
-  }
-
-  .split-word {
-    font-size: 1.8rem;
-    margin-right: 0.5rem;
-  }
-  
-  .topo p {
-    max-width: 100%;
-    font-size: 0.95rem;
-  }
-  
-  .instituicoes-disponiveis h2 {
-    font-size: 1.7rem;
-  }
-  
-  .instituicoes-disponiveis > p {
-    font-size: 0.95rem;
-    margin-bottom: 30px;
-  }
-
-  .card-actions {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 480px) {
-  .institutions-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    max-width: 350px;
-    padding: 0 5px;
-  }
-
-  .recommendation-card {
-    display: block;
-  }
-
-  .institution-image {
-    max-height: 160px;
-  }
-  
-  .instituicoes-disponiveis {
-    padding: 25px 5px;
-  }
-
-
-  .topo p {
-    font-size: 0.9rem;
-  }
-
-  .topo h1 {
-    font-size: 1.5rem;
-  }
-  
-  .institution-card {
-    height: 320px;
-  }
-
-  .institution-info h4 {
-    font-size: 1em;
-    height: 20px;
-    -webkit-line-clamp: 1;
-  }
-
-  .filtros-list {
-    display: none;
-  }
-
-   .meta-item {
-    display: none;
-  }
-
-  .institution-meta{
-    display: none;
-  }
-
-  .filtros-list {
-    display: none;
-  }
-  
-  .institution-description {
-    font-size: 0.85em;
-    height: 60px;
-    -webkit-line-clamp: 3;
-    margin-bottom: 10px;
-  }
-
-  .btn-pagina-instituicao {
-    width: 100%;
-  }
-  
-  .btn-doar-instituicao {
-    padding: 3px 10px 8px 10px;
-    font-size: 0.8em;
-  }
-  
-  .topo {
-    height: 35vh;
-  }
-  
-  .split-word {
-    font-size: 1.5rem;
-  }
-  
-  .instituicoes-disponiveis h2 {
-    font-size: 1.5rem;
-  }
-  
-  .instituicoes-disponiveis > p {
-    font-size: 0.9rem;
-    margin-bottom: 25px;
-  }
-
-  .institution-logo {
-    height: 140px;
-  }
-
-  .time {
-    font-size: 1.2rem;
-  }
-
-  .card-right p {
-    font-size: 0.9em;
-    color: #6b7280;
-    margin-bottom: 15px;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .card-right h3 {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .split-word {
-    font-size: 1.3rem;
-  }
-  
-  .topo p {
-    font-size: 0.85rem;
-  }
-
-  .institution-card {
-    min-height: 400px;
-  }
-
-  .institutions-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 .topo {
   position: relative;
@@ -621,3 +380,245 @@
 
 /* TAMO Q TAMO MEXENDO RAPAIZ  */
 
+
+@media (min-width: 1025px) {
+  .recommendation-card {
+    flex-direction: row;
+  }
+
+  .card-left {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    padding: 0 15px;
+  }
+  
+  .institution-card {
+    height: 480px;
+  }
+  
+  .topo {
+    height: 45vh;
+  }
+  
+  .split-word {
+    font-size: 2.2rem;
+  }
+
+  .recommendation-card {
+    flex-direction: row;
+  }
+
+  .card-left {
+    min-width: 200px;
+  }
+
+  .topo h1 {
+    font-size: 2.2rem;
+  }
+
+  .topo p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    padding: 0 10px;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 30px 10px;
+  }
+  
+  .institution-card {
+    height: 450px;
+  }
+  
+  .institution-info {
+    padding: 15px;
+  }
+  
+  .institution-info h4 {
+    font-size: 1.1em;
+    height: 28px;
+  }
+  
+  .institution-description {
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
+  }
+  
+  .topo {
+    height: 40vh;
+    text-align: center;
+  }
+  
+  .topo .banner {
+    padding: 0 5%;
+    text-align: center;
+  }
+
+  .split-word {
+    font-size: 1.8rem;
+    margin-right: 0.5rem;
+  }
+  
+  .topo p {
+    max-width: 100%;
+    font-size: 0.95rem;
+  }
+  
+  .instituicoes-disponiveis h2 {
+    font-size: 1.7rem;
+  }
+  
+  .instituicoes-disponiveis > p {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .institutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 350px;
+    padding: 0 5px;
+  }
+
+  .recommendation-card {
+    display: block;
+  }
+
+  .institution-image {
+    max-height: 160px;
+  }
+  
+  .instituicoes-disponiveis {
+    padding: 25px 5px;
+  }
+
+
+  .topo p {
+    font-size: 0.9rem;
+  }
+
+  .topo h1 {
+    font-size: 1.5rem;
+  }
+  
+  .institution-card {
+    height: 320px;
+  }
+
+  .institution-info h4 {
+    font-size: 1em;
+    height: 20px;
+    -webkit-line-clamp: 1;
+  }
+
+  .filtros-list {
+    display: none;
+  }
+
+   .meta-item {
+    display: none;
+  }
+
+  .institution-meta{
+    display: none;
+  }
+
+  .filtros-list {
+    display: none;
+  }
+  
+  .institution-description {
+    font-size: 0.85em;
+    height: 60px;
+    -webkit-line-clamp: 3;
+    margin-bottom: 10px;
+  }
+
+  .btn-pagina-instituicao {
+    width: 100%;
+  }
+  
+  .btn-doar-instituicao {
+    padding: 3px 10px 8px 10px;
+    font-size: 0.8em;
+  }
+  
+  .topo {
+    height: 35vh;
+  }
+  
+  .split-word {
+    font-size: 1.5rem;
+  }
+  
+  .instituicoes-disponiveis h2 {
+    font-size: 1.5rem;
+  }
+  
+  .instituicoes-disponiveis > p {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+
+  .institution-logo {
+    height: 140px;
+  }
+
+  .time {
+    font-size: 1.2rem;
+  }
+
+  .card-right p {
+    font-size: 0.9em;
+    color: #6b7280;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-right h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .split-word {
+    font-size: 1.3rem;
+  }
+  
+  .topo p {
+    font-size: 0.85rem;
+  }
+
+  .institution-card {
+    min-height: 400px;
+  }
+
+  .institutions-grid {
+    grid-template-columns: 1fr;
+  }
+}

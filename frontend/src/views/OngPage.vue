@@ -107,19 +107,6 @@ const onExitComplete = () => {
 
 <style scoped>
 
-@media (max-width: 480px) {
-  .container-instituicao{
-    display: block;
-  }
-
-  .logo-container{
-    max-width: 500px;
-  }
-
-  .botao-doar{
-    width: 100%;
-  }
-}
 
 /* Layout da página */
 .pagina-wrapper {
@@ -250,6 +237,21 @@ h1 {
 
 .botao-doar:hover {
   background-color: #3367d6;
+}
+
+
+@media (max-width: 480px) {
+  .container-instituicao{
+    display: block;
+  }
+
+  .logo-container{
+    max-width: 500px;
+  }
+
+  .botao-doar{
+    width: 100%;
+  }
 }
 
 </style>
