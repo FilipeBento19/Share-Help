@@ -14,7 +14,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
             <h1 class="titulo-principal">Equipe Sharehelp</h1>
           </div>
         </div>
-        <div class="ourhistory">  
+        <div class="ourhistory">
           <h1>Nossa Historia</h1>
           <p>Nossa equipe nasceu da vontade em comum de ajudar quem precisa. Sempre tivemos o desejo de doar para ONGs locais de Joinville, mas não sabíamos exatamente onde ou como fazer isso. A partir dessa dificuldade, surgiu a ideia de criar um site que facilitasse tanto a comunicação quanto as doações entre moradores e instituições de caridade da cidade. Com apenas 5 amigos, trabalhamos juntos por 2 meses no desenvolvimento do projeto para o hackathon do IFC Campus Araquari, onde estudamos. Foi uma jornada desafiadora, mas muito gratificante, que uniu nossa paixão por tecnologia e solidariedade em uma iniciativa capaz de transformar pequenas ações em grandes impactos para a comunidade.</p>
         </div>
@@ -149,7 +149,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-  max-height: 40vh;
+  max-height: 210vh;
   margin-bottom: 15px;
 }
 
@@ -157,7 +157,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
 .team-image {
   width: 100%;
   height: 320px;
-  
+
 }
 
 .card-footer {
@@ -170,6 +170,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
   font-weight: 800;
   color: #2563eb;
   margin: 0;
+
 }
 
 /* Lista de membros */
@@ -346,7 +347,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
     text-align: center;
   }
 
-  
+
 
   .avatar {
     margin-right: 0;

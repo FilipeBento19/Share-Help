@@ -67,7 +67,7 @@ const resendCode = () => {
 }
 </script>
 
-<template>
+<template  style="height: 100%;">
   <div class="page-container">
     <div class="background-image"></div>
 
@@ -134,12 +134,13 @@ const resendCode = () => {
 .page-container {
   position: relative;
   width: 100vw;
-  height: 92.7vh;
+  height: 90.1vh;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow: hidden;
+
 }
 
 .background-image {
@@ -254,15 +255,15 @@ const resendCode = () => {
     padding: 35px;
     min-height: 450px;
   }
-  
+
   .main-card.slide-left {
     transform: translateX(20vw);
   }
-  
+
   .side-text.desktop-only h1 {
     font-size: 4rem;
   }
-  
+
   .footer-text {
     font-size: 11px;
     bottom: 30px;
@@ -276,19 +277,19 @@ const resendCode = () => {
     padding: 30px;
     min-height: 400px;
   }
-  
+
   .main-card.slide-left {
     transform: translateX(15vw);
   }
-  
+
   .side-text.desktop-only {
     left: 5%;
   }
-  
+
   .side-text.desktop-only h1 {
     font-size: 3.5rem;
   }
-  
+
   .footer-text {
     font-size: 10px;
     bottom: 25px;
@@ -302,41 +303,41 @@ const resendCode = () => {
     height: 100vh;
     padding: 20px;
   }
-  
+
   .main-card {
     max-width: 100%;
     padding: 25px;
     min-height: 350px;
     margin: 0 20px;
   }
-  
+
   /* Desabilita animação lateral em mobile */
   .main-card.slide-left {
     transform: translateX(0);
   }
-  
+
   /* Esconde texto lateral no mobile */
   .side-text.desktop-only {
     display: none;
   }
-  
+
   /* Mostra texto em cima no mobile */
   .mobile-header-text {
     display: block;
   }
-  
+
   .mobile-header-text h1 {
     font-size: 2.2rem;
   }
-  
+
   .back-to-login span {
     font-size: 13px;
   }
-  
+
   .back-login-link {
     font-size: 13px;
   }
-  
+
   .footer-text {
     font-size: 9px;
     bottom: 15px;
@@ -352,7 +353,7 @@ const resendCode = () => {
   .page-container {
     padding: 15px;
   }
-  
+
   .main-card {
     padding: 20px;
     min-height: 320px;
@@ -367,28 +368,28 @@ const resendCode = () => {
   .side-text h1 {
     font-size: 3.1rem;
   }
-  
+
   .mobile-header-text {
     top: 6%;
   }
-  
+
   .mobile-header-text h1 {
     font-size: 1.8rem;
 
   }
-  
+
   .back-to-login {
     margin-top: 15px;
   }
-  
+
   .back-to-login span {
     font-size: 12px;
   }
-  
+
   .back-login-link {
     font-size: 12px;
   }
-  
+
   .footer-text {
     font-size: 8px;
     bottom: 10px;
@@ -400,33 +401,33 @@ const resendCode = () => {
   .page-container {
     padding: 10px;
   }
-  
+
   .main-card {
     padding: 15px;
     min-height: 300px;
     margin: 0 10px;
   }
-  
+
   .mobile-header-text {
     top: 5%;
   }
-  
+
   .mobile-header-text h1 {
     font-size: 1.5rem;
   }
-  
+
   .back-to-login {
     margin-top: 10px;
   }
-  
+
   .back-to-login span {
     font-size: 11px;
   }
-  
+
   .back-login-link {
     font-size: 11px;
   }
-  
+
   .footer-text {
     font-size: 7px;
     bottom: 8px;
@@ -440,11 +441,11 @@ const resendCode = () => {
     min-height: 280px;
     margin: 0 8px;
   }
-  
+
   .mobile-header-text h1 {
     font-size: 1.3rem;
   }
-  
+
   .footer-text {
     font-size: 6px;
     bottom: 5px;
