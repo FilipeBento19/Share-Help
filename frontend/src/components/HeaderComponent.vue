@@ -49,7 +49,7 @@ import { motion } from 'motion-v';
             :whileTap="{ scale: 0.1 }"
             class="box"
           >
-          <li class="login"><router-link to="/perfil"><img src="/icons/login.png" alt=""></router-link></li>
+          <li class="login"><router-link to="/login"><img src="/icons/login.png" alt=""></router-link></li>
           </motion.div>
         </ul>
       </nav>
