@@ -1063,7 +1063,7 @@ const formatarTipos = (tipos) => {
   .sidebar-show-button {
     width: 36px;
     height: 36px;
-    top: 852px;
+    top: 802px;
     left: 12px;
   }
   
