@@ -24,7 +24,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
       <!-- Membros da equipe -->
       <div class="members-section">
         <div class="membro-item">
-          <img src="/icons/arthurteam.png" alt="Arthur Cândido Benk" class="avatar">
+          <img src="/icons/arthurteam.jpg" alt="Arthur Cândido Benk" class="avatar">
           <div class="info-container">
             <h3 class="nome">Arthur Cândido Benk</h3>
             <p class="cargo">UI/UX - Design Figma</p>
@@ -50,7 +50,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
         </div>
 
         <div class="membro-item">
-          <img src="/icons/filipeteam.png" alt="Filipe Bento dos Santos" class="avatar">
+          <img src="/icons/filipeteam.jpg" alt="Filipe Bento dos Santos" class="avatar">
           <div class="info-container">
             <h3 class="nome">Filipe Bento dos Santos</h3>
             <p class="cargo">Frontend</p>
