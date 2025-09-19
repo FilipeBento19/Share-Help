@@ -4,14 +4,9 @@ import LoginForm from '@/components/LoginForm.vue'
 import RegisterStep from '@/components/RegisterStep.vue'
 
 // Estados principais
-const email = ref('')
-const password = ref('')
-const isLoading = ref(false)
+
 const error = ref('')
-const keepLoggedIn = ref(false)
 const showRegister = ref(false)
-const isAnimating = ref(false)
-const registerStep = ref(1)
 
 // Dados do cadastro
 const registerData = ref({
@@ -22,16 +17,6 @@ const registerData = ref({
   password: '',
   confirmPassword: ''
 })
-
-// Função para o login
-const handleLogin = () => {
-  console.log('Login clicado:', {
-    email: email.value,
-    password: password.value,
-    keepLoggedIn: keepLoggedIn.value
-  })
-  // resto do django ou oq quiser
-}
 
 // Função para mostrar tela de cadastro
 const createAccount = () => {
@@ -54,20 +39,9 @@ const backToLogin = () => {
   }
 }
 
-// Função para próximo passo do cadastro
-const handleNextStep = () => {
-  console.log('Próximo passo:', registerStep.value, registerData.value)
-  // resto do django ou oq quiser
-}
-
-// Função para reenviar código de verificação
-const resendCode = () => {
-  console.log('Reenviar código para:', registerData.value.email)
-  // resto do django ou oq quiser
-}
 </script>
 
-<template  style="height: 100%;">
+<template>
   <div class="page-container">
     <div class="background-image"></div>
 
@@ -134,13 +108,12 @@ const resendCode = () => {
 .page-container {
   position: relative;
   width: 100vw;
-  height: 90.1vh;
+  height: 92.7vh;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow: hidden;
-
 }
 
 .background-image {
