@@ -1,24 +1,25 @@
 from pathlib import Path
-from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-05++#9zqyewz&r9k=@ba!-dvf+r=1^r@)_f^@x0m%7#&id@8ic'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-05++#9zqyewz&r9k=@ba!-dvf+r=1^r@)_f^@x0m%7#&id@8ic')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ["*"]
+# Mais específico e seguro
+ALLOWED_HOSTS = [
+    'share-help-production.up.railway.app',  # ← Seu backend Railway
+    'localhost',
+    '127.0.0.1',
+    '*.up.railway.app',  # Permite qualquer subdomínio Railway
+]
 
 AUTH_USER_MODEL = 'shareHelp.Usuario'
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,12 +33,13 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
+# Email configuration (melhor usar variáveis de ambiente)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'contatosharehelp@gmail.com'        # seu email
-EMAIL_HOST_PASSWORD = 'bimx ecqn mhrs bjsi'           # senha de app (não a senha normal do Gmail)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'contatosharehelp@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'bimx ecqn mhrs bjsi')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 REST_FRAMEWORK = {
@@ -52,7 +54,6 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -64,9 +65,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS Configuration - APENAS UMA configuração
+CORS_ALLOWED_ORIGINS = [
+    "https://*.up.railway.app",  # Permite qualquer subdomínio Railway
+    "http://localhost:5173",     # Desenvolvimento local Vite
+    "http://127.0.0.1:5173",     # Desenvolvimento local alternativo
+    "http://localhost:3000",     # Desenvolvimento local React/Next
+]
 
-APPEND_SLASH=False
+# Para desenvolvimento, você pode usar (APENAS TEMPORÁRIO):
+# CORS_ALLOW_ALL_ORIGINS = True
+
+APPEND_SLASH = False
 
 ROOT_URLCONF = 'config.urls'
 
@@ -87,20 +97,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -115,29 +117,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },  
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'pt-br'
-
 TIME_ZONE = 'America/Sao_Paulo'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
