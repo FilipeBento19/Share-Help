@@ -15,6 +15,14 @@ ALLOWED_HOSTS = [
     '*.up.railway.app',
 ]
 
+# ========== CONFIGURAÇÃO CSRF ==========
+CSRF_TRUSTED_ORIGINS = [
+    'https://share-help-production.up.railway.app',
+    'https://*.up.railway.app',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+
 AUTH_USER_MODEL = 'shareHelp.Usuario'
 
 INSTALLED_APPS = [
@@ -23,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',  # ← Necessário para admin
+    'django.contrib.staticfiles',
     'corsheaders',
     'shareHelp',
     'rest_framework',
@@ -52,7 +60,7 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # ← ADICIONE ESTA LINHA
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     "django.middleware.common.CommonMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -113,14 +121,11 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-# ========== CONFIGURAÇÃO DE ARQUIVOS ESTÁTICOS ==========
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# WhiteNoise configuration
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Para desenvolvimento local (opcional)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ] if os.path.exists(os.path.join(BASE_DIR, 'static')) else []
