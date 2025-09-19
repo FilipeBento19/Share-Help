@@ -175,14 +175,13 @@
 <script setup>
 import Swal from "sweetalert2"
 import { ref, onMounted, computed } from "vue";
-import axios from "axios";
+import api from "@/services/api.js"; // ← Importa o service
 import ongs from "@/data/ongsData";
 import FooterComponent from "@/components/FooterComponent.vue";
-const favoritas = ref([])
-const tipoTexto = ref("simplificada")
 import graficComponent from "@/components/graficComponent.vue";
 
-
+const favoritas = ref([])
+const tipoTexto = ref("simplificada")
 const user = ref(null);
 const error = ref(null);
 const isLoading = ref(false);
@@ -198,12 +197,8 @@ const getProfile = async () => {
       return;
     }
 
-    const response = await axios.get("http://127.0.0.1:8000/api/perfil/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
+    // ✅ Usa o service da API - o token é adicionado automaticamente pelo interceptor
+    const response = await api.get("/perfil/");
     user.value = response.data;
   } catch {
     error.value = "Erro ao carregar perfil. Verifique seu login.";
@@ -220,9 +215,10 @@ const logout = () => {
   Swal.fire({
     icon: 'info',
     title: 'Você saiu da conta',
-    timer: 2000,            // 2 segundos
+    timer: 2000,
     showConfirmButton: false
-  }); setTimeout(() => {
+  }); 
+  setTimeout(() => {
     window.location.href = "/perfil"
   }, 2200)
 };

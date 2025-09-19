@@ -1,10 +1,8 @@
 <script setup>
 import { ref } from "vue"
-import axios from "axios"
+import api from "@/services/api.js" // ← Importa o service
 import Swal from "sweetalert2"
 defineEmits(['createAccount'])
-
-
 
 const email = ref("")
 const password = ref("")
@@ -17,8 +15,9 @@ const login = async () => {
   error.value = null
 
   try {
-    const response = await axios.post("http://127.0.0.1:8000/api/token/", {
-      username: email.value, // Django JWT usa "username" por padrão
+    // ✅ Usa o service da API ao invés da URL hardcoded
+    const response = await api.post("/token/", {
+      username: email.value,
       password: password.value,
     })
 
@@ -26,7 +25,6 @@ const login = async () => {
     localStorage.setItem("access_token", response.data.access)
     localStorage.setItem("refresh_token", response.data.refresh)
 
-    // se marcado "manter login", você poderia guardar num cookie ou localStorage permanente
     if (keepLoggedIn.value) {
       localStorage.setItem("keepLoggedIn", "true")
     } else {
@@ -43,7 +41,6 @@ const login = async () => {
       color: "#111827"
     })
 
-    // Redireciona após o alerta fechar
     setTimeout(() => {
       window.location.href = "/perfil"
     }, 2200)
