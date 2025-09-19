@@ -1,3 +1,144 @@
+    <script setup>
+    import Swal from "sweetalert2"
+    import { ref, onMounted, computed } from "vue";
+    import api from "@/config/api.js"; // ← Importa o service
+    import ongs from "@/data/ongsData";
+    import FooterComponent from "@/components/FooterComponent.vue";
+    import graficComponent from "@/components/graficComponent.vue";
+
+    const favoritas = ref([])
+    const tipoTexto = ref("simplificada")
+    const user = ref(null);
+    const error = ref(null);
+    const isLoading = ref(false);
+
+    const getProfile = async () => {
+      isLoading.value = true;
+      error.value = null;
+
+      try {
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+          error.value = "Você não está logado.";
+          return;
+        }
+
+        // ✅ Usa o service da API - o token é adicionado automaticamente pelo interceptor
+        const response = await api.get("/perfil/");
+        user.value = response.data;
+      } catch {
+        error.value = "Erro ao carregar perfil. Verifique seu login.";
+      } finally {
+        isLoading.value = false;
+      }
+    };
+
+    const logout = () => {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("keepLoggedIn");
+      user.value = null;
+      Swal.fire({
+        icon: 'info',
+        title: 'Você saiu da conta',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      setTimeout(() => {
+        window.location.href = "/perfil"
+      }, 2200)
+    };
+
+    const favoritasList = computed(() => {
+      return ongs.filter(o => favoritas.value.includes(o.id))
+    })
+
+    onMounted(() => {
+      getProfile()
+
+      //favoritos
+      favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
+
+      //doacoa
+      doacoes.value = JSON.parse(localStorage.getItem('doacoes') || '[]')
+
+      // ouvinte para atualizar se outra aba/modulo mudou o localStorage
+      window.addEventListener('storage', () => {
+        favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
+      })
+
+      // opcional: evento custom para atualizações dentro da mesma aba
+      window.addEventListener('favoritasUpdated', () => {
+        favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
+      })
+    })
+
+    function unfavorite(id) {
+      let saved = JSON.parse(localStorage.getItem('favoritas') || '[]')
+      if (saved.includes(id)) {
+        saved = saved.filter(i => i !== id)
+        localStorage.setItem('favoritas', JSON.stringify(saved))
+        favoritas.value = saved
+      }
+    }
+
+    //Doacoes
+    const filtroTipo = ref(""); // Texto ou Gráfico
+
+    const doacoes = ref([]);
+
+    const resumoPorOng = computed(() => {
+      const resumo = {};
+      doacoes.value.forEach((d) => {
+        if (!resumo[d.ongNome]) {
+          resumo[d.ongNome] = { quantidade: 0, valorTotal: 0 };
+        }
+        resumo[d.ongNome].quantidade += 1;
+        resumo[d.ongNome].valorTotal += d.valor;
+      });
+
+      return Object.entries(resumo).map(([ong, dados]) => ({
+        ong,
+        quantidade: dados.quantidade,
+        valor: dados.valorTotal,
+      }));
+    });
+
+    async function refreshAccessToken() {
+      const refreshToken = localStorage.getItem("refresh_token")
+      if (!refreshToken) return null
+
+      try {
+        const response = await api.post("/api/token/refresh/", {
+          refresh: refreshToken,
+        })
+        localStorage.setItem("access_token", response.data.access)
+        return response.data.access
+      } catch (err) {
+        console.error("Erro ao renovar token:", err)
+        logout()
+        return null
+      }
+    }
+
+    // Interceptor para renovar automaticamente se o token expirar
+    api.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        if (error.response && error.response.status === 401) {
+          const newToken = await refreshAccessToken()
+          if (newToken) {
+            error.config.headers.Authorization = `Bearer ${newToken}`
+            return api.request(error.config)
+          } else {
+            logout()
+          }
+        }
+        return Promise.reject(error)
+      }
+    )
+</script>
+
   <template>
     <!-- Verificação se usuário está logado -->
     <div v-if="!user && !isLoading" class="box-nao-logado">
@@ -172,113 +313,6 @@
     </div>
   </template>
 
-<script setup>
-import Swal from "sweetalert2"
-import { ref, onMounted, computed } from "vue";
-import api from "@/config/api.js"; // ← Importa o service
-import ongs from "@/data/ongsData";
-import FooterComponent from "@/components/FooterComponent.vue";
-import graficComponent from "@/components/graficComponent.vue";
-
-const favoritas = ref([])
-const tipoTexto = ref("simplificada")
-const user = ref(null);
-const error = ref(null);
-const isLoading = ref(false);
-
-const getProfile = async () => {
-  isLoading.value = true;
-  error.value = null;
-
-  try {
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-      error.value = "Você não está logado.";
-      return;
-    }
-
-    // ✅ Usa o service da API - o token é adicionado automaticamente pelo interceptor
-    const response = await api.get("/perfil/");
-    user.value = response.data;
-  } catch {
-    error.value = "Erro ao carregar perfil. Verifique seu login.";
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-const logout = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
-  localStorage.removeItem("keepLoggedIn");
-  user.value = null;
-  Swal.fire({
-    icon: 'info',
-    title: 'Você saiu da conta',
-    timer: 2000,
-    showConfirmButton: false
-  }); 
-  setTimeout(() => {
-    window.location.href = "/perfil"
-  }, 2200)
-};
-
-const favoritasList = computed(() => {
-  return ongs.filter(o => favoritas.value.includes(o.id))
-})
-
-onMounted(() => {
-  getProfile()
-
-  //favoritos
-  favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
-
-  //doacoa
-  doacoes.value = JSON.parse(localStorage.getItem('doacoes') || '[]')
-
-  // ouvinte para atualizar se outra aba/modulo mudou o localStorage
-  window.addEventListener('storage', () => {
-    favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
-  })
-
-  // opcional: evento custom para atualizações dentro da mesma aba
-  window.addEventListener('favoritasUpdated', () => {
-    favoritas.value = JSON.parse(localStorage.getItem('favoritas') || '[]')
-  })
-})
-
-function unfavorite(id) {
-  let saved = JSON.parse(localStorage.getItem('favoritas') || '[]')
-  if (saved.includes(id)) {
-    saved = saved.filter(i => i !== id)
-    localStorage.setItem('favoritas', JSON.stringify(saved))
-    favoritas.value = saved
-  }
-}
-
-//Doacoes
-const filtroTipo = ref(""); // Texto ou Gráfico
-
-const doacoes = ref([]);
-
-const resumoPorOng = computed(() => {
-  const resumo = {};
-  doacoes.value.forEach((d) => {
-    if (!resumo[d.ongNome]) {
-      resumo[d.ongNome] = { quantidade: 0, valorTotal: 0 };
-    }
-    resumo[d.ongNome].quantidade += 1;
-    resumo[d.ongNome].valorTotal += d.valor;
-  });
-
-  return Object.entries(resumo).map(([ong, dados]) => ({
-    ong,
-    quantidade: dados.quantidade,
-    valor: dados.valorTotal,
-  }));
-});
-
-</script>
 
 <style scoped>
 .box-nao-logado {
