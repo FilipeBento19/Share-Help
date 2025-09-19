@@ -1,1 +1,2 @@
+release: python manage.py collectstatic --noinput
 web: pip install -r requirements.txt && python -m gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
