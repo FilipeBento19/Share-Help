@@ -175,7 +175,7 @@
 <script setup>
 import Swal from "sweetalert2"
 import { ref, onMounted, computed } from "vue";
-import api from "@/services/api.js"; // ← Importa o service
+import api from "@/config/api.js"; // ← Importa o service
 import ongs from "@/data/ongsData";
 import FooterComponent from "@/components/FooterComponent.vue";
 import graficComponent from "@/components/graficComponent.vue";

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue"
-import api from "@/services/api.js" // ← Importa o service
+import api from "@/config/api.js" // ← Importa o service
 import Swal from "sweetalert2"
 defineEmits(['createAccount'])
 
