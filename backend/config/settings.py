@@ -67,10 +67,9 @@ MIDDLEWARE = [
 
 # CORS Configuration - APENAS UMA configuração
 CORS_ALLOWED_ORIGINS = [
-    "https://*.up.railway.app",  # Permite qualquer subdomínio Railway
-    "http://localhost:5173",     # Desenvolvimento local Vite
-    "http://127.0.0.1:5173",     # Desenvolvimento local alternativo
-    "http://localhost:3000",     # Desenvolvimento local React/Next
+    "https://frontend-production-8425.up.railway.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 # Para desenvolvimento, você pode usar (APENAS TEMPORÁRIO):
