@@ -20,9 +20,9 @@ const wordsLine2 = computed(() => line2.split(' '));
     <div class="topo">
         <div class="overlay"></div>
         <div class="banner">
-          <div class="linetop">       
+          <div class="linetop">
             <div class="line">
-              <motion.div 
+              <motion.div
                 v-for="(word, i) in wordsLine1"
                 :key="'line1-' + i"
                 class="split-word"
@@ -35,7 +35,7 @@ const wordsLine2 = computed(() => line2.split(' '));
               </motion.div>
             </div>
             <div class="line">
-              <motion.div 
+              <motion.div
                 v-for="(word, i) in wordsLine2"
                 :key="'line2-' + i"
                 class="split-word"
@@ -58,7 +58,7 @@ const wordsLine2 = computed(() => line2.split(' '));
         <h2>Nossas Causas</h2>
         <p>Conheça os projetos que estão transformando vidas e <br>comunidades inteiras.</p>
             <div class="causes-grid">
-              <CausasCard 
+              <CausasCard
                   v-for="cause in causesData"
                   :key="cause.id"
                   :cause="cause"
@@ -108,26 +108,26 @@ const wordsLine2 = computed(() => line2.split(' '));
     .causes-grid, .payment-grid {
         gap: 15px;
     }
-    
+
     .cause-card, .payment-card {
         padding: 15px;
     }
-    
+
     .escolher-div {
         padding: 15px;
     }
 }
 
 @media (max-width: 992px) {
-    
+
     .cause-title, .payment-title, .escolher-div h2 {
         font-size: 1.1rem;
     }
-    
+
     .cause-description, .payment-description, .escolher-div p {
         font-size: 0.5rem;
     }
-    
+
     .escolher-div img, .payment-icon {
         width: 50px;
         height: 50px;
@@ -135,38 +135,38 @@ const wordsLine2 = computed(() => line2.split(' '));
 }
 
 @media (max-width: 768px) {
-    
-    
+
+
     .cause-card, .payment-card, .escolher-div {
         padding: 12px;
     }
-    
+
     .section-title {
         font-size: 2rem;
     }
-    
+
     .section-subtitle {
         font-size: 1rem;
     }
-    
+
     .cause-title, .payment-title, .escolher-div h2 {
         font-size: 1rem;
     }
-    
+
     .cause-description, .payment-description, .escolher-div p {
         font-size: 0.8rem;
     }
-    
+
     .donate-button, .payment-button {
         padding: 8px 12px;
         font-size: 0.85rem;
     }
-    
+
     .escolher-div img, .payment-icon {
         width: 40px;
         height: 40px;
     }
-    
+
     .progress-text {
         font-size: 0.8rem;
     }
@@ -178,72 +178,72 @@ const wordsLine2 = computed(() => line2.split(' '));
 }
 
 @media (max-width: 576px) {
-    
-    
+
+
     .cause-card, .payment-card, .escolher-div {
         padding: 10px;
     }
-    
+
     .section-title {
         font-size: 1.7rem;
     }
-    
+
     .section-subtitle {
         font-size: 0.9rem;
         margin-bottom: 30px;
     }
-    
+
     .cause-title, .payment-title, .escolher-div h2 {
         font-size: 0.9rem;
         margin: 10px 0;
     }
-    
+
     .cause-description, .payment-description, .escolher-div p {
         font-size: 0.75rem;
         line-height: 1.4;
     }
-    
+
     .donate-button, .payment-button {
         padding: 6px 10px;
         font-size: 0.8rem;
     }
-    
+
     .escolher-div img, .payment-icon {
         width: 35px;
         height: 35px;
         margin-bottom: 10px;
     }
-    
+
     .progress-bar {
         height: 6px;
         margin: 10px 0;
     }
-    
+
     .progress-text {
         font-size: 0.75rem;
     }
 
-    
-    
+
+
 }
 
 @media (max-width: 400px) {
     .causes-grid, .payment-grid, .escolher-coisas {
         gap: 8px;
     }
-    
+
     .cause-card, .payment-card, .escolher-div {
         padding: 8px;
     }
-    
+
     .section-title {
         font-size: 1.5rem;
     }
-    
+
     .section-subtitle {
         font-size: 0.85rem;
     }
-    
+
     .formas-desc p {
       width: 60%;
     }
@@ -255,16 +255,16 @@ const wordsLine2 = computed(() => line2.split(' '));
     .cause-title, .payment-title, .escolher-div h2 {
         font-size: 0.85rem;
     }
-    
+
     .cause-description, .payment-description, .escolher-div p {
         font-size: 0.7rem;
     }
-    
+
     .donate-button, .payment-button {
         padding: 5px 8px;
         font-size: 0.75rem;
     }
-    
+
     .escolher-div img, .payment-icon {
         width: 30px;
         height: 30px;
@@ -308,7 +308,7 @@ const wordsLine2 = computed(() => line2.split(' '));
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7)); 
+  background: linear-gradient(to right, rgba(37, 99, 235, 0.7), rgba(16, 185, 129, 0.7));
   z-index: 1;
   animation: gradientBG 8s ease infinite;
   background-size: 300% 300%;
@@ -316,11 +316,11 @@ const wordsLine2 = computed(() => line2.split(' '));
 
 .topo .banner {
   z-index: 2;
-  position: relative; 
-  max-width: 720px; 
-  width: 100%; 
-  text-align: left; 
-  padding-left: 10%; 
+  position: relative;
+  max-width: 720px;
+  width: 100%;
+  text-align: left;
+  padding-left: 10%;
 }
 
 .topo p {
@@ -385,7 +385,7 @@ const wordsLine2 = computed(() => line2.split(' '));
 
 .causes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
@@ -441,7 +441,7 @@ const wordsLine2 = computed(() => line2.split(' '));
   text-align: center;
 }
 
-.formas-de-doar h1 {  
+.formas-de-doar h1 {
   font-weight: 650;
   font-size: 2.3rem;
   color: #111827;

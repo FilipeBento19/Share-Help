@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator, MaxValueValidator
 import random
 
-#==========================================================
-#                       Cadastro
-#===========================================================
+# ================================
+# USUÁRIO E AUTENTICAÇÃO
+# ================================
 class Usuario(AbstractUser):
     nome = models.CharField(max_length=100, blank=True, null=True)
     email_verificado = models.BooleanField(default=False)
@@ -19,18 +20,19 @@ class CodigoVerificacao(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.codigo:
-            self.codigo = str(random.randint(100000, 999999))  # 6 dígitos
+            self.codigo = str(random.randint(100000, 999999))
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.email} - {self.codigo}"
 
-#==========================================================
-
-
+# ================================
+# TIPOS DE DOAÇÃO
+# ================================
 class TipoDoacao(models.Model):
     nome_tipo = models.CharField(max_length=50, unique=True)
     descricao = models.TextField(null=True, blank=True)
+    icone = models.CharField(max_length=100, null=True, blank=True, help_text="Nome do ícone ou classe CSS")
     ativo = models.BooleanField(default=True)
 
     def __str__(self):
@@ -40,7 +42,9 @@ class TipoDoacao(models.Model):
         verbose_name = "Tipo de Doação"
         verbose_name_plural = "Tipos de Doação"
 
-
+# ================================
+# LOCALIZAÇÃO
+# ================================
 class Endereco(models.Model):
     logradouro = models.CharField(max_length=255)
     numero = models.CharField(max_length=20, null=True, blank=True)
@@ -60,63 +64,112 @@ class Endereco(models.Model):
         verbose_name = "Endereço"
         verbose_name_plural = "Endereços"
 
-
+# ================================
+# INSTITUIÇÕES (baseado no ongsData)
+# ================================
 class Instituicao(models.Model):
-    TIPO_CHOICES = [
-        ('local', 'Presencial'),
-        ('online', 'Online'),
-        ('ambos', 'Presencial e Online')
+    # Categorias baseadas no ongsData
+    CATEGORIA_CHOICES = [
+        ('criancas', 'Crianças'),
+        ('idosos', 'Idosos'),
+        ('moradores-de-rua', 'Moradores de Rua'),
+        ('animais', 'Animais'),
+        ('meio-ambiente', 'Meio Ambiente'),
+        ('saude', 'Saúde'),
+        ('educacao', 'Educação'),
+        ('geral', 'Geral'),
     ]
     
-    nome = models.CharField(max_length=150)
-    descricao = models.TextField(null=True, blank=True)
-    tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
+    STATUS_CHOICES = [
+        ('ativa', 'Ativa'),
+        ('inativa', 'Inativa'),
+        ('pendente', 'Pendente Aprovação'),
+    ]
     
-    # Campos para instituições locais
-    endereco = models.ForeignKey(
-        Endereco, 
-        on_delete=models.CASCADE, 
-        null=True, 
-        blank=True,
-        help_text="Obrigatório para instituições presenciais"
-    )
+    # Campos principais (baseados no ongsData)
+    identificador = models.CharField(max_length=100, unique=True)
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField(help_text="Descrição detalhada da instituição")
+    categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES)
+    
+    # Contato e localização
     telefone = models.CharField(max_length=20, null=True, blank=True)
+    endereco_completo = models.TextField(help_text="Endereço completo como string")
+    horario_funcionamento = models.CharField(max_length=100, null=True, blank=True)
     
-    # Campos para instituições online
-    site = models.URLField(null=True, blank=True)
-    email_contato = models.EmailField(null=True, blank=True)
+    # Coordenadas geográficas
+    latitude = models.DecimalField(max_digits=10, decimal_places=7)
+    longitude = models.DecimalField(max_digits=10, decimal_places=7)
     
-    # Campos gerais
-    ativo = models.BooleanField(default=True)
-    data_criacao = models.DateTimeField(auto_now_add=True)
-    data_atualizacao = models.DateTimeField(auto_now=True)
+    # Mídia
+    logo = models.CharField(max_length=255, help_text="Caminho para o logo da instituição")
     
-    # Relacionamento com tipos de doação aceitos
+    # Progresso e status
+    progresso = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        help_text="Progresso em percentual (0-100)"
+    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ativa')
+    
+    # Relacionamentos
     tipos_doacao_aceitos = models.ManyToManyField(
         TipoDoacao, 
         blank=True,
-        help_text="Tipos de doação que esta instituição aceita"
+        help_text="Tipos de doação aceitos (filtros)"
+    )
+    endereco_detalhado = models.ForeignKey(
+        Endereco, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        help_text="Endereço estruturado (opcional)"
     )
     
-    def __str__(self):
-        return f"{self.nome} ({self.get_tipo_display()})"
+    # Metadados
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    data_atualizacao = models.DateTimeField(auto_now=True)
     
-    def clean(self):
-        from django.core.exceptions import ValidationError
-        # Validação: instituições locais devem ter endereço
-        if self.tipo in ['local', 'ambos'] and not self.endereco:
-            raise ValidationError('Instituições presenciais devem ter um endereço.')
+    def __str__(self):
+        return self.nome
+    
+    @property
+    def coordenadas(self):
+        """Retorna coordenadas como array [lat, lng]"""
+        return [float(self.latitude), float(self.longitude)]
+    
+    @property
+    def filtros(self):
+        """Retorna lista de filtros (tipos de doação aceitos)"""
+        return list(self.tipos_doacao_aceitos.values_list('nome_tipo', flat=True))
+    
+    @property
+    def endereco_resumo(self):
+        """Retorna resumo do endereço (cidade/estado)"""
+        if self.endereco_detalhado:
+            return f"{self.endereco_detalhado.cidade}/{self.endereco_detalhado.estado}"
         
-        # Validação: instituições online devem ter site
-        if self.tipo in ['online', 'ambos'] and not self.site:
-            raise ValidationError('Instituições online devem ter um site.')
+        # Extrai cidade/estado do endereço completo (fallback)
+        try:
+            parts = self.endereco_completo.split(' - ')
+            if len(parts) >= 2:
+                cidade_estado = parts[-1]
+                if '/' in cidade_estado:
+                    return cidade_estado.split(',')[0].strip()
+        except:
+            pass
+        return "Não informado"
 
     class Meta:
         verbose_name = "Instituição"
         verbose_name_plural = "Instituições"
         ordering = ['nome']
 
-
+# ================================
+# FAVORITOS E DOAÇÕES
+# ================================
 class Favorito(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
@@ -129,10 +182,11 @@ class Favorito(models.Model):
                 name='unique_favorito_usuario_instituicao'
             )
         ]
+        verbose_name = "Favorito"
+        verbose_name_plural = "Favoritos"
 
     def __str__(self):
-        return f"Favorito de {self.usuario.nome} → {self.instituicao.nome}"
-
+        return f"{self.usuario.username} → {self.instituicao.nome}"
 
 class Doacao(models.Model):
     STATUS_CHOICES = [
@@ -164,7 +218,7 @@ class Doacao(models.Model):
     data_atualizacao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Doação #{self.id} - {self.usuario.nome} → {self.instituicao.nome} ({self.tipo_doacao.nome_tipo})"
+        return f"Doação #{self.id} - {self.usuario.username} → {self.instituicao.nome}"
 
     class Meta:
         verbose_name = "Doação"
