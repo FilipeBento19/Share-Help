@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue"
-import api from "@/config/api.js" // ← Importa o service
+import api from "@/config/api.js"
 import Swal from "sweetalert2"
 defineEmits(['createAccount'])
 
@@ -15,7 +15,6 @@ const login = async () => {
   error.value = null
 
   try {
-    // ✅ Usa o service da API ao invés da URL hardcoded
     const response = await api.post("/token/", {
       username: email.value,
       password: password.value,
