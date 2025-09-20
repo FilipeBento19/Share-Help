@@ -107,7 +107,7 @@ const backToLogin = () => {
 
 .page-container {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 92.7vh;
   display: flex;
   align-items: center;

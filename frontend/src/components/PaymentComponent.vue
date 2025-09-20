@@ -511,171 +511,14 @@ defineExpose({ showModal })
   font-size: 0.8rem;
   color: #818181;
 }
+/* ===== RESPONSIVIDADE SIMPLIFICADA ===== */
 
-/* RESPONSIVIDADE PARA A CAIXINHA DE AGRADECIMENTO */
-@media (max-width: 480px) {
-  .thank-you-box {
-    padding: 32px 24px;
-    max-width: 280px;
-  }
+/* Desktop padrão já definido no estilo base — mantenha como está */
 
-  .thank-you-icon {
-    width: 56px;
-    height: 56px;
-  }
-
-  .thank-you-icon svg {
-    width: 40px;
-    height: 40px;
-  }
-
-  .thank-you-box h3 {
-    font-size: 18px;
-  }
-
-  .thank-you-box p {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 360px) {
-  .thank-you-box {
-    padding: 28px 20px;
-    max-width: 260px;
-  }
-
-  .thank-you-icon {
-    width: 48px;
-    height: 48px;
-  }
-
-  .thank-you-icon svg {
-    width: 32px;
-    height: 32px;
-  }
-
-  .thank-you-box h3 {
-    font-size: 16px;
-  }
-
-  .thank-you-box p {
-    font-size: 12px;
-  }
-}
-
-/* ===== RESPONSIVIDADE - APENAS DIMINUINDO PROPORCIONALMENTE ===== */
-
-/* Tablets grandes */
-@media (max-width: 1024px) {
-  .overlay {
-    padding: 16px;
-  }
-
-  .divprimary {
-    max-width: 800px;
-    padding: 18px;
-    border-radius: 10px;
-  }
-
-  .header {
-    top: 18px;
-    left: 18px;
-    margin-bottom: 28px;
-  }
-
-  .content-wrapper {
-    gap: 26px;
-    padding-top: 54px;
-    min-height: 360px;
-  }
-
-  .valor h1 {
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-
-  .value-grid {
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-
-  .value-button {
-    padding: 18px;
-    font-size: 16px;
-    border-radius: 10px;
-  }
-
-  .custom-value {
-    margin-bottom: 28px;
-  }
-
-  .custom-input {
-    padding: 18px;
-    font-size: 15px;
-    border-radius: 10px;
-  }
-
-  .donation-type {
-    margin-bottom: 36px;
-  }
-
-  .donation-type h3 {
-    font-size: 15px;
-    margin-bottom: 14px;
-  }
-
-  .radio-group {
-    gap: 20px;
-  }
-
-  .radio-label {
-    font-size: 15px;
-  }
-
-  .form h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-
-  .payment-options {
-    gap: 10px;
-    margin-bottom: 28px;
-  }
-
-  .payment-option {
-    padding: 14px 18px;
-    border-radius: 10px;
-  }
-
-  .payment-icon {
-    width: 28px;
-    height: 28px;
-    margin-right: 14px;
-  }
-
-  .payment-name {
-    font-size: 15px;
-  }
-
-  .payment-desc {
-    font-size: 13px;
-  }
-
-  .finalize-button {
-    padding: 14px 20px;
-    font-size: 15px;
-    border-radius: 10px;
-  }
-}
-
-/* Tablets */
+/* Tablet (até 768px) */
 @media (max-width: 768px) {
-  .overlay {
-    padding: 12px;
-  }
-
   .divprimary {
-    max-width: 700px;
+    max-width: 95vw;
     padding: 16px;
     border-radius: 8px;
   }
@@ -683,214 +526,34 @@ defineExpose({ showModal })
   .header {
     top: 16px;
     left: 16px;
-    margin-bottom: 24px;
-  }
-
-  .back-button {
-    padding: 6px;
-  }
-
-  .back-button svg {
-    width: 20px;
-    height: 20px;
   }
 
   .content-wrapper {
-    gap: 22px;
-    padding-top: 48px;
-    min-height: 320px;
-  }
-
-  .valor h1 {
-    font-size: 20px;
-    margin-bottom: 18px;
+    flex-direction: column; /* Empilha os blocos em telas menores */
+    gap: 20px;
+    padding-top: 60px;
+    min-height: auto;
   }
 
   .value-grid {
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .value-button {
-    padding: 16px;
-    font-size: 15px;
-    border-radius: 8px;
-  }
-
-  .custom-value {
-    margin-bottom: 24px;
-  }
-
-  .custom-input {
-    padding: 16px;
-    font-size: 14px;
-    border-radius: 8px;
-  }
-
-  .donation-type {
-    margin-bottom: 32px;
-  }
-
-  .donation-type h3 {
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
-
-  .radio-group {
-    gap: 18px;
-  }
-
-  .radio-option input[type="radio"] {
-    transform: scale(1.1);
-    margin-right: 6px;
-  }
-
-  .radio-label {
-    font-size: 14px;
-  }
-
-  .form h2 {
-    font-size: 16px;
-    margin-bottom: 18px;
+    grid-template-columns: repeat(2, 1fr); /* Mantém 2 colunas até mobile */
   }
 
   .payment-options {
     gap: 8px;
-    margin-bottom: 24px;
   }
 
-  .payment-option {
-    padding: 12px 16px;
-    border-radius: 8px;
-  }
-
-  .payment-icon {
-    width: 26px;
-    height: 26px;
-    margin-right: 12px;
-  }
-
-  .payment-name {
-    font-size: 14px;
-    margin-bottom: 2px;
-  }
-
-  .payment-desc {
-    font-size: 12px;
-  }
-
-  .radio-indicator {
-    width: 18px;
-    height: 18px;
-  }
-
-  .radio-indicator.active::after {
-    width: 8px;
-    height: 8px;
-  }
-
+  .payment-option,
+  .value-button,
+  .custom-input,
   .finalize-button {
-    padding: 12px 18px;
+    padding: 12px;
     font-size: 14px;
-    border-radius: 8px;
-    gap: 6px;
-  }
-
-  .finalize-button svg {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-/* Smartphones grandes */
-@media (max-width: 640px) {
-  .overlay {
-    padding: 10px;
-  }
-
-  .divprimary {
-    max-width: 600px;
-    padding: 14px;
-  }
-
-  .header {
-    top: 14px;
-    left: 14px;
-  }
-
-  .content-wrapper {
-    gap: 18px;
-    padding-top: 42px;
-    min-height: 280px;
-  }
-
-  .valor h1 {
-    font-size: 18px;
-    margin-bottom: 16px;
-  }
-
-  .value-grid {
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  .value-button {
-    padding: 14px;
-    font-size: 14px;
-  }
-
-  .custom-value {
-    margin-bottom: 20px;
-  }
-
-  .custom-input {
-    padding: 14px;
-    font-size: 13px;
-  }
-
-  .donation-type {
-    margin-bottom: 28px;
-  }
-
-  .donation-type h3 {
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
-
-  .radio-group {
-    gap: 16px;
-  }
-
-  .radio-label {
-    font-size: 13px;
-  }
-
-  .form h2 {
-    font-size: 15px;
-    margin-bottom: 16px;
-  }
-
-  .payment-options {
-    gap: 6px;
-    margin-bottom: 20px;
-  }
-
-  .payment-option {
-    padding: 10px 14px;
   }
 
   .payment-icon {
     width: 24px;
     height: 24px;
-    margin-right: 10px;
-  }
-
-  .payment-name {
-    font-size: 13px;
-  }
-
-  .payment-desc {
-    font-size: 11px;
   }
 
   .radio-indicator {
@@ -903,253 +566,57 @@ defineExpose({ showModal })
     height: 6px;
   }
 
-  .finalize-button {
-    padding: 10px 16px;
-    font-size: 13px;
-  }
-
-  .finalize-button svg {
-    width: 16px;
-    height: 16px;
+  .msgzinha {
+    font-size: 0.75rem;
   }
 }
 
-/* Smartphones */
+/* Mobile (até 480px) */
 @media (max-width: 480px) {
-  .overlay {
-    padding: 8px;
-  }
-
   .divprimary {
-    max-width: 500px;
     padding: 12px;
   }
 
-  .header {
-    top: 12px;
-    left: 12px;
-  }
-
-  .content-wrapper {
-    gap: 14px;
-    padding-top: 36px;
-    min-height: 240px;
-  }
-
-  .valor h1 {
-    font-size: 16px;
-    margin-bottom: 14px;
+  .valor h1,
+  .form h2 {
+    font-size: 1.25rem; /* Ou use clamp! */
   }
 
   .value-grid {
+    grid-template-columns: 1fr; /* Uma coluna só em mobile pequeno */
     gap: 8px;
-    margin-bottom: 12px;
   }
 
-  .value-button {
-    padding: 12px;
+  .value-button,
+  .custom-input,
+  .finalize-button {
+    padding: 10px;
     font-size: 13px;
   }
 
-  .custom-value {
-    margin-bottom: 16px;
-  }
-
-  .custom-input {
-    padding: 12px;
-    font-size: 12px;
-  }
-
-  .donation-type {
-    margin-bottom: 24px;
-  }
-
-  .donation-type h3 {
-    font-size: 12px;
-    margin-bottom: 8px;
-  }
-
-  .radio-group {
-    gap: 14px;
-  }
-
-  .radio-option input[type="radio"] {
-    transform: scale(1);
-    margin-right: 4px;
-  }
-
-  .radio-label {
-    font-size: 12px;
-  }
-
-  .form h2 {
-    font-size: 14px;
-    margin-bottom: 14px;
-  }
-
-  .payment-options {
-    gap: 4px;
-    margin-bottom: 16px;
-  }
-
   .payment-option {
-    padding: 8px 12px;
-  }
-
-  .payment-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-  }
-
-  .payment-name {
-    font-size: 12px;
-  }
-
-  .payment-desc {
-    font-size: 10px;
-  }
-
-  .radio-indicator {
-    width: 14px;
-    height: 14px;
-  }
-
-  .radio-indicator.active::after {
-    width: 4px;
-    height: 4px;
-  }
-
-  .finalize-button {
-    padding: 8px 14px;
-    font-size: 12px;
-  }
-
-  .finalize-button svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .msgzinha {
-    padding-top: 4px;
-    font-size: 0.7rem;
-    color: #818181;
-  }
-}
-
-/* Smartphones pequenos */
-@media (max-width: 360px) {
-  .overlay {
-    padding: 6px;
-  }
-
-  .divprimary {
-    max-width: 400px;
     padding: 10px;
   }
 
-  .header {
-    top: 10px;
-    left: 10px;
+  .payment-name {
+    font-size: 13px;
   }
 
-  .back-button {
-    padding: 4px;
+  .payment-desc {
+    font-size: 11px;
+  }
+
+  .donation-type h3 {
+    font-size: 13px;
+  }
+
+  .radio-label {
+    font-size: 13px;
   }
 
   .back-button svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .content-wrapper {
-    gap: 12px;
-    padding-top: 32px;
-    min-height: 200px;
-  }
-
-  .valor h1 {
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
-
-  .value-grid {
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-
-  .value-button {
-    padding: 10px;
-    font-size: 12px;
-  }
-
-  .custom-value {
-    margin-bottom: 14px;
-  }
-
-  .custom-input {
-    padding: 10px;
-    font-size: 11px;
-  }
-
-  .donation-type {
-    margin-bottom: 20px;
-  }
-
-  .donation-type h3 {
-    font-size: 11px;
-    margin-bottom: 6px;
-  }
-
-  .radio-group {
-    gap: 12px;
-  }
-
-  .radio-label {
-    font-size: 11px;
-  }
-
-  .form h2 {
-    font-size: 13px;
-    margin-bottom: 12px;
-  }
-
-  .payment-options {
-    gap: 3px;
-    margin-bottom: 14px;
-  }
-
-  .payment-option {
-    padding: 6px 10px;
-  }
-
-  .payment-icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 6px;
-  }
-
-  .payment-name {
-    font-size: 11px;
-  }
-
-  .payment-desc {
-    font-size: 9px;
-  }
-
-  .radio-indicator {
-    width: 12px;
-    height: 12px;
-  }
-
-  .finalize-button {
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-
-  .finalize-button svg {
-    width: 12px;
-    height: 12px;
+    width: 20px;
+    height: 20px;
   }
 }
 </style>
