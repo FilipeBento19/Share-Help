@@ -2,21 +2,25 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-05++#9zqyewz&r9k=@ba!-dvf+r=1^r@)_f^@x0m%7#&id@8ic')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-# Mais específico e seguro
 ALLOWED_HOSTS = [
-    'share-help-production.up.railway.app',  # ← Seu backend Railway
+    'share-help-production.up.railway.app',
     'localhost',
     '127.0.0.1',
-    '*.up.railway.app',  # Permite qualquer subdomínio Railway
+    '*.up.railway.app',
+]
+
+# ========== CONFIGURAÇÃO CSRF ==========
+CSRF_TRUSTED_ORIGINS = [
+    'https://share-help-production.up.railway.app',
+    'https://*.up.railway.app',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
 ]
 
 AUTH_USER_MODEL = 'shareHelp.Usuario'
@@ -33,7 +37,6 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
-# Email configuration (melhor usar variáveis de ambiente)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -56,24 +59,21 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    'django.middleware.security.SecurityMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS Configuration - APENAS UMA configuração
 CORS_ALLOWED_ORIGINS = [
     "https://frontend-production-cfdb.up.railway.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
-
-# Para desenvolvimento, você pode usar (APENAS TEMPORÁRIO):
-# CORS_ALLOW_ALL_ORIGINS = True
 
 APPEND_SLASH = False
 
@@ -121,7 +121,13 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+] if os.path.exists(os.path.join(BASE_DIR, 'static')) else []
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
