@@ -2,13 +2,13 @@
 import axios from 'axios'
 
 // Pega a URL da variável de ambiente ou usa localhost para desenvolvimento
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = `${BASE_URL}/api`
 
 console.log('🔗 API configurada para:', API_URL)
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-
+    baseURL: API_URL,
 })
 
 // Interceptor para adicionar o token em todas as requisições
@@ -38,7 +38,7 @@ api.interceptors.response.use(
       if (refreshToken) {
         try {
           // ✅ CORRIGIDO: usando API_URL em vez de localhost hardcoded
-          const response = await axios.post(`${API_URL}/api/token/refresh/`, {
+          const response = await axios.post(`/token/refresh/`, {
             refresh: refreshToken
           })
 
