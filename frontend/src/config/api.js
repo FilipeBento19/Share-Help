@@ -7,11 +7,8 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 console.log('🔗 API configurada para:', API_URL)
 
 const api = axios.create({
-  baseURL: `${API_URL}/api`,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  }
+    baseURL: import.meta.env.VITE_API_URL,
+
 })
 
 // Interceptor para adicionar o token em todas as requisições

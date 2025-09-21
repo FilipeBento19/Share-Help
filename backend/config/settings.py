@@ -9,7 +9,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-05++#9zqyewz&r9k=@ba!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = [
-    'share-help-production.up.railway.app',
+    'https://frontend-production-cfdb.up.railway.app',
     'localhost',
     '127.0.0.1',
     '*.up.railway.app',
@@ -17,7 +17,7 @@ ALLOWED_HOSTS = [
 
 # ========== CONFIGURAÇÃO CSRF ==========
 CSRF_TRUSTED_ORIGINS = [
-    'https://share-help-production.up.railway.app',
+    'https://frontend-production-cfdb.up.railway.app',
     'https://*.up.railway.app',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
