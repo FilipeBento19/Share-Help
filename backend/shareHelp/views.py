@@ -23,47 +23,18 @@ from .serializers import (
 # ================================
 # AUTENTICAÇÃO
 # ================================
-class UsuarioViewSet(ModelViewSet):
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
-
-import logging
-logger = logging.getLogger(__name__)
-
+# ✅ CORRETO - linha dentro da função
 class EnviarCodigoView(APIView):
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data["email"]
             codigo_obj, _ = CodigoVerificacao.objects.update_or_create(email=email)
-
-            mensagem = f'''Olá!
-
-Seu código de verificação para cadastro no Share Help é: {codigo_obj.codigo}
-
-Este código é válido por 15 minutos.
-
-Se você não solicitou este código, ignore este email.
-
-Atenciosamente,
-Equipe Share Help'''
-
-            try:
-                send_mail(
-                    subject="Código de verificação - Share Help",
-                    message=mensagem,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[email],
-                    fail_silently=False,
-                )
-                logger.info(f"✅ Email enviado com sucesso para {email}")
-            except Exception as e:
-                logger.error(f"❌ Erro SendGrid: {str(e)}")
-
-            return Response({
-                "message": "Código enviado para o email"
-                # remover codigo da resposta para produção
-            }, status=status.HTTP_200_OK)
+            
+            # send_mail(...) # comentado
+            logger.info(f"Email seria enviado para {email} com código {codigo_obj.codigo}")  # ✅ DENTRO!
+            
+            return Response({"message": "Código enviado"})
 
 class VerificarCodigoView(APIView):
     def post(self, request):
@@ -348,5 +319,3 @@ class DoacaoViewSet(ModelViewSet):
             'top_instituicoes': list(por_instituicao)
         })
     
-# send_mail(...) # COMENTADO
-logger.info(f"Email seria enviado para {email} com código {codigo_obj.codigo}")
