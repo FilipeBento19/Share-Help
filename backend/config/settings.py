@@ -9,7 +9,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-05++#9zqyewz&r9k=@ba!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = [
-    'https://share-help-production.up.railway.app',
+    'share-help-production.up.railway.app',
     'localhost',
     '127.0.0.1',
     '*.up.railway.app',
