@@ -40,7 +40,8 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem('refresh_token')
       if (refreshToken) {
         try {
-          const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+          // ✅ CORRIGIDO: usando API_URL em vez de localhost hardcoded
+          const response = await axios.post(`${API_URL}/api/token/refresh/`, {
             refresh: refreshToken
           })
 
