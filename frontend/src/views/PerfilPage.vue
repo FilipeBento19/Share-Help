@@ -535,9 +535,10 @@ api.interceptors.response.use(
 /* ✅ SIDEBAR (mantida como estava) */
 .sidebar {
   position: sticky;
-  border-radius: 20px;
-  padding: 2rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  top: 20px;
+  align-self: flex-start;
+  border: none;
+  box-shadow: none;
 
   & h2 {
     color: #2563EB;
@@ -571,7 +572,6 @@ api.interceptors.response.use(
     }
 
     a.active {
-      background: #eff6ff;
       color: #2563EB;
     }
 
@@ -773,17 +773,11 @@ section {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* ✅ Reduzido de 1.5rem */
   background-color: white;
-  /* ✅ MANTIDO - Fundo branco dos "recibos" */
   padding: 1vw;
-  /* ✅ Reduzido de 1vw */
   border-radius: 12px;
-  /* ✅ Reduzido de 20px */
   font-size: 0.95rem;
-  /* ✅ Reduzido de 1.1rem */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  /* ✅ Sombra mais sutil */
 
   & h2 {
     color: #0062ff;
