@@ -22,7 +22,25 @@ const tipoTexto = ref("simplificada")
 const user = ref(null);
 const error = ref(null);
 const isLoading = ref(false);
-const filtroTipo = ref(""); // Texto ou Gráfico
+const filtroTipo = ref(""); // Lista ou Gráfico
+const filtroTempo = ref("30"); // ✅ ADICIONAR filtroTempo
+
+// ✅ MAPEAMENTO DE CATEGORIAS
+const categoriasMap = {
+  'criancas': 'Crianças',
+  'moradores-de-rua': 'Moradores de Rua',
+  'idosos': 'Idosos',
+  'animais': 'Animais',
+  'saude': 'Saúde',
+  'educacao': 'Educação',
+  'meio-ambiente': 'Meio Ambiente',
+  'geral': 'Geral'
+}
+
+// ✅ FUNÇÃO PARA FORMATAR CATEGORIA
+const formatarCategoria = (categoria) => {
+  return categoriasMap[categoria] || categoria || 'Não categorizada'
+}
 
 // =====================================
 // BUSCAR DADOS
@@ -47,10 +65,7 @@ onMounted(async () => {
     isLoadingOngs.value = false
   }
 
-  // ✅ BUSCAR FAVORITOS DA API (não mais do localStorage)
   await buscarFavoritos()
-
-  // ✅ BUSCAR DOAÇÕES DA API (não mais do localStorage)
   await buscarDoacoes()
 })
 
@@ -71,9 +86,7 @@ const buscarFavoritos = async () => {
 
     console.log('✅ Favoritos da API:', response.data)
 
-    // Mapear para o formato do localStorage (IDs das instituições)
     favoritas.value = response.data.map(fav => {
-      // Buscar o identificador da instituição nos dados carregados
       const instituicao = ongs.value.find(ong => ong.api_id === fav.instituicao)
       return instituicao?.id || fav.instituicao.toString()
     }).filter(Boolean)
@@ -88,7 +101,7 @@ const buscarFavoritos = async () => {
 }
 
 // =====================================
-// BUSCAR DOAÇÕES DA API
+// ✅ BUSCAR DOAÇÕES DA API (ATUALIZADO COM CATEGORIA)
 // =====================================
 const buscarDoacoes = async () => {
   try {
@@ -104,19 +117,46 @@ const buscarDoacoes = async () => {
 
     console.log('✅ Doações da API:', response.data)
 
-    // Mapear para o formato esperado pelo template
-    doacoes.value = response.data.map(doacao => ({
-      id: doacao.id,
-      ongNome: doacao.instituicao_nome || doacao.instituicao_detalhes?.nome || 'Instituição',
-      ongId: doacao.instituicao_detalhes?.identificador || doacao.instituicao.toString(),
-      tipo: doacao.tipo_doacao_nome || doacao.tipo_doacao_detalhes?.nome_tipo || 'Doação',
-      valor: parseFloat(doacao.valor_estimado || 0),
-      data: doacao.data_doacao || doacao.data_criacao,
-      status: doacao.status,
-      descricao: doacao.descricao || ''
-    }))
+    // Mapear para o formato esperado com CATEGORIA
+    doacoes.value = response.data.map(doacao => {
+      // ✅ BUSCAR CATEGORIA DA ONG
+      let categoriaOng = 'Não categorizada'
+      let ongEncontrada = null
 
-    console.log('✅ Doações mapeadas:', doacoes.value)
+      // Primeiro tenta buscar pelo api_id
+      if (doacao.instituicao) {
+        ongEncontrada = ongs.value.find(o => o.api_id === doacao.instituicao)
+      }
+
+      // Se não encontrar, tenta pelo nome
+      if (!ongEncontrada && (doacao.instituicao_nome || doacao.instituicao_detalhes?.nome)) {
+        const nomeOng = doacao.instituicao_nome || doacao.instituicao_detalhes?.nome
+        ongEncontrada = ongs.value.find(o =>
+          o.title === nomeOng || o.nome === nomeOng
+        )
+      }
+
+      // Se encontrou a ONG, pega a categoria
+      if (ongEncontrada) {
+        categoriaOng = ongEncontrada.categoria || 'Não categorizada'
+      }
+
+      console.log(`📦 Doação #${doacao.id}: ONG = ${doacao.instituicao_nome}, Categoria = ${categoriaOng}`)
+
+      return {
+        id: doacao.id,
+        ongNome: doacao.instituicao_nome || doacao.instituicao_detalhes?.nome || 'Instituição',
+        ongId: doacao.instituicao_detalhes?.identificador || doacao.instituicao.toString(),
+        categoriaOng: categoriaOng, // ✅ CATEGORIA DA ONG
+        valor: parseFloat(doacao.valor_estimado || 0),
+        data: doacao.data_doacao || doacao.data_criacao,
+        status: doacao.status,
+        descricao: doacao.descricao || '',
+        quantidade: doacao.quantidade || ''
+      }
+    })
+
+    console.log('✅ Doações mapeadas com categorias:', doacoes.value)
 
   } catch (error) {
     console.error('❌ Erro ao buscar doações:', error)
@@ -138,12 +178,32 @@ const favoritasList = computed(() => {
   return ongs.value.filter(o => favoritas.value.includes(o.id))
 })
 
-// Resumo por ONG
+// ✅ DOAÇÕES FILTRADAS POR TEMPO
+const doacoesFiltradas = computed(() => {
+  if (!doacoes.value || doacoes.value.length === 0) return []
+
+  if (filtroTempo.value === 'all') return doacoes.value
+
+  const dias = parseInt(filtroTempo.value)
+  const dataLimite = new Date()
+  dataLimite.setDate(dataLimite.getDate() - dias)
+
+  return doacoes.value.filter(doacao => {
+    const dataDoacao = new Date(doacao.data)
+    return dataDoacao >= dataLimite
+  })
+})
+
+// ✅ RESUMO POR ONG (COM CATEGORIA)
 const resumoPorOng = computed(() => {
   const resumo = {};
-  doacoes.value.forEach((d) => {
+  doacoesFiltradas.value.forEach((d) => {
     if (!resumo[d.ongNome]) {
-      resumo[d.ongNome] = { quantidade: 0, valorTotal: 0 };
+      resumo[d.ongNome] = {
+        quantidade: 0,
+        valorTotal: 0,
+        categoria: d.categoriaOng
+      };
     }
     resumo[d.ongNome].quantidade += 1;
     resumo[d.ongNome].valorTotal += d.valor;
@@ -153,6 +213,7 @@ const resumoPorOng = computed(() => {
     ong,
     quantidade: dados.quantidade,
     valor: dados.valorTotal,
+    categoria: formatarCategoria(dados.categoria)
   }));
 });
 
@@ -214,14 +275,12 @@ const unfavorite = async (id) => {
 
     console.log('🗑️ Removendo favorito:', id)
 
-    // Encontrar a ONG nos dados carregados
     const ong = ongs.value.find(o => o.id === id)
     if (!ong) {
       console.error('❌ ONG não encontrada:', id)
       return
     }
 
-    // Buscar o favorito na API
     const favoritosResponse = await api.get("/favoritos/")
     const favorito = favoritosResponse.data.find(fav => fav.instituicao === ong.api_id)
 
@@ -230,10 +289,7 @@ const unfavorite = async (id) => {
       return
     }
 
-    // Remover da API
     await api.delete(`/favoritos/${favorito.id}/`)
-
-    // Atualizar estado local
     favoritas.value = favoritas.value.filter(favId => favId !== id)
 
     console.log('✅ Favorito removido com sucesso')
@@ -286,34 +342,29 @@ api.interceptors.response.use(
   }
 )
 </script>
-<template>
-  <!-- =====================================
-          ESTADOS DE CARREGAMENTO
-  ===================================== -->
 
+<template>
   <!-- Verificação se usuário está logado -->
   <div v-if="!user && !isLoading" class="box-nao-logado">
     <!-- Conteúdo para usuário não logado -->
   </div>
 
-  <!-- =====================================
-       CONTEÚDO PRINCIPAL
-       ===================================== -->
-
+  <!-- CONTEÚDO PRINCIPAL -->
   <div class="main-container" v-else>
     <!-- Sidebar -->
     <aside class="sidebar">
       <h2 class="sidebar-title">Gerenciamento de conta</h2>
       <nav class="sidebar-nav">
         <a href="#login" class="nav-item">
-          <img src="/public/icons/key-solid-full.svg" alt="" class="nav-icon">
+          <img src="/icons/key-solid-full.svg" alt="" class="nav-icon">
           Login e conta
         </a>
         <a href="#ongs" class="nav-item">
-          <img src="/public/icons/star-solid-full.svg" alt="" class="nav-icon"> ONGs favoritadas
+          <img src="/icons/star-solid-full.svg" alt="" class="nav-icon">
+          ONGs favoritadas
         </a>
         <a href="#doacoes" class="nav-item">
-          <img src="/public/icons/signal-solid-full.svg" alt="" class="nav-icon">
+          <img src="/icons/signal-solid-full.svg" alt="" class="nav-icon">
           Registros de doação
         </a>
       </nav>
@@ -325,10 +376,7 @@ api.interceptors.response.use(
         <section id="login" class="secao">
           <div id="backCinza">
             <h2>Login e conta</h2>
-            <p>Essa informação é particular e não
-              será compartilhada com outras
-              pessoas. Configure suas informações
-              agora!</p>
+            <p>Essa informação é particular e não será compartilhada com outras pessoas. Configure suas informações agora!</p>
           </div>
           <div class="grid">
             <label for="user.username">
@@ -358,18 +406,15 @@ api.interceptors.response.use(
         <section id="ongs" class="favoritas">
           <h2>ONGs favoritas</h2>
 
-          <!-- Loading das ONGs -->
           <div v-if="isLoadingOngs || isLoadingFavoritos" class="loading-favorites">
             <p>Carregando favoritas...</p>
           </div>
 
-          <!-- Erro ao carregar ONGs -->
           <div v-else-if="errorOngs" class="error-favorites">
             <p>Erro ao carregar instituições: {{ errorOngs }}</p>
             <button @click="$router.go(0)" class="btn-retry">Tentar novamente</button>
           </div>
 
-          <!-- Lista de favoritas -->
           <div v-else-if="favoritasList.length" class="lista-ongs">
             <div v-for="ong in favoritasList" :key="ong.id" class="ong-item">
               <img :src="ong.img" :alt="ong.title" class="ong" />
@@ -379,7 +424,6 @@ api.interceptors.response.use(
             </div>
           </div>
 
-          <!-- Nenhuma favorita -->
           <p v-else>Você ainda não favoritou nenhuma ONG.</p>
         </section>
 
@@ -387,58 +431,75 @@ api.interceptors.response.use(
         <section id="doacoes" class="doacoes">
           <h2>Registros de doação</h2>
 
-          <!-- Loading de doações -->
           <div v-if="isLoadingDoacoes" class="loading-favorites">
             <p>Carregando doações...</p>
           </div>
 
-          <!-- Quando for gráfico -->
+          <!-- ✅ PASSAR ONGs PARA O GRÁFICO -->
           <template v-else-if="filtroTipo === 'Gráfico'">
             <div class="grafico-placeholder">
-              <graficComponent v-model:filtro="filtroTipo" :doacoes="doacoes" />
+              <graficComponent
+                v-model:filtro="filtroTipo"
+                :doacoes="doacoesFiltradas"
+                :ongs="ongs"
+              />
             </div>
           </template>
 
-          <!-- Quando for texto -->
+          <!-- Lista -->
           <template v-else>
             <div v-if="doacoes.length" class="grafico doacoes-grid">
               <div class="registros-conteiner">
-                <!-- Lista detalhada -->
+                <!-- ✅ LISTA DETALHADA (SEM TIPO, COM CATEGORIA) -->
                 <div class="registros" v-if="tipoTexto === 'detalhada'">
                   <h2>Lista detalhada</h2>
                   <table>
                     <tr class="titulos">
-                      <th>Ong</th>
+                      <th>ONG</th>
+                      <th>Categoria</th>
                       <th>Data</th>
-                      <th>Tipo</th>
                       <th>Valor</th>
                     </tr>
-                    <tr v-for="(d, index) in doacoes" :key="index" class="infos">
+                    <tr v-for="(d, index) in doacoesFiltradas" :key="index" class="infos">
                       <th>{{ d.ongNome }}</th>
-                      <th>{{ new Date(d.data).toLocaleDateString() }}</th>
-                      <th>{{ d.tipo }}</th>
-                      <th>{{ d.valor }} R$</th>
+                      <th>
+                        <span class="categoria-badge">
+                          {{ formatarCategoria(d.categoriaOng) }}
+                        </span>
+                      </th>
+                      <th>{{ new Date(d.data).toLocaleDateString('pt-BR') }}</th>
+                      <th>R$ {{ d.valor.toFixed(2) }}</th>
                     </tr>
                   </table>
-                  <p class="preco">Valor total: {{doacoes.reduce((a, b) => a + b.valor, 0)}} R$</p>
+                  <p class="preco">
+                    Valor total: R$ {{ doacoesFiltradas.reduce((a, b) => a + b.valor, 0).toFixed(2) }}
+                  </p>
                 </div>
 
-                <!-- Resumo -->
+                <!-- ✅ RESUMO POR ONG (COM CATEGORIA) -->
                 <div class="registros" v-if="tipoTexto === 'simplificada'">
-                  <h2>Lista simplificada</h2>
+                  <h2>Resumo por ONG</h2>
                   <table>
                     <tr class="titulos">
-                      <th>Ong</th>
-                      <th>Quantidade de doações</th>
+                      <th>ONG</th>
+                      <th>Categoria</th>
+                      <th>Qtd Doações</th>
                       <th>Valor</th>
                     </tr>
                     <tr v-for="(r, i) in resumoPorOng" :key="i" class="infos">
                       <th>{{ r.ong }}</th>
+                      <th>
+                        <span class="categoria-badge">
+                          {{ r.categoria }}
+                        </span>
+                      </th>
                       <th>{{ r.quantidade }}</th>
-                      <th>{{ r.valor }} R$</th>
+                      <th>R$ {{ r.valor.toFixed(2) }}</th>
                     </tr>
                   </table>
-                  <p class="preco">Valor total: {{doacoes.reduce((a, b) => a + b.valor, 0)}} R$</p>
+                  <p class="preco">
+                    Valor total: R$ {{ doacoesFiltradas.reduce((a, b) => a + b.valor, 0).toFixed(2) }}
+                  </p>
                 </div>
               </div>
 
@@ -452,15 +513,15 @@ api.interceptors.response.use(
                   </select>
                 </label>
 
-                <p>Tipo de texto:</p>
+                <p>Tipo de lista:</p>
                 <label class="input">
                   <div>
                     <input type="radio" value="simplificada" v-model="tipoTexto" />
-                    Simplificada
+                    Resumo por ONG
                   </div>
                   <div>
                     <input type="radio" value="detalhada" v-model="tipoTexto" />
-                    Detalhada
+                    Lista Detalhada
                   </div>
                 </label>
 
@@ -476,7 +537,6 @@ api.interceptors.response.use(
               </aside>
             </div>
 
-            <!-- Nenhuma doação -->
             <p v-else>Nenhuma doação registrada ainda.</p>
           </template>
         </section>
@@ -489,7 +549,6 @@ api.interceptors.response.use(
     <FooterComponent />
   </div>
 </template>
-
 <style scoped>
 .loading-favorites,
 .error-favorites {

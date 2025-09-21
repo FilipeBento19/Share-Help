@@ -4,18 +4,10 @@
     <div class="chart-area">
       <div v-if="chartData.labels.length > 0" class="chart-canvas">
         <!-- Gráfico de Barras -->
-        <Bar
-          v-if="graphType === 'Gráfico de colunas'"
-          :data="chartData"
-          :options="chartOptions"
-        />
+        <Bar v-if="graphType === 'Gráfico de colunas'" :data="chartData" :options="chartOptions" />
 
         <!-- Gráfico de Pizza -->
-        <Pie
-          v-else-if="graphType === 'Gráfico pizza'"
-          :data="pieChartData"
-          :options="pieChartOptions"
-        />
+        <Pie v-else-if="graphType === 'Gráfico pizza'" :data="pieChartData" :options="pieChartOptions" />
       </div>
       <div v-else class="no-data-message">
         <p>Nenhuma doação registrada para exibir no gráfico.</p>
@@ -36,13 +28,13 @@
         </div>
       </div>
 
-      <!-- ✅ NOVO: Filtro de Conteúdo -->
+      <!-- ✅ FILTRO ATUALIZADO -->
       <div class="control-group">
-        <label class="control-label">Conteúdo</label>
+        <label class="control-label">Agrupar por</label>
         <div class="select-wrapper">
           <select v-model="contentFilter" class="control-select">
-            <option value="ongs">ONGs mais doadas</option>
-            <option value="categorias">Categorias mais doadas</option>
+            <option value="ongs">ONGs</option>
+            <option value="categorias">Categoria das ONGs</option>
           </select>
           <div class="select-arrow">▼</div>
         </div>
@@ -82,11 +74,11 @@
         <div class="stats-box">
           <div class="stat-item">
             <div class="stat-number">{{ estatisticas.totalItems }}</div>
-            <div class="stat-label">{{ contentFilter === 'ongs' ? 'ONGs' : 'Categorias' }} com Doações</div>
+            <div class="stat-label">{{ contentFilter === 'ongs' ? 'ONGs' : 'Categorias' }}</div>
           </div>
           <div class="stat-item">
-            <div class="stat-number">{{ estatisticas.valorTotal.toLocaleString() }}</div>
-            <div class="stat-label">Valor Total (R$)</div>
+            <div class="stat-number">R$ {{ Number(estatisticas.valorTotal).toLocaleString('pt-BR') }}</div>
+            <div class="stat-label">Valor Total</div>
           </div>
         </div>
       </div>
@@ -95,15 +87,9 @@
       <div v-if="graphType === 'Gráfico pizza'" class="control-group">
         <label class="control-label">Legenda</label>
         <div class="pizza-legend">
-          <div
-            v-for="(item, index) in pieChartData.labels"
-            :key="item"
-            class="legend-item"
-          >
-            <div
-              class="legend-color"
-              :style="{ backgroundColor: pieChartData.datasets[0].backgroundColor[index] }"
-            ></div>
+          <div v-for="(item, index) in pieChartData.labels" :key="item" class="legend-item">
+            <div class="legend-color" :style="{ backgroundColor: pieChartData.datasets[0].backgroundColor[index] }">
+            </div>
             <span class="legend-text">{{ item }}</span>
           </div>
         </div>
@@ -133,8 +119,9 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 const props = defineProps({
   doacoes: Array,
   filtro: String,
-  ongs: Array  // ✅ NOVO: Receber dados das ONGs para mapear categorias
+  ongs: Array
 })
+
 const emit = defineEmits(['update:filtro'])
 
 const localFiltro = computed({
@@ -145,55 +132,39 @@ const localFiltro = computed({
 // Estados reativos para os controles
 const graphType = ref('Gráfico de colunas')
 const timeRange = ref('30')
-const contentFilter = ref('ongs')  // ✅ NOVO: Filtro de conteúdo
+const contentFilter = ref('ongs')
 
 // Dados reativos
 const doacoesFiltradas = ref([])
 
 // Cores para os gráficos
 const cores = [
-  '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57',
-  '#FF9FF3', '#54A0FF', '#5F27CD', '#00D2D3', '#FF9F43',
-  '#EE5A24', '#0A79DF', '#EF5777', '#575FCF', '#4834D4'
+  '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6',
+  '#EC4899', '#06B6D4', '#84CC16', '#F97316', '#6366F1',
+  '#14B8A6', '#FB923C', '#A855F7', '#0EA5E9', '#22C55E'
 ]
 
-// ✅ NOVO: Mapeamento de categorias para nomes amigáveis
+// ✅ MAPEAMENTO DE CATEGORIAS
 const categoriasMap = {
-  'criancas': 'Alimentação Escolar',
+  'criancas': 'Crianças',
   'moradores-de-rua': 'Moradores de Rua',
-  'idosos': 'Lar de Idosos',
-  'animais': 'Proteção Animal',
+  'idosos': 'Idosos',
+  'animais': 'Animais',
   'saude': 'Saúde',
   'educacao': 'Educação',
-  'meio-ambiente': 'Meio Ambiente'
+  'meio-ambiente': 'Meio Ambiente',
+  'geral': 'Geral'
 }
 
-// ✅ NOVO: Função para obter categoria da ONG
-const getOngCategoria = (ongNome) => {
-  if (!props.ongs || !props.ongs.length) {
-    // Fallback: tentar inferir pela nome da ONG
-    const nomeMinusculo = ongNome.toLowerCase()
-
-    if (nomeMinusculo.includes('criança') || nomeMinusculo.includes('escola') || nomeMinusculo.includes('alimentação')) {
-      return 'criancas'
-    }
-    if (nomeMinusculo.includes('idoso') || nomeMinusculo.includes('lar') || nomeMinusculo.includes('asilo')) {
-      return 'idosos'
-    }
-    if (nomeMinusculo.includes('rua') || nomeMinusculo.includes('abrigo') || nomeMinusculo.includes('moradores')) {
-      return 'moradores-de-rua'
-    }
-
-    return 'outros'
-  }
-
-  // Buscar categoria nas ONGs carregadas
-  const ong = props.ongs.find(o => o.title === ongNome || o.nome === ongNome)
-  return ong?.categoria || 'outros'
+// Função para formatar categoria
+const formatarCategoria = (categoria) => {
+  return categoriasMap[categoria] || categoria || 'Não categorizada'
 }
 
 // Função para filtrar doações por tempo
 const filtrarPorTempo = (doacoes) => {
+  if (!doacoes || !doacoes.length) return []
+
   if (timeRange.value === 'all') return doacoes
 
   const dias = parseInt(timeRange.value)
@@ -207,13 +178,13 @@ const filtrarPorTempo = (doacoes) => {
 }
 
 // Atualizar doações filtradas quando dados ou filtros mudarem
-watch([() => props.doacoes, timeRange, contentFilter], () => {
+watch([() => props.doacoes, timeRange], () => {
   doacoesFiltradas.value = filtrarPorTempo(props.doacoes)
 }, { immediate: true })
 
-// ✅ NOVO: Função para obter dados agrupados (modificada para suportar categorias)
+// ✅ FUNÇÃO ATUALIZADA PARA AGRUPAR DADOS
 const getDadosAgrupados = () => {
-  if (!doacoesFiltradas.value.length) {
+  if (!doacoesFiltradas.value || !doacoesFiltradas.value.length) {
     return {
       labels: [],
       valores: [],
@@ -227,12 +198,12 @@ const getDadosAgrupados = () => {
     let chave
 
     if (contentFilter.value === 'categorias') {
-      // ✅ Agrupar por categoria
-      const categoria = getOngCategoria(doacao.ongNome)
-      chave = categoriasMap[categoria] || 'Outros'
+      // ✅ Agrupar por categoria (já vem no objeto doacao)
+      const categoria = doacao.categoriaOng || 'Não categorizada'
+      chave = formatarCategoria(categoria)
     } else {
-      // Agrupar por ONG (comportamento original)
-      chave = doacao.ongNome
+      // Agrupar por ONG
+      chave = doacao.ongNome || 'ONG não identificada'
     }
 
     if (!resumo[chave]) {
@@ -243,11 +214,16 @@ const getDadosAgrupados = () => {
     }
 
     resumo[chave].quantidade += 1
-    resumo[chave].valorTotal += doacao.valor
+    resumo[chave].valorTotal += doacao.valor || 0
   })
 
-  const labels = Object.keys(resumo)
-  const valores = labels.map(label => resumo[label].valorTotal)
+  // Ordenar por valor total (decrescente)
+  const entries = Object.entries(resumo)
+    .sort((a, b) => b[1].valorTotal - a[1].valorTotal)
+    .slice(0, 15)
+
+  const labels = entries.map(([label]) => label)
+  const valores = entries.map(([, data]) => data.valorTotal)
   const coresGrafico = labels.map((_, index) => cores[index % cores.length])
 
   return {
@@ -269,7 +245,7 @@ const chartData = computed(() => {
     labels,
     datasets: [
       {
-        label: `Valor Total das Doações (R$) - ${contentFilter.value === 'ongs' ? 'por ONG' : 'por Categoria'}`,
+        label: contentFilter.value === 'ongs' ? 'Valor por ONG' : 'Valor por Categoria',
         data: valores,
         backgroundColor: coresGrafico,
         borderRadius: 4,
@@ -291,7 +267,7 @@ const pieChartData = computed(() => {
     labels,
     datasets: [
       {
-        label: `Doações ${contentFilter.value === 'ongs' ? 'por ONG' : 'por Categoria'}`,
+        label: contentFilter.value === 'ongs' ? 'Doações por ONG' : 'Doações por Categoria',
         data: valores,
         backgroundColor: coresGrafico,
         borderColor: '#fff',
@@ -303,9 +279,9 @@ const pieChartData = computed(() => {
   }
 })
 
-// ✅ Estatísticas computadas (modificadas)
+// Estatísticas
 const estatisticas = computed(() => {
-  if (!doacoesFiltradas.value.length) {
+  if (!doacoesFiltradas.value || !doacoesFiltradas.value.length) {
     return {
       totalItems: 0,
       valorTotal: 0
@@ -318,24 +294,26 @@ const estatisticas = computed(() => {
     // Contar categorias únicas
     const categoriasUnicas = new Set()
     doacoesFiltradas.value.forEach(d => {
-      const categoria = getOngCategoria(d.ongNome)
-      categoriasUnicas.add(categoriasMap[categoria] || 'Outros')
+      const categoria = d.categoriaOng || 'Não categorizada'
+      categoriasUnicas.add(formatarCategoria(categoria))
     })
     itensUnicos = categoriasUnicas
   } else {
-    // Contar ONGs únicas (comportamento original)
-    itensUnicos = new Set(doacoesFiltradas.value.map(d => d.ongNome))
+    // Contar ONGs únicas
+    itensUnicos = new Set(doacoesFiltradas.value.map(d => d.ongNome || 'ONG não identificada'))
   }
 
-  const valorTotal = doacoesFiltradas.value.reduce((total, doacao) => total + doacao.valor, 0)
+  const valorTotal = doacoesFiltradas.value.reduce((total, doacao) => {
+    return total + (doacao.valor || 0)
+  }, 0)
 
   return {
     totalItems: itensUnicos.size,
-    valorTotal
+    valorTotal: valorTotal.toFixed(2)
   }
 })
 
-// Opções do gráfico de barras (modificadas para label dinâmico)
+// Opções do gráfico de barras
 const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
