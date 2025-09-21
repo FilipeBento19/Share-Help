@@ -347,3 +347,6 @@ class DoacaoViewSet(ModelViewSet):
             'por_status': list(por_status),
             'top_instituicoes': list(por_instituicao)
         })
+    
+# send_mail(...) # COMENTADO
+logger.info(f"Email seria enviado para {email} com código {codigo_obj.codigo}")
