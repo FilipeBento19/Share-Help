@@ -27,6 +27,9 @@ class UsuarioViewSet(ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
 
+import logging
+logger = logging.getLogger(__name__)
+
 class EnviarCodigoView(APIView):
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
@@ -46,20 +49,22 @@ Atenciosamente,
 Equipe Share Help'''
 
             try:
+                logger.info(f"🔄 Tentando enviar email para {email}")
                 send_mail(
                     subject="Código de verificação - Share Help",
                     message=mensagem,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[email],
-                    fail_silently=True,  # ✅ Não quebra se falhar
+                    fail_silently=False,
                 )
+                logger.info(f"✅ Email enviado com sucesso para {email}")
             except Exception as e:
-                # Log do erro, mas não quebra a API
-                print(f"Erro ao enviar email: {e}")
+                logger.error(f"❌ Erro ao enviar email para {email}: {str(e)}")
+                logger.error(f"❌ Tipo do erro: {type(e).__name__}")
 
             return Response({
                 "message": "Código enviado para o email",
-                "codigo": codigo_obj.codigo  # TEMPORÁRIO - remover depois
+                "codigo": codigo_obj.codigo
             }, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
