@@ -30,7 +30,7 @@
         <div class="select-wrapper">
           <select v-model="localFiltro" class="control-select">
             <option value="Gráfico">Gráfico</option>
-            <option value="">Texto</option>
+            <option value="">Lista</option>
           </select>
           <div class="select-arrow">▼</div>
         </div>

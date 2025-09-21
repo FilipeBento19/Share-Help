@@ -425,7 +425,7 @@ api.interceptors.response.use(
 
                 <!-- Resumo -->
                 <div class="registros" v-if="tipoTexto === 'simplificada'">
-                  <h2>Resumo por ONG</h2>
+                  <h2>Lista simplificada</h2>
                   <table>
                     <tr class="titulos">
                       <th>Ong</th>
@@ -447,7 +447,7 @@ api.interceptors.response.use(
                 <label>
                   <p>Tipo de registro:</p>
                   <select v-model="filtroTipo">
-                    <option value="">Texto</option>
+                    <option value="">Lista</option>
                     <option value="Gráfico">Gráfico</option>
                   </select>
                 </label>
