@@ -34,19 +34,32 @@ class EnviarCodigoView(APIView):
             email = serializer.validated_data["email"]
             codigo_obj, _ = CodigoVerificacao.objects.update_or_create(email=email)
 
-            # ✅ COMENTAR TEMPORARIAMENTE
-            # send_mail(
-            #     subject="Código de verificação - Share Help",
-            #     message=mensagem,
-            #     from_email=settings.DEFAULT_FROM_EMAIL,
-            #     recipient_list=[email],
-            #     fail_silently=False,
-            # )
+            mensagem = f'''Olá!
 
-            # Para debug - retornar o código
+Seu código de verificação para cadastro no Share Help é: {codigo_obj.codigo}
+
+Este código é válido por 15 minutos.
+
+Se você não solicitou este código, ignore este email.
+
+Atenciosamente,
+Equipe Share Help'''
+
+            try:
+                send_mail(
+                    subject="Código de verificação - Share Help",
+                    message=mensagem,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[email],
+                    fail_silently=True,  # ✅ Não quebra se falhar
+                )
+            except Exception as e:
+                # Log do erro, mas não quebra a API
+                print(f"Erro ao enviar email: {e}")
+
             return Response({
                 "message": "Código enviado para o email",
-                "codigo": codigo_obj.codigo  # TEMPORÁRIO para teste
+                "codigo": codigo_obj.codigo  # TEMPORÁRIO - remover depois
             }, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
