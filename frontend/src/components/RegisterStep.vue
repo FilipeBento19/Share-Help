@@ -1,8 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
-import axios from 'axios'
+import api from '@/config/api.js'
 import Swal from "sweetalert2"
-
 
 // Estado
 const step = ref(1)
@@ -84,13 +83,13 @@ const handleNext = async () => {
   try {
     if (step.value === 1) {
       // Enviar código
-      await axios.post('http://127.0.0.1:8000/api/send-code/', {
+      await api.post('/send-code/', {
         email: data.value.email
       })
       step.value = 2
     } else if (step.value === 2) {
       // Verificar código
-      await axios.post('http://127.0.0.1:8000/api/verify-code/', {
+      await api.post('/verify-code/', {
         email: data.value.email,
         codigo: data.value.codigo
       })
@@ -104,7 +103,7 @@ const handleNext = async () => {
       } else if (data.value.password.length <= 8) {
         throw new Error('A senha precisa ter mais de 8 caracteres')
       }
-      await axios.post('http://127.0.0.1:8000/api/register/', {
+      await api.post('/register/', {
         email: data.value.email,
         nome: data.value.name,
         username: data.value.username,
@@ -143,7 +142,7 @@ const handleNext = async () => {
 
 const handleResend = async () => {
   try {
-    await axios.post('http://127.0.0.1:8000/api/send-code/', {
+    await api.post('/send-code/', {
       email: data.value.email
     })
     alert('Código reenviado!')
@@ -221,6 +220,7 @@ const handleResend = async () => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .form-content {
