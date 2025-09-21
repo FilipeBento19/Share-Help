@@ -49,7 +49,6 @@ Atenciosamente,
 Equipe Share Help'''
 
             try:
-                logger.info(f"🔄 Tentando enviar email para {email}")
                 send_mail(
                     subject="Código de verificação - Share Help",
                     message=mensagem,
@@ -59,15 +58,12 @@ Equipe Share Help'''
                 )
                 logger.info(f"✅ Email enviado com sucesso para {email}")
             except Exception as e:
-                logger.error(f"❌ Erro ao enviar email para {email}: {str(e)}")
-                logger.error(f"❌ Tipo do erro: {type(e).__name__}")
+                logger.error(f"❌ Erro SendGrid: {str(e)}")
 
             return Response({
-                "message": "Código enviado para o email",
-                "codigo": codigo_obj.codigo
+                "message": "Código enviado para o email"
+                # remover codigo da resposta para produção
             }, status=status.HTTP_200_OK)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class VerificarCodigoView(APIView):
     def post(self, request):
