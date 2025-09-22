@@ -6,7 +6,7 @@ import { motion } from 'motion-v';
   <header class="app-header">
     <div class="header-content">
       <div class="logo">
-        <router-link to="/"><img src="/logosite.png" alt="ShareHelp Logo"></img></router-link>
+        <router-link to="/"><img src="/logosite.png" alt="ShareHelp Logo" /></router-link>
         <div class="textinho">
             <router-link to="/">
               <h1>ShareHelp</h1>
@@ -44,13 +44,14 @@ import { motion } from 'motion-v';
           >
           <li><router-link to="/ourteam">Nossa equipe</router-link></li>
           </motion.div>
-          <motion.div
-            :whileHover="{ scale: 1.1 }"
-            :whileTap="{ scale: 0.1 }"
-            class="box"
-          >
-          <li class="login"><router-link to="/perfil"><img src="/icons/login.png" alt=""></router-link></li>
-          </motion.div>
+          <div class="header-login">
+            <li class="login">
+              <router-link to="/perfil" class="login-link">
+                <img src="/icons/user.png" class="login-img" alt="">
+                <span class="entrar">Entrar</span>
+              </router-link>
+            </li>
+          </div>
         </ul>
       </nav>
     </div>
@@ -151,6 +152,39 @@ import { motion } from 'motion-v';
 
 .login{
   padding-top: 6px;
+  color: white;
+}
+
+.header-login {
+  background-color: #2563eb; /* azul */
+  border-radius: 25px;
+  padding: 3px 20px 6px 20px;
+  transition: background-color 0.3s ease;
+}
+
+.header-login:hover {
+  background-color: #1856ff;
+}
+
+.login-link {
+  display: flex;
+  justify-content: center;
+  gap: 8px; /* espaço entre ícone e texto */
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95em;
+}
+
+.login-img {
+  width: 20px;
+  height: 20px;
+}
+
+.entrar {
+  color: white;
+  font-weight: 700;
+  padding-bottom: 3px;
 }
 
 @media (max-width: 1200px) {

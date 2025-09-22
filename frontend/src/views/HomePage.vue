@@ -5,7 +5,10 @@ import CausasCard from '../components/CausasCard.vue';
 import PaymentCard from '../components/PaymentMethodComponent.vue';
 import MapInteractive from '@/components/MapInterativeComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
+import LogoLoop from '@/components/LogoLoop.vue';
+import ongs from '@/data/ongsData';
 import { motion } from 'motion-v';
+
 
 const line1 = "Transforme Vidas";
 const line2 = "com sua Doação";
@@ -18,43 +21,37 @@ const wordsLine2 = computed(() => line2.split(' '));
 <template>
   <main>
     <div class="topo">
-        <div class="overlay"></div>
-        <div class="banner">
-          <div class="linetop">
-            <div class="line">
-              <motion.div
-                v-for="(word, i) in wordsLine1"
-                :key="'line1-' + i"
-                class="split-word"
-                :initial="{ opacity: 0, y: 10 }"
-                :while-in-view="{ opacity: 1, y: 0 }"
-                :viewport="{ once: false }"
-                :transition="{ duration: 0.5, delay: i * 0.05 }"
-              >
-                {{ word }}
-              </motion.div>
-            </div>
-            <div class="line">
-              <motion.div
-                v-for="(word, i) in wordsLine2"
-                :key="'line2-' + i"
-                class="split-word"
-                :initial="{ opacity: 0, y: 10 }"
-                :while-in-view="{ opacity: 1, y: 0 }"
-                :viewport="{ once: false }"
-                :transition="{ duration: 0.5, delay: (i + wordsLine1.length) * 0.05 }"
-              >
-                {{ word }}
-              </motion.div>
-            </div>
+      <div class="overlay"></div>
+      <div class="banner">
+        <div class="linetop">
+          <div class="line">
+            <motion.div v-for="(word, i) in wordsLine1" :key="'line1-' + i" class="split-word"
+              :initial="{ opacity: 0, y: 10 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: false }"
+              :transition="{ duration: 0.5, delay: i * 0.05 }">
+              {{ word }}
+            </motion.div>
           </div>
-          <p>Conectamos doadores e instituições carentes de forma transparente e segura. Cada real doado faz a diferença na vida de quem mais precisa.</p>
-          <div class="buttons">
-            <a href="/institution"><button class="primary">Doar Agora</button></a>
+          <div class="line">
+            <motion.div v-for="(word, i) in wordsLine2" :key="'line2-' + i" class="split-word"
+              :initial="{ opacity: 0, y: 10 }" :while-in-view="{ opacity: 1, y: 0 }" :viewport="{ once: false }"
+              :transition="{ duration: 0.5, delay: (i + wordsLine1.length) * 0.05 }">
+              {{ word }}
+            </motion.div>
           </div>
         </div>
+        <p>Conectamos doadores e instituições carentes de forma transparente e segura. Cada real doado faz a diferença
+          na vida de quem mais precisa.</p>
+        <div class="buttons">
+          <a href="/institution"><button class="primary">Doar Agora</button></a>
+        </div>
+      </div>
     </div>
+    <LogoLoop :logos="ongs" :speed="70" direction="left" :logoHeight="60" :gap="50" :pauseOnHover="true"
+            :scaleOnHover="true" fadeOutColor="#f8f9fa" ariaLabel="Clique nos logos para conhecer as ONGs"
+            class="logo-loop" />
+
     <section class="nossas-causas">
+
         <h2>Nossas Causas</h2>
         <p>Conheça os projetos que estão transformando vidas e <br>comunidades inteiras.</p>
             <div class="causes-grid">
@@ -67,23 +64,23 @@ const wordsLine2 = computed(() => line2.split(' '));
     </section>
     <section class="escolher-sh">
       <h1>Por que Escolher o ShareHelp?</h1>
-    <div class="escolher-coisas">
-      <div class="escolher-div">
-        <img src="/icons/seguranca.png" alt="">
-        <h2>Segurança garantida</h2>
-        <p>Receba relatórios e gráficos detalhados sobre suas doações e onde seu dinheiro foi investido</p>
+      <div class="escolher-coisas">
+        <div class="escolher-div">
+          <img src="/icons/seguranca.png" alt="">
+          <h2>Segurança garantida</h2>
+          <p>Receba relatórios e gráficos detalhados sobre suas doações e onde seu dinheiro foi investido</p>
+        </div>
+        <div class="escolher-div">
+          <img src="/icons/praticidade.png" alt="">
+          <h2>Praticidade</h2>
+          <p>Acompanhe em tempo real o suporte que a comunidade dá as fundações</p>
+        </div>
+        <div class="escolher-div">
+          <img src="/icons/doacoes.png" alt="">
+          <h2>Doações Recorrentes</h2>
+          <p>Configure doações únicas ou mensais, para facilitar seu ato ajuda</p>
+        </div>
       </div>
-      <div class="escolher-div">
-        <img src="/icons/praticidade.png" alt="">
-        <h2>Praticidade</h2>
-        <p>Acompanhe em tempo real o suporte que a comunidade dá as fundações</p>
-      </div>
-      <div class="escolher-div">
-        <img src="/icons/doacoes.png" alt="">
-        <h2>Doações Recorrentes</h2>
-        <p>Configure doações únicas ou mensais, para facilitar seu ato ajuda</p>
-      </div>
-    </div>
     </section>
     <section class="formas-de-doar">
       <div class="formas-desc">
@@ -91,19 +88,27 @@ const wordsLine2 = computed(() => line2.split(' '));
         <p>Escolha a forma mais conveniente para você fazer sua doação</p>
       </div>
       <div class="payment-grid">
-            <PaymentCard/>
+        <PaymentCard />
       </div>
     </section>
     <section class="mapa-interativo">
-      <MapInteractive/>
+      <MapInteractive />
     </section>
     <section>
-      <FooterComponent/>
+      <FooterComponent />
     </section>
   </main>
 </template>
 
 <style scoped>
+
+.logo-loop {
+  padding-top: 30px;
+  display: block;
+  width: 100%;
+}
+
+
 @media (max-width: 1200px) {
     .causes-grid, .payment-grid {
         gap: 15px;
@@ -116,10 +121,11 @@ const wordsLine2 = computed(() => line2.split(' '));
     .escolher-div {
         padding: 15px;
     }
+
 }
 
 @media (max-width: 992px) {
-
+  
     .cause-title, .payment-title, .escolher-div h2 {
         font-size: 1.1rem;
     }
@@ -174,7 +180,7 @@ const wordsLine2 = computed(() => line2.split(' '));
     .line {
     display: block;
     margin-bottom: -20px;
-    }
+  }
 }
 
 @media (max-width: 576px) {
@@ -222,12 +228,10 @@ const wordsLine2 = computed(() => line2.split(' '));
     .progress-text {
         font-size: 0.75rem;
     }
-
-
-
 }
 
 @media (max-width: 400px) {
+
     .causes-grid, .payment-grid, .escolher-coisas {
         gap: 8px;
     }
@@ -336,9 +340,17 @@ const wordsLine2 = computed(() => line2.split(' '));
 }
 
 @keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .topo button {
@@ -366,24 +378,25 @@ const wordsLine2 = computed(() => line2.split(' '));
 /*----------------------------------------------*/
 
 .nossas-causas {
-    text-align: center;
-    padding: 60px 20px;
+  text-align: center;
+  padding: 20px 20px;
 }
 
 .nossas-causas h2 {
-    font-weight: 650;
-    font-size: 2.5em;
-    color: #111827;
-    margin-bottom: 15px;
+  font-weight: 650;
+  font-size: 2.5em;
+  color: #111827;
+  margin-bottom: 15px;
 }
 
 .nossas-causas p {
-    font-size: 1.1em;
-    color: #555;
-    margin-bottom: 40px;
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 40px;
 }
 
 .causes-grid {
+  
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
@@ -395,19 +408,19 @@ const wordsLine2 = computed(() => line2.split(' '));
 /*----------------------------------------------*/
 
 .escolher-sh {
-  background-color: #f8f8f8 ;
+  background-color: #f8f8f8;
   padding: 2vw;
   text-align: center;
 }
 
-.escolher-sh h1{
+.escolher-sh h1 {
   font-weight: 650;
   font-size: 2.3rem;
   color: #111827;
   padding-bottom: 15px;
 }
 
-.escolher-coisas{
+.escolher-coisas {
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -420,20 +433,20 @@ const wordsLine2 = computed(() => line2.split(' '));
   width: 25%;
 }
 
-.escolher-div h2{
+.escolher-div h2 {
   padding-top: 10px;
   font-weight: 1000;
   color: #111827;
 }
 
-.escolher-div p{
+.escolher-div p {
   padding-top: 15px;
   color: #4B5563;
 }
 
 /*----------------------------------------------*/
 
-.formas-desc{
+.formas-desc {
   padding-top: 30px;
 }
 
@@ -451,6 +464,5 @@ const wordsLine2 = computed(() => line2.split(' '));
   padding-top: 2.5vw;
   padding-bottom: 4vw;
 }
-
-
 </style>
+

@@ -462,12 +462,14 @@ const formatarTipos = (tipos) => {
   pointer-events: auto;
 }
 
+
+
 .app-layout {
   display: flex;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 .sidebar {
