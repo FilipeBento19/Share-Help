@@ -51,11 +51,16 @@ const wordsLine2 = computed(() => line2.split(' '));
             class="logo-loop" />
 
     <section class="nossas-causas">
-      <h2>Nossas Causas</h2>
-      <p>Conheça os projetos que estão transformando vidas e <br>comunidades inteiras.</p>
-      <div class="causes-grid">
-        <CausasCard v-for="cause in causesData" :key="cause.id" :cause="cause" />
-      </div>
+
+        <h2>Nossas Causas</h2>
+        <p>Conheça os projetos que estão transformando vidas e <br>comunidades inteiras.</p>
+            <div class="causes-grid">
+              <CausasCard
+                  v-for="cause in causesData"
+                  :key="cause.id"
+                  :cause="cause"
+              />
+            </div>
     </section>
     <section class="escolher-sh">
       <h1>Por que Escolher o ShareHelp?</h1>
@@ -105,89 +110,74 @@ const wordsLine2 = computed(() => line2.split(' '));
 
 
 @media (max-width: 1200px) {
+    .causes-grid, .payment-grid {
+        gap: 15px;
+    }
 
-  .causes-grid,
-  .payment-grid {
-    gap: 15px;
-  }
+    .cause-card, .payment-card {
+        padding: 15px;
+    }
 
-  .cause-card,
-  .payment-card {
-    padding: 15px;
-  }
+    .escolher-div {
+        padding: 15px;
+    }
 
-  .escolher-div {
-    padding: 15px;
-  }
 }
 
 @media (max-width: 992px) {
+  
+    .cause-title, .payment-title, .escolher-div h2 {
+        font-size: 1.1rem;
+    }
 
-  .cause-title,
-  .payment-title,
-  .escolher-div h2 {
-    font-size: 1.1rem;
-  }
+    .cause-description, .payment-description, .escolher-div p {
+        font-size: 0.5rem;
+    }
 
-  .cause-description,
-  .payment-description,
-  .escolher-div p {
-    font-size: 0.5rem;
-  }
-
-  .escolher-div img,
-  .payment-icon {
-    width: 50px;
-    height: 50px;
-  }
+    .escolher-div img, .payment-icon {
+        width: 50px;
+        height: 50px;
+    }
 }
 
 @media (max-width: 768px) {
 
 
-  .cause-card,
-  .payment-card,
-  .escolher-div {
-    padding: 12px;
-  }
+    .cause-card, .payment-card, .escolher-div {
+        padding: 12px;
+    }
 
-  .section-title {
-    font-size: 2rem;
-  }
+    .section-title {
+        font-size: 2rem;
+    }
 
-  .section-subtitle {
-    font-size: 1rem;
-  }
+    .section-subtitle {
+        font-size: 1rem;
+    }
 
-  .cause-title,
-  .payment-title,
-  .escolher-div h2 {
-    font-size: 1rem;
-  }
+    .cause-title, .payment-title, .escolher-div h2 {
+        font-size: 1rem;
+    }
 
-  .cause-description,
-  .payment-description,
-  .escolher-div p {
-    font-size: 0.8rem;
-  }
+    .cause-description, .payment-description, .escolher-div p {
+        font-size: 0.8rem;
+    }
 
-  .donate-button,
-  .payment-button {
-    padding: 8px 12px;
-    font-size: 0.85rem;
-  }
+    .donate-button, .payment-button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
 
-  .escolher-div img,
-  .payment-icon {
-    width: 40px;
-    height: 40px;
-  }
+    .escolher-div img, .payment-icon {
+        width: 40px;
+        height: 40px;
+    }
 
-  .progress-text {
-    font-size: 0.8rem;
-  }
+    .progress-text {
+        font-size: 0.8rem;
+    }
 
-  .line {
+    .line {
     display: block;
     margin-bottom: -20px;
   }
@@ -196,118 +186,97 @@ const wordsLine2 = computed(() => line2.split(' '));
 @media (max-width: 576px) {
 
 
-  .cause-card,
-  .payment-card,
-  .escolher-div {
-    padding: 10px;
-  }
+    .cause-card, .payment-card, .escolher-div {
+        padding: 10px;
+    }
 
-  .section-title {
-    font-size: 1.7rem;
-  }
+    .section-title {
+        font-size: 1.7rem;
+    }
 
-  .section-subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 30px;
-  }
+    .section-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 30px;
+    }
 
-  .cause-title,
-  .payment-title,
-  .escolher-div h2 {
-    font-size: 0.9rem;
-    margin: 10px 0;
-  }
+    .cause-title, .payment-title, .escolher-div h2 {
+        font-size: 0.9rem;
+        margin: 10px 0;
+    }
 
-  .cause-description,
-  .payment-description,
-  .escolher-div p {
-    font-size: 0.75rem;
-    line-height: 1.4;
-  }
+    .cause-description, .payment-description, .escolher-div p {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
 
-  .donate-button,
-  .payment-button {
-    padding: 6px 10px;
-    font-size: 0.8rem;
-  }
+    .donate-button, .payment-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
 
-  .escolher-div img,
-  .payment-icon {
-    width: 35px;
-    height: 35px;
-    margin-bottom: 10px;
-  }
+    .escolher-div img, .payment-icon {
+        width: 35px;
+        height: 35px;
+        margin-bottom: 10px;
+    }
 
-  .progress-bar {
-    height: 6px;
-    margin: 10px 0;
-  }
+    .progress-bar {
+        height: 6px;
+        margin: 10px 0;
+    }
 
-  .progress-text {
-    font-size: 0.75rem;
-  }
-
-
-
+    .progress-text {
+        font-size: 0.75rem;
+    }
 }
 
 @media (max-width: 400px) {
 
-  .causes-grid,
-  .payment-grid,
-  .escolher-coisas {
-    gap: 8px;
-  }
+    .causes-grid, .payment-grid, .escolher-coisas {
+        gap: 8px;
+    }
 
-  .cause-card,
-  .payment-card,
-  .escolher-div {
-    padding: 8px;
-  }
+    .cause-card, .payment-card, .escolher-div {
+        padding: 8px;
+    }
 
-  .section-title {
-    font-size: 1.5rem;
-  }
+    .section-title {
+        font-size: 1.5rem;
+    }
 
-  .section-subtitle {
-    font-size: 0.85rem;
-  }
+    .section-subtitle {
+        font-size: 0.85rem;
+    }
 
-  .formas-desc p {
-    width: 60%;
-  }
+    .formas-desc p {
+      width: 60%;
+    }
 
-  .formas-desc {
-    justify-items: center;
-  }
+    .formas-desc {
+      justify-items: center;
+    }
 
-  .cause-title,
-  .payment-title,
-  .escolher-div h2 {
-    font-size: 0.85rem;
-  }
+    .cause-title, .payment-title, .escolher-div h2 {
+        font-size: 0.85rem;
+    }
 
-  .cause-description,
-  .payment-description,
-  .escolher-div p {
-    font-size: 0.7rem;
-  }
+    .cause-description, .payment-description, .escolher-div p {
+        font-size: 0.7rem;
+    }
 
-  .donate-button,
-  .payment-button {
-    padding: 5px 8px;
-    font-size: 0.75rem;
-  }
+    .donate-button, .payment-button {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+    }
 
-  .escolher-div img,
-  .payment-icon {
-    width: 30px;
-    height: 30px;
-  }
+    .escolher-div img, .payment-icon {
+        width: 30px;
+        height: 30px;
+    }
 
 }
 
-.linetop {
+.linetop{
   padding-bottom: 50px;
 }
 
@@ -427,12 +396,13 @@ const wordsLine2 = computed(() => line2.split(' '));
 }
 
 .causes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 10px;
+  
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
 }
 
 /*----------------------------------------------*/
@@ -495,3 +465,4 @@ const wordsLine2 = computed(() => line2.split(' '));
   padding-bottom: 4vw;
 }
 </style>
+

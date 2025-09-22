@@ -7,3 +7,4 @@ gunicorn==21.2.0
 pyjwt==2.10.1
 sqlparse==0.5.3
 whitenoise==6.5.0
+sendgrid==6.10.0

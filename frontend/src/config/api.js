@@ -1,45 +1,74 @@
-// src/services/api.js
-import axios from 'axios';
+// @/config/api.js
+import axios from 'axios'
 
 // Pega a URL da variável de ambiente ou usa localhost para desenvolvimento
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = `${BASE_URL}/api`
 
-console.log('🔗 API configurada para:', API_URL);
+console.log('🔗 API configurada para:', API_URL)
 
-// Instância do axios configurada
 const api = axios.create({
-  baseURL: `${API_URL}/api`,
-  headers: {
-    'Content-Type': 'application/json',
-  }
-});
+    baseURL: API_URL,
+})
 
-// Interceptor para adicionar token automaticamente
+// Interceptor para adicionar o token em todas as requisições
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem('access_token')
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`
     }
-    return config;
+    return config
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
-// Interceptor para lidar com erros de autenticação
+// Interceptor para lidar com respostas e renovar token automaticamente
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Token expirado, redireciona para login
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      window.location.href = '/login';
-    }
-    return Promise.reject(error);
-  }
-);
+  async (error) => {
+    const originalRequest = error.config
 
-export default api;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+
+      const refreshToken = localStorage.getItem('refresh_token')
+      if (refreshToken) {
+        try {
+          // ✅ CORRIGIDO: usando API_URL em vez de localhost hardcoded
+          const response = await axios.post(`/token/refresh/`, {
+            refresh: refreshToken
+          })
+
+          const newAccessToken = response.data.access
+          localStorage.setItem('access_token', newAccessToken)
+
+          // Atualiza o header da requisição original
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+
+          return api(originalRequest)
+        } catch (refreshError) {
+          // Se falhou ao renovar o token, remove tudo e redireciona para login
+          localStorage.removeItem('access_token')
+          localStorage.removeItem('refresh_token')
+          localStorage.removeItem('keepLoggedIn')
+
+          // Redireciona para página de login ou perfil
+          window.location.href = '/perfil'
+          return Promise.reject(refreshError)
+        }
+      } else {
+        // Não há refresh token, remove tudo
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        localStorage.removeItem('keepLoggedIn')
+      }
+    }
+
+    return Promise.reject(error)
+  }
+)
+
+export default api

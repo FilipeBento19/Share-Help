@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import api from '@/config/api.js'
+import Swal from 'sweetalert2'
 
 const props = defineProps({
   ong: {
@@ -20,6 +22,7 @@ const customValue = ref('')
 const donationType = ref('unica')
 const selectedPayment = ref('')
 const showThankYou = ref(false)
+const isProcessingDonation = ref(false)
 const predefinedValues = [25, 50, 100, 200]
 
 const selectValue = (value) => {
@@ -35,36 +38,142 @@ const selectPayment = (method) => {
   selectedPayment.value = method
 }
 
-const finalizeDonation = () => {
-  const amount = selectedValue.value === 'custom' ? Number(customValue.value) : Number(selectedValue.value)
-
-  const donation = {
-    ongId: props.ong?.id,
-    ongNome: props.ong?.title,
-    tipo: donationType.value,
-    valor: amount,
-    pagamento: selectedPayment.value,
-    data: new Date().toISOString()
-  }
-
-  // Salva no localStorage
-  let saved = JSON.parse(localStorage.getItem('doacoes') || '[]')
-  saved.push(donation)
-  localStorage.setItem('doacoes', JSON.stringify(saved))
-
-  console.log('✅ Doação registrada:', donation)
-
-  // Mostrar mensagem de agradecimento
-  showThankYou.value = true
-
-  // Fechar automaticamente após 3 segundos
-  setTimeout(() => {
-    showThankYou.value = false
-    showModal.value = false
-    emit('fechar')
-  }, 3000)
+// Mapeamento dos métodos de pagamento para descrições
+const paymentDescriptions = {
+  'pix': 'PIX',
+  'card': 'Cartão de Crédito',
+  'transfer': 'Débito Online'
 }
 
+const finalizeDonation = async () => {
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Login necessário',
+      text: 'Faça login para registrar sua doação'
+    });
+    return;
+  }
+
+  if (isProcessingDonation.value) return;
+
+  const amount = selectedValue.value === 'custom' ? Number(customValue.value) : Number(selectedValue.value);
+
+  if (!amount || amount <= 0) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Valor inválido',
+      text: 'Por favor, informe um valor válido para a doação'
+    });
+    return;
+  }
+
+  isProcessingDonation.value = true;
+
+  try {
+    // ✅ 1. PRIMEIRO: Buscar dados do usuário logado
+    const perfilResponse = await api.get("/perfil/");
+    const usuario = perfilResponse.data;
+
+    console.log('👤 Usuário logado:', usuario);
+
+    // ✅ 2. Buscar a instituição
+    const instituicoesResponse = await api.get("/instituicoes/");
+    const instituicao = instituicoesResponse.data.find(inst =>
+      inst.id.toString() === props.ong?.api_id?.toString() ||
+      inst.identificador === props.ong?.id
+    );
+
+    if (!instituicao) {
+      throw new Error("Instituição não encontrada na API");
+    }
+
+    console.log('🏢 Instituição encontrada:', instituicao);
+
+    // ✅ 3. Buscar tipo de doação
+    const tiposDoacaoResponse = await api.get("/tipos-doacao/");
+    let tipoDoacao = tiposDoacaoResponse.data.find(tipo =>
+      tipo.nome_tipo.toLowerCase().includes('monetária') ||
+      tipo.nome_tipo.toLowerCase().includes('dinheiro') ||
+      tipo.nome_tipo.toLowerCase().includes('financeira') ||
+      tipo.nome_tipo.toLowerCase().includes('valor')
+    );
+
+    // Se não encontrar, usar o primeiro disponível
+    if (!tipoDoacao && tiposDoacaoResponse.data.length > 0) {
+      tipoDoacao = tiposDoacaoResponse.data[0];
+    }
+
+    if (!tipoDoacao) {
+      throw new Error("Tipo de doação não encontrado");
+    }
+
+    console.log('💰 Tipo de doação:', tipoDoacao);
+
+    // ✅ 4. Criar doação com TODOS os campos obrigatórios
+    const doacaoData = {
+      usuario: usuario.id,           // ← ADICIONAR o ID do usuário
+      instituicao: instituicao.id,
+      tipo_doacao: tipoDoacao.id,
+      valor_estimado: amount,
+      data_doacao: new Date().toISOString().split('T')[0],
+      descricao: `Doação ${donationType.value} via ${paymentDescriptions[selectedPayment.value] || selectedPayment.value}`,
+      status: 'confirmada'
+    };
+
+    console.log('📤 Dados da doação:', doacaoData);
+
+    const response = await api.post("/doacoes/", doacaoData);
+
+    console.log('✅ Doação registrada na API:', response.data);
+
+    // Mostrar mensagem de agradecimento
+    showThankYou.value = true;
+
+    // Fechar automaticamente após 3 segundos
+    setTimeout(() => {
+      showThankYou.value = false;
+      showModal.value = false;
+      emit('fechar');
+    }, 3000);
+
+  } catch (error) {
+    console.error("❌ Erro ao registrar doação:", error);
+
+    let errorMessage = 'Erro ao processar doação';
+
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      console.log('📋 Detalhes do erro:', errorData);
+
+      if (typeof errorData === 'string') {
+        errorMessage = errorData;
+      } else if (errorData.detail) {
+        errorMessage = errorData.detail;
+      } else if (errorData.non_field_errors) {
+        errorMessage = errorData.non_field_errors.join(', ');
+      } else {
+        // Erros de campo específicos
+        const fieldErrors = Object.entries(errorData)
+          .map(([field, errors]) => `${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`)
+          .join('; ');
+        if (fieldErrors) {
+          errorMessage = fieldErrors;
+        }
+      }
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Erro na doação',
+      text: errorMessage,
+      footer: 'Verifique se você está logado e tente novamente'
+    });
+  } finally {
+    isProcessingDonation.value = false;
+  }
+};
 const closeModal = () => {
   showModal.value = false
   emit('fechar')
@@ -122,8 +231,7 @@ defineExpose({ showModal })
           <h2>Forma de pagamento</h2>
 
           <div class="payment-options">
-            <button class="payment-option" :class="{ active: selectedPayment === 'pix' }"
-              @click="selectPayment('pix')">
+            <button class="payment-option" :class="{ active: selectedPayment === 'pix' }" @click="selectPayment('pix')">
               <div class="payment-icon"><img src="/icons/pix.png" alt=""></div>
               <div class="payment-info">
                 <div class="payment-name">PIX</div>
@@ -172,7 +280,8 @@ defineExpose({ showModal })
       <div class="thank-you-content">
         <div class="thank-you-icon">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#4CAF50" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </div>
         <h3>Obrigado pela sua doação!</h3>
@@ -245,6 +354,7 @@ defineExpose({ showModal })
     opacity: 0;
     transform: scale(0.9) translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);

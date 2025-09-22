@@ -3,7 +3,11 @@
     <!-- Área do Gráfico -->
     <div class="chart-area">
       <div v-if="chartData.labels.length > 0" class="chart-canvas">
-        <Bar :data="chartData" :options="chartOptions" />
+        <!-- Gráfico de Barras -->
+        <Bar v-if="graphType === 'Gráfico de colunas'" :data="chartData" :options="chartOptions" />
+
+        <!-- Gráfico de Pizza -->
+        <Pie v-else-if="graphType === 'Gráfico pizza'" :data="pieChartData" :options="pieChartOptions" />
       </div>
       <div v-else class="no-data-message">
         <p>Nenhuma doação registrada para exibir no gráfico.</p>
@@ -18,7 +22,19 @@
         <div class="select-wrapper">
           <select v-model="localFiltro" class="control-select">
             <option value="Gráfico">Gráfico</option>
-            <option value="">Texto</option>
+            <option value="">Lista</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+      </div>
+
+      <!-- ✅ FILTRO ATUALIZADO -->
+      <div class="control-group">
+        <label class="control-label">Agrupar por</label>
+        <div class="select-wrapper">
+          <select v-model="contentFilter" class="control-select">
+            <option value="ongs">ONGs</option>
+            <option value="categorias">Categoria das ONGs</option>
           </select>
           <div class="select-arrow">▼</div>
         </div>
@@ -57,12 +73,24 @@
       <div class="control-group">
         <div class="stats-box">
           <div class="stat-item">
-            <div class="stat-number">{{ estatisticas.totalOngs }}</div>
-            <div class="stat-label">ONGs com Doações</div>
+            <div class="stat-number">{{ estatisticas.totalItems }}</div>
+            <div class="stat-label">{{ contentFilter === 'ongs' ? 'ONGs' : 'Categorias' }}</div>
           </div>
           <div class="stat-item">
-            <div class="stat-number">{{ estatisticas.valorTotal.toLocaleString() }}</div>
-            <div class="stat-label">Valor Total (R$)</div>
+            <div class="stat-number">R$ {{ Number(estatisticas.valorTotal).toLocaleString('pt-BR') }}</div>
+            <div class="stat-label">Valor Total</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legenda para gráfico de pizza -->
+      <div v-if="graphType === 'Gráfico pizza'" class="control-group">
+        <label class="control-label">Legenda</label>
+        <div class="pizza-legend">
+          <div v-for="(item, index) in pieChartData.labels" :key="item" class="legend-item">
+            <div class="legend-color" :style="{ backgroundColor: pieChartData.datasets[0].backgroundColor[index] }">
+            </div>
+            <span class="legend-text">{{ item }}</span>
           </div>
         </div>
       </div>
@@ -72,18 +100,28 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import { Bar } from 'vue-chartjs'
-
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  ArcElement
+} from 'chart.js'
+import { Bar, Pie } from 'vue-chartjs'
 
 // Registrar os módulos do Chart.js
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement)
 
 // Props para receber dados do componente pai
 const props = defineProps({
   doacoes: Array,
-  filtro: String
+  filtro: String,
+  ongs: Array
 })
+
 const emit = defineEmits(['update:filtro'])
 
 const localFiltro = computed({
@@ -91,19 +129,42 @@ const localFiltro = computed({
   set: (val) => emit('update:filtro', val)
 })
 
-
 // Estados reativos para os controles
 const graphType = ref('Gráfico de colunas')
 const timeRange = ref('30')
+const contentFilter = ref('ongs')
 
 // Dados reativos
 const doacoesFiltradas = ref([])
 
-// Cores para o gráfico
-const cores = ['#4285F4', '#34A853', '#EA4335', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3', '#54A0FF']
+// Cores para os gráficos
+const cores = [
+  '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6',
+  '#EC4899', '#06B6D4', '#84CC16', '#F97316', '#6366F1',
+  '#14B8A6', '#FB923C', '#A855F7', '#0EA5E9', '#22C55E'
+]
+
+// ✅ MAPEAMENTO DE CATEGORIAS
+const categoriasMap = {
+  'criancas': 'Crianças',
+  'moradores-de-rua': 'Moradores de Rua',
+  'idosos': 'Idosos',
+  'animais': 'Animais',
+  'saude': 'Saúde',
+  'educacao': 'Educação',
+  'meio-ambiente': 'Meio Ambiente',
+  'geral': 'Geral'
+}
+
+// Função para formatar categoria
+const formatarCategoria = (categoria) => {
+  return categoriasMap[categoria] || categoria || 'Não categorizada'
+}
 
 // Função para filtrar doações por tempo
 const filtrarPorTempo = (doacoes) => {
+  if (!doacoes || !doacoes.length) return []
+
   if (timeRange.value === 'all') return doacoes
 
   const dias = parseInt(timeRange.value)
@@ -116,43 +177,75 @@ const filtrarPorTempo = (doacoes) => {
   })
 }
 
-// Atualizar doações filtradas quando props.doacoes ou timeRange mudar
+// Atualizar doações filtradas quando dados ou filtros mudarem
 watch([() => props.doacoes, timeRange], () => {
   doacoesFiltradas.value = filtrarPorTempo(props.doacoes)
 }, { immediate: true })
 
-// Dados computados para o gráfico
-const chartData = computed(() => {
-  if (!doacoesFiltradas.value.length) {
+// ✅ FUNÇÃO ATUALIZADA PARA AGRUPAR DADOS
+const getDadosAgrupados = () => {
+  if (!doacoesFiltradas.value || !doacoesFiltradas.value.length) {
     return {
       labels: [],
-      datasets: []
+      valores: [],
+      cores: []
     }
   }
 
-  // Agrupar doações por ONG e somar valores
-  const resumoPorOng = {}
+  const resumo = {}
 
   doacoesFiltradas.value.forEach(doacao => {
-    if (!resumoPorOng[doacao.ongNome]) {
-      resumoPorOng[doacao.ongNome] = {
+    let chave
+
+    if (contentFilter.value === 'categorias') {
+      // ✅ Agrupar por categoria (já vem no objeto doacao)
+      const categoria = doacao.categoriaOng || 'Não categorizada'
+      chave = formatarCategoria(categoria)
+    } else {
+      // Agrupar por ONG
+      chave = doacao.ongNome || 'ONG não identificada'
+    }
+
+    if (!resumo[chave]) {
+      resumo[chave] = {
         quantidade: 0,
         valorTotal: 0
       }
     }
-    resumoPorOng[doacao.ongNome].quantidade += 1
-    resumoPorOng[doacao.ongNome].valorTotal += doacao.valor
+
+    resumo[chave].quantidade += 1
+    resumo[chave].valorTotal += doacao.valor || 0
   })
 
-  const ongs = Object.keys(resumoPorOng)
-  const valores = ongs.map(ong => resumoPorOng[ong].valorTotal)
-  const coresGrafico = ongs.map((_, index) => cores[index % cores.length])
+  // Ordenar por valor total (decrescente)
+  const entries = Object.entries(resumo)
+    .sort((a, b) => b[1].valorTotal - a[1].valorTotal)
+    .slice(0, 15)
+
+  const labels = entries.map(([label]) => label)
+  const valores = entries.map(([, data]) => data.valorTotal)
+  const coresGrafico = labels.map((_, index) => cores[index % cores.length])
 
   return {
-    labels: ongs,
+    labels,
+    valores,
+    cores: coresGrafico
+  }
+}
+
+// Dados computados para o gráfico de barras
+const chartData = computed(() => {
+  const { labels, valores, cores: coresGrafico } = getDadosAgrupados()
+
+  if (!labels.length) {
+    return { labels: [], datasets: [] }
+  }
+
+  return {
+    labels,
     datasets: [
       {
-        label: 'Valor Total das Doações (R$)',
+        label: contentFilter.value === 'ongs' ? 'Valor por ONG' : 'Valor por Categoria',
         data: valores,
         backgroundColor: coresGrafico,
         borderRadius: 4,
@@ -162,26 +255,66 @@ const chartData = computed(() => {
   }
 })
 
-// Estatísticas computadas
+// Dados computados para o gráfico de pizza
+const pieChartData = computed(() => {
+  const { labels, valores, cores: coresGrafico } = getDadosAgrupados()
+
+  if (!labels.length) {
+    return { labels: [], datasets: [] }
+  }
+
+  return {
+    labels,
+    datasets: [
+      {
+        label: contentFilter.value === 'ongs' ? 'Doações por ONG' : 'Doações por Categoria',
+        data: valores,
+        backgroundColor: coresGrafico,
+        borderColor: '#fff',
+        borderWidth: 2,
+        hoverBorderWidth: 3,
+        hoverBorderColor: '#fff'
+      }
+    ]
+  }
+})
+
+// Estatísticas
 const estatisticas = computed(() => {
-  if (!doacoesFiltradas.value.length) {
+  if (!doacoesFiltradas.value || !doacoesFiltradas.value.length) {
     return {
-      totalOngs: 0,
+      totalItems: 0,
       valorTotal: 0
     }
   }
 
-  const ongsUnicas = new Set(doacoesFiltradas.value.map(d => d.ongNome))
-  const valorTotal = doacoesFiltradas.value.reduce((total, doacao) => total + doacao.valor, 0)
+  let itensUnicos
+
+  if (contentFilter.value === 'categorias') {
+    // Contar categorias únicas
+    const categoriasUnicas = new Set()
+    doacoesFiltradas.value.forEach(d => {
+      const categoria = d.categoriaOng || 'Não categorizada'
+      categoriasUnicas.add(formatarCategoria(categoria))
+    })
+    itensUnicos = categoriasUnicas
+  } else {
+    // Contar ONGs únicas
+    itensUnicos = new Set(doacoesFiltradas.value.map(d => d.ongNome || 'ONG não identificada'))
+  }
+
+  const valorTotal = doacoesFiltradas.value.reduce((total, doacao) => {
+    return total + (doacao.valor || 0)
+  }, 0)
 
   return {
-    totalOngs: ongsUnicas.size,
-    valorTotal
+    totalItems: itensUnicos.size,
+    valorTotal: valorTotal.toFixed(2)
   }
 })
 
-// Opções do gráfico
-const chartOptions = {
+// Opções do gráfico de barras
+const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   layout: {
@@ -252,6 +385,47 @@ const chartOptions = {
       borderWidth: 0
     }
   }
+}))
+
+// Opções do gráfico de pizza
+const pieChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  layout: {
+    padding: {
+      top: 20,
+      bottom: 20,
+      left: 20,
+      right: 20
+    }
+  },
+  plugins: {
+    legend: {
+      display: false
+    },
+    tooltip: {
+      enabled: true,
+      backgroundColor: 'rgba(0,0,0,0.8)',
+      titleColor: '#fff',
+      bodyColor: '#fff',
+      callbacks: {
+        label: function (context) {
+          const valor = context.parsed
+          const total = context.dataset.data.reduce((a, b) => a + b, 0)
+          const porcentagem = ((valor / total) * 100).toFixed(1)
+          return `${context.label}: R$ ${valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} (${porcentagem}%)`
+        }
+      }
+    }
+  },
+  elements: {
+    arc: {
+      borderWidth: 2,
+      borderColor: '#fff'
+    }
+  },
+  cutout: 0,
+  radius: '85%'
 }
 
 onMounted(() => {
@@ -260,6 +434,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* Todos os estilos existentes permanecem os mesmos */
 .chart-wrapper {
   display: flex;
   gap: 20px;
@@ -386,6 +561,37 @@ onMounted(() => {
   margin-top: 2px;
 }
 
+.pizza-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legend-text {
+  font-size: 11px;
+  color: #333;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .control-select:focus {
   outline: none;
   border-color: #2563EB;
@@ -395,5 +601,23 @@ onMounted(() => {
 .radio-input:focus {
   outline: 2px solid #4285F4;
   outline-offset: 2px;
+}
+
+.pizza-legend::-webkit-scrollbar {
+  width: 4px;
+}
+
+.pizza-legend::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.pizza-legend::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 2px;
+}
+
+.pizza-legend::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 </style>
