@@ -20,6 +20,10 @@ from .serializers import (
     EmailSerializer, VerificarCodigoSerializer
 )
 
+class UsuarioViewSet(ModelViewSet):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+
 # ================================
 # AUTENTICAÇÃO
 # ================================
@@ -303,7 +307,7 @@ class DoacaoViewSet(ModelViewSet):
             'instituicao__nome'
         ).annotate(
             count=Count('id'),
-            valor_total=models.Sum('valor_estimado')
+            valor_total=Sum('valor_estimado')
         ).order_by('-count')[:5]
         
         # Valor total doado
