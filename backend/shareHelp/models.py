@@ -3,6 +3,28 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 import random
 
+def get_usuario_anonimo():
+    """Retorna ou cria um usuário especial para doações anônimas"""
+    try:
+        anonimo, created = Usuario.objects.get_or_create(
+            username='anonimo',
+            defaults={
+                'email': 'anonimo@sharehelp.com',
+                'nome': 'Usuário Anônimo',
+                'email_verificado': True,
+                'is_active': True,
+                'first_name': 'Anônimo',
+                'last_name': 'ShareHelp'
+            }
+        )
+        
+        if created:
+            print("✅ Usuário anônimo criado com sucesso")
+        
+        return anonimo
+    except Exception as e:
+        print(f"❌ Erro ao criar usuário anônimo: {e}")
+        return None
 # ================================
 # USUÁRIO E AUTENTICAÇÃO
 # ================================
@@ -25,6 +47,8 @@ class CodigoVerificacao(models.Model):
 
     def __str__(self):
         return f"{self.email} - {self.codigo}"
+    
+    
 
 # ================================
 # TIPOS DE DOAÇÃO
@@ -196,7 +220,7 @@ class Doacao(models.Model):
         ('cancelada', 'Cancelada')
     ]
     
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)    
     instituicao = models.ForeignKey(Instituicao, on_delete=models.CASCADE)
     tipo_doacao = models.ForeignKey(TipoDoacao, on_delete=models.RESTRICT)
     
@@ -218,9 +242,12 @@ class Doacao(models.Model):
     data_atualizacao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Doação #{self.id} - {self.usuario.username} → {self.instituicao.nome}"
+        usuario_nome = self.usuario.username if self.usuario else "Anônimo"
+        return f"Doação #{self.id} - {usuario_nome} → {self.instituicao.nome}"
 
     class Meta:
         verbose_name = "Doação"
         verbose_name_plural = "Doações"
         ordering = ['-data_criacao']
+        
+        

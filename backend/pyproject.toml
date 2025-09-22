@@ -11,6 +11,7 @@ dependencies = [
     "django-cors-headers>=4.7.0",
     "djangorestframework-simplejwt>=5.5.1",
     "whitenoise>=6.11.0",
+    "sendgrid>=6.12.5",
 ]
 requires-python = "==3.13.*"
 readme = "README.md"

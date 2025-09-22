@@ -46,16 +46,6 @@ const paymentDescriptions = {
 }
 
 const finalizeDonation = async () => {
-  const token = localStorage.getItem("access_token");
-  if (!token) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Login necessário',
-      text: 'Faça login para registrar sua doação'
-    });
-    return;
-  }
-
   if (isProcessingDonation.value) return;
 
   const amount = selectedValue.value === 'custom' ? Number(customValue.value) : Number(selectedValue.value);
@@ -72,11 +62,25 @@ const finalizeDonation = async () => {
   isProcessingDonation.value = true;
 
   try {
-    // ✅ 1. PRIMEIRO: Buscar dados do usuário logado
-    const perfilResponse = await api.get("/perfil/");
-    const usuario = perfilResponse.data;
+    // ✅ Verificar se usuário está logado
+    const token = localStorage.getItem("access_token");
+    let usuario = null;
+    let useAnonymousEndpoint = false;
 
-    console.log('👤 Usuário logado:', usuario);
+    if (token) {
+      try {
+        // ✅ 1. Buscar dados do usuário logado (se tiver token)
+        const perfilResponse = await api.get("/perfil/");
+        usuario = perfilResponse.data;
+        console.log('👤 Usuário logado:', usuario);
+      } catch {
+        console.log('⚠️ Token inválido, prosseguindo como anônimo');
+        useAnonymousEndpoint = true;
+      }
+    } else {
+      console.log('👤 Usuário não logado, doação anônima');
+      useAnonymousEndpoint = true;
+    }
 
     // ✅ 2. Buscar a instituição
     const instituicoesResponse = await api.get("/instituicoes/");
@@ -100,7 +104,6 @@ const finalizeDonation = async () => {
       tipo.nome_tipo.toLowerCase().includes('valor')
     );
 
-    // Se não encontrar, usar o primeiro disponível
     if (!tipoDoacao && tiposDoacaoResponse.data.length > 0) {
       tipoDoacao = tiposDoacaoResponse.data[0];
     }
@@ -111,9 +114,8 @@ const finalizeDonation = async () => {
 
     console.log('💰 Tipo de doação:', tipoDoacao);
 
-    // ✅ 4. Criar doação com TODOS os campos obrigatórios
+    // ✅ 4. Preparar dados da doação
     const doacaoData = {
-      usuario: usuario.id,           // ← ADICIONAR o ID do usuário
       instituicao: instituicao.id,
       tipo_doacao: tipoDoacao.id,
       valor_estimado: amount,
@@ -122,14 +124,34 @@ const finalizeDonation = async () => {
       status: 'confirmada'
     };
 
-    console.log('📤 Dados da doação:', doacaoData);
-
-    const response = await api.post("/doacoes/", doacaoData);
+    // ✅ 5. Escolher endpoint baseado no status de login
+    let response;
+    if (useAnonymousEndpoint) {
+      console.log('📤 Usando endpoint anônimo:', doacaoData);
+      // ✅ USAR ENDPOINT ESPECÍFICO PARA DOAÇÕES ANÔNIMAS
+      response = await api.post("/doacoes-anonimas/", doacaoData);
+    } else {
+      console.log('📤 Usando endpoint normal (usuário logado):', doacaoData);
+      // ✅ USAR ENDPOINT NORMAL
+      response = await api.post("/doacoes/", doacaoData);
+    }
 
     console.log('✅ Doação registrada na API:', response.data);
 
-    // Mostrar mensagem de agradecimento
+    // Mostrar mensagem de agradecimento personalizada
+    const mensagemSucesso = usuario
+      ? 'Obrigado pela sua doação!'
+      : 'Obrigado pela sua doação anônima!';
+
     showThankYou.value = true;
+
+    // Atualizar o texto da mensagem de agradecimento
+    setTimeout(() => {
+      const thankYouText = document.querySelector('.thank-you-box h3');
+      if (thankYouText) {
+        thankYouText.textContent = mensagemSucesso;
+      }
+    }, 100);
 
     // Fechar automaticamente após 3 segundos
     setTimeout(() => {
@@ -149,12 +171,13 @@ const finalizeDonation = async () => {
 
       if (typeof errorData === 'string') {
         errorMessage = errorData;
+      } else if (errorData.error) {
+        errorMessage = errorData.error;
       } else if (errorData.detail) {
         errorMessage = errorData.detail;
       } else if (errorData.non_field_errors) {
         errorMessage = errorData.non_field_errors.join(', ');
       } else {
-        // Erros de campo específicos
         const fieldErrors = Object.entries(errorData)
           .map(([field, errors]) => `${field}: ${Array.isArray(errors) ? errors.join(', ') : errors}`)
           .join('; ');
@@ -168,12 +191,13 @@ const finalizeDonation = async () => {
       icon: 'error',
       title: 'Erro na doação',
       text: errorMessage,
-      footer: 'Verifique se você está logado e tente novamente'
+      footer: 'Tente novamente ou entre em contato com o suporte'
     });
   } finally {
     isProcessingDonation.value = false;
   }
 };
+
 const closeModal = () => {
   showModal.value = false
   emit('fechar')
@@ -261,13 +285,15 @@ defineExpose({ showModal })
             </button>
           </div>
 
-          <button class="finalize-button" @click="finalizeDonation" :disabled="!selectedValue || !selectedPayment">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <button class="finalize-button" @click="finalizeDonation"
+            :disabled="!selectedValue || !selectedPayment || isProcessingDonation">
+            <svg v-if="!isProcessingDonation" width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path
                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
                 fill="currentColor" />
             </svg>
-            Finalizar Doação
+            <div v-if="isProcessingDonation" class="spinner"></div>
+            {{ isProcessingDonation ? 'Processando...' : 'Finalizar Doação' }}
           </button>
         </div>
       </div>
@@ -304,6 +330,27 @@ defineExpose({ showModal })
   justify-content: center;
   z-index: 999;
   padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* SPINNER PARA LOADING */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* MINI CAIXINHA DE AGRADECIMENTO */
@@ -621,9 +668,8 @@ defineExpose({ showModal })
   font-size: 0.8rem;
   color: #818181;
 }
-/* ===== RESPONSIVIDADE SIMPLIFICADA ===== */
 
-/* Desktop padrão já definido no estilo base — mantenha como está */
+/* ===== RESPONSIVIDADE SIMPLIFICADA ===== */
 
 /* Tablet (até 768px) */
 @media (max-width: 768px) {
@@ -639,14 +685,14 @@ defineExpose({ showModal })
   }
 
   .content-wrapper {
-    flex-direction: column; /* Empilha os blocos em telas menores */
+    flex-direction: column;
     gap: 20px;
     padding-top: 60px;
     min-height: auto;
   }
 
   .value-grid {
-    grid-template-columns: repeat(2, 1fr); /* Mantém 2 colunas até mobile */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .payment-options {
@@ -689,11 +735,11 @@ defineExpose({ showModal })
 
   .valor h1,
   .form h2 {
-    font-size: 1.25rem; /* Ou use clamp! */
+    font-size: 1.25rem;
   }
 
   .value-grid {
-    grid-template-columns: 1fr; /* Uma coluna só em mobile pequeno */
+    grid-template-columns: 1fr;
     gap: 8px;
   }
 
