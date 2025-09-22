@@ -106,7 +106,7 @@ const availableInstitutions = computed(() => {
               </div>
 
               <div class="card-actions">
-                <button class="btn-doar-opcao" >Doar para esta opção</button>
+                <router-link :to="`$`"><button class="btn-doar-opcao" >Doar para esta opção</button></router-link>
                 <router-link :to="`${$route.path}/${recommendedInstitution.id}`"><button class="btn-pagina-instituicao" >Página da Instituição</button></router-link>
               </div>
             </div>
