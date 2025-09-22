@@ -31,17 +31,49 @@ class UsuarioViewSet(ModelViewSet):
 # AUTENTICAÇÃO
 # ================================
 # ✅ CORRETO - linha dentro da função
+# views.py
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 class EnviarCodigoView(APIView):
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data["email"]
             codigo_obj, _ = CodigoVerificacao.objects.update_or_create(email=email)
+
+            # ✅ Usar SendGrid API
+            message = Mail(
+                from_email='contatosharehelp@gmail.com',
+                to_emails=email,
+                subject='Código de verificação - Share Help',
+                html_content=f'''
+                <h2>Olá!</h2>
+                <p>Seu código de verificação para cadastro no Share Help é: <strong>{codigo_obj.codigo}</strong></p>
+                <p>Este código é válido por 15 minutos.</p>
+                <p>Se você não solicitou este código, ignore este email.</p>
+                <hr>
+                <p>Atenciosamente,<br>Equipe Share Help</p>
+                '''
+            )
             
-            # send_mail(...) # comentado
-            logger.info(f"Email seria enviado para {email} com código {codigo_obj.codigo}")  # ✅ DENTRO!
-            
-            return Response({"message": "Código enviado"})
+            try:
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                response = sg.send(message)
+                logger.info(f"✅ Email enviado com sucesso para {email} - Status: {response.status_code}")
+                
+                return Response({
+                    "message": "Código enviado para o email"
+                }, status=status.HTTP_200_OK)
+                
+            except Exception as e:
+                logger.error(f"❌ Erro SendGrid API: {str(e)}")
+                return Response({
+                    "error": "Erro ao enviar email"
+                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class VerificarCodigoView(APIView):
     def post(self, request):
