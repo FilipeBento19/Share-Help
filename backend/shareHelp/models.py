@@ -89,7 +89,8 @@ class Instituicao(models.Model):
     # Campos principais (baseados no ongsData)
     identificador = models.CharField(max_length=100, unique=True)
     nome = models.CharField(max_length=200)
-    descricao = models.TextField(help_text="Descrição detalhada da instituição")
+    descricao_curta = models.TextField(help_text="Descrição resumida da instituição")
+    descricao = models.TextField(help_text="Descrição detalhada da instituição")  
     categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES)
     
     # Contato e localização

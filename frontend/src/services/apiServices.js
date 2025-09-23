@@ -5,11 +5,16 @@ import api from '@/config/api.js'
 // UTILITÁRIOS DE MAPEAMENTO
 // =====================================
 const mapInstituicaoToOngData = (instituicao) => {
+  // Debug temporário - remover depois
+  console.log('🔍 Dados brutos da API:', instituicao);
+  console.log('🔍 descricao_curta da API:', instituicao.descricao_curta);
+  
   return {
     // Compatibilidade com ongsData.js
     id: instituicao.identificador || instituicao.id.toString(),
     title: instituicao.nome,
     description: instituicao.descricao,
+    descricao_curta: instituicao.descricao_curta,
     categoria: instituicao.categoria,
     filtros: instituicao.filtros || [],
     telefone: instituicao.telefone,
@@ -23,7 +28,7 @@ const mapInstituicaoToOngData = (instituicao) => {
     endereco_resumo: instituicao.endereco_resumo,
     status: instituicao.status,
     data_criacao: instituicao.data_criacao,
-    api_id: instituicao.id, // ID numérico da API
+    api_id: instituicao.id,
   }
 }
 
