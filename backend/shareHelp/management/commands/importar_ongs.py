@@ -32,7 +32,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'lar-abdon-batista',
                 'categoria': 'criancas',
-                'nome': 'Associação de Amigos das Crianças do Lar Abdon Batista',
+                'nome': 'Lar Abdon Batista',
                 'descricao_curta': 'Acolhe crianças afastadas das famílias, oferecendo proteção, carinho e novas oportunidades em um ambiente seguro e acolhedor.',
                 'descricao': 'O Lar Abdon Batista é uma instituição dedicada ao acolhimento de crianças que, por diferentes motivos, precisam ser afastadas de suas famílias. Em um ambiente seguro e cheio de afeto, cada criança encontra proteção, cuidado e a chance de um novo começo. O trabalho realizado vai além da simples moradia: busca-se reconstruir laços familiares e preparar as crianças para um futuro mais seguro e cheio de esperança. A equipe do Lar atua diariamente para suprir as necessidades básicas e emocionais das crianças, garantindo acompanhamento integral. O objetivo central é oferecer um espaço acolhedor e humanizado, respeitando a individualidade de cada uma e promovendo seu desenvolvimento integral. As doações recebidas são fundamentais para manter essa rede de proteção, contribuindo com roupas, alimentos e apoio contínuo. Cada contribuição ajuda a fortalecer a missão de transformar vidas, criando um ambiente em que cada criança pode sonhar e acreditar em novas oportunidades.',
                 'filtros': ['roupas', 'alimentos'],
@@ -45,7 +45,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'omunga',
                 'categoria': 'criancas',
-                'nome': 'OMUNGA Grife Social e Instituto',
+                'nome': 'OMUNGA',
                 'descricao_curta': 'Leva educação a comunidades vulneráveis no Brasil e África, implementando bibliotecas, capacitando professores e incentivando a leitura.',
                 'descricao': 'A OMUNGA nasceu em Joinville como uma grife em 2013 e, com o tempo, transformou-se em um instituto voltado para a educação. Seu propósito é levar oportunidades de aprendizado a comunidades vulneráveis no Brasil e na África, atuando com projetos de incentivo à leitura, capacitação de professores e implantação de bibliotecas. O nome OMUNGA, de origem angolana, significa união, refletindo sua essência de conectar pessoas e transformar realidades por meio da educação. Com iniciativas que já alcançaram o sertão nordestino, a Amazônia e Angola, a organização impactou milhares de crianças e educadores, oferecendo ferramentas para a construção de um futuro mais justo. As ações são financiadas por meio da venda de produtos sociais, doações e parcerias. Esse modelo sustentável garante que a missão de levar educação siga crescendo e beneficiando comunidades que enfrentam grandes desafios de acesso ao conhecimento. Contribuir com a OMUNGA é apoiar diretamente o fortalecimento da educação e da cultura como instrumentos de transformação social.',
                 'filtros': ['livros'],
@@ -58,7 +58,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'missao-crianca-jardim-paraiso',
                 'categoria': 'criancas',
-                'nome': 'Missão Criança Jardim Paraíso',
+                'nome': 'Missão Criança',
                 'descricao_curta': 'Oferece vagas no contraturno escolar, promovendo desenvolvimento social, emocional e espiritual para crianças e adolescentes.',
                 'descricao': 'Há quase três décadas, a Missão Criança atua no bairro Jardim Paraíso, em Joinville, oferecendo um espaço seguro e transformador para crianças e adolescentes. O projeto disponibiliza 250 vagas no contraturno escolar, garantindo que os jovens tenham acompanhamento e atividades que fortalecem seu desenvolvimento social, emocional e espiritual. Movido pelo amor de Deus, o projeto vai além do reforço escolar. Oficinas, orientações e apoio às famílias fazem parte da rotina, criando um ambiente onde os valores são cultivados e os vínculos comunitários são fortalecidos. O espaço é reconhecido como um refúgio de esperança, em que cada criança encontra acolhimento e incentivo para trilhar novos caminhos. A Missão Criança também dedica esforços a impactar positivamente a comunidade local, oferecendo suporte contínuo às famílias. Dessa forma, os benefícios vão além dos muros da instituição, reverberando em todo o entorno. Com dedicação e amor, o projeto constrói futuros mais promissores, ajudando cada criança a desenvolver seu potencial e acreditar em uma vida melhor.',
                 'filtros': ['brinquedos', 'roupas'],
@@ -71,7 +71,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'ecos-esperanca',
                 'categoria': 'criancas',
-                'nome': 'Associação Ecos de Esperança',
+                'nome': 'Ecos de Esperança',
                 'descricao_curta': 'Instituição cristã que protege crianças e adolescentes, promovendo igualdade, justiça social e dignidade em parceria com sociedade civil.',
                 'descricao': 'A Associação Ecos de Esperança é uma instituição cristã, sem fins lucrativos, que trabalha na defesa integral de crianças e adolescentes. Seu foco é garantir proteção, promover direitos e lutar por justiça social, sempre fundamentada em valores éticos e no Evangelho de Cristo. Acredita que, por meio da fé e da ação concreta, é possível construir uma sociedade mais justa, humana e igualitária. Suas iniciativas envolvem projetos sociais que alcançam crianças em situação de vulnerabilidade, oferecendo suporte emocional, acompanhamento escolar e atividades que fortalecem a cidadania. A organização atua em parceria com igrejas, sociedade civil e poder público, fortalecendo redes de proteção e desenvolvendo projetos comunitários. A dedicação é voltada a assegurar que cada criança e adolescente tenha acesso a oportunidades e seja tratado com dignidade. O apoio da comunidade e das doações permite que esse trabalho se mantenha firme, transformando a vida de muitas famílias e contribuindo para um futuro mais solidário.',
                 'filtros': ['roupas', 'brinquedos', 'alimentos'],
@@ -97,7 +97,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'casa-do-adalto',
                 'categoria': 'criancas',
-                'nome': 'Associação Casa do Adalto (ACAN)',
+                'nome': 'Casa do Adalto',
                 'descricao_curta': 'Apoia crianças e adolescentes com câncer, oferecendo acolhimento, suporte às famílias e mobilização por tratamentos adequados.',
                 'descricao': 'A Associação Casa do Adalto, conhecida como ACAN, nasceu em 2002 a partir da história de Adalto, um menino diagnosticado com câncer aos quatro anos de idade. Apesar de sua luta, ele faleceu aos cinco anos, mas deixou um legado de amor e força que inspirou a criação da instituição. A ACAN é uma entidade sem fins lucrativos, dedicada a apoiar crianças e adolescentes com câncer, oferecendo acolhimento e suporte às famílias durante o tratamento. Além de garantir melhores condições de enfrentamento da doença, a associação mobiliza recursos para auxiliar em tratamentos, alimentação e necessidades básicas. O espaço também proporciona um ambiente acolhedor, em que famílias encontram apoio emocional e social em momentos de grande fragilidade. Com o trabalho da ACAN, muitas crianças e adolescentes recebem não apenas suporte médico e material, mas também afeto e esperança. Cada doação contribui para que a instituição siga firme em sua missão de transformar dor em solidariedade e cuidado.',
                 'filtros': ['roupas', 'alimentos'],
@@ -136,7 +136,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'instituto-caranguejo',
                 'categoria': 'criancas',
-                'nome': 'Instituto Caranguejo de Educação Ambiental',
+                'nome': 'Instituto Caranguejo',
                 'descricao_curta': 'Promove educação ambiental em escolas e comunidades, incentivando consciência ecológica, diagnóstico pedagógico e preservação socioambiental em Joinville.',
                 'descricao': 'O Instituto Caranguejo de Educação Ambiental nasceu a partir das iniciativas do Menino Caranguejo e do personagem Caranga, que aproximaram crianças e escolas do tema da preservação ambiental. Com sede em Joinville, a instituição busca fortalecer a consciência ecológica por meio de projetos educativos em comunidades, escolas e espaços sociais. Além de atividades lúdicas e pedagógicas, o instituto realiza diagnósticos nacionais sobre o perfil de professores, estudantes e escolas que trabalham com educação ambiental. Essa análise permite desenvolver estratégias mais eficazes e contribuir para a formação de cidadãos comprometidos com a preservação do meio ambiente. O trabalho do Instituto Caranguejo é reconhecido pelo impacto positivo na formação de valores socioambientais e no estímulo à cidadania. As doações ajudam a fortalecer programas educativos e a ampliar o alcance das iniciativas, garantindo que mais crianças e jovens sejam sensibilizados para cuidar do planeta. Com cada ação, o instituto planta sementes de transformação e de consciência ecológica que perduram por gerações.',
                 'filtros': ['roupas', 'alimentos'],
@@ -164,7 +164,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'ventura-residence',
                 'categoria': 'idosos',
-                'nome': 'Ventura Residence - Residencial de Idosos',
+                'nome': 'Ventura Residence',
                 'descricao_curta': 'Oferece moradia e cuidados especializados a idosos, garantindo saúde, conforto e atenção humanizada em Joinville.',
                 'descricao': 'Localizado em Joinville, o Ventura Residence é um residencial de idosos que proporciona um ambiente seguro e confortável para pessoas acima de 60 anos. A instituição oferece atendimento integral, incluindo serviços de enfermagem, nutrição, fisioterapia, assistência social e acompanhamento médico especializado. Cada residente recebe atenção individualizada, com foco na saúde física e emocional, bem-estar e qualidade de vida. A equipe é formada por profissionais capacitados, que combinam conhecimento técnico e cuidado humanizado. Além do atendimento diário, o Ventura Residence realiza atividades sociais e recreativas, estimulando a interação, a autonomia e a participação dos moradores. O espaço é projetado para atender às necessidades específicas de cada residente, oferecendo conforto, segurança e suporte contínuo. A instituição tem como missão proporcionar dignidade, acolhimento e qualidade de vida, criando um lar permanente ou temporário onde os idosos se sintam valorizados, respeitados e bem cuidados.',
                 'filtros': ['alimentos'],
@@ -177,7 +177,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'lar-renascer',
                 'categoria': 'idosos',
-                'nome': 'Associação Beneficente Lar Renascer',
+                'nome': 'Lar Renascer',
                 'descricao_curta': 'Promove acolhimento seguro e dignidade para mulheres idosas, oferecendo cuidado integral e apoio emocional constante.',
                 'descricao': 'A Associação Beneficente Lar Renascer é uma instituição que se dedica ao acolhimento e proteção de mulheres idosas em situação de vulnerabilidade social em Joinville. O Lar oferece um ambiente seguro, confortável e humanizado, garantindo cuidados médicos, alimentação adequada, assistência psicológica e atividades recreativas. Cada residente recebe atenção individualizada, com foco na autonomia, dignidade e bem-estar. O Lar Renascer busca criar um espaço de convivência respeitosa, promovendo interação social, apoio emocional e desenvolvimento pessoal. A instituição atua para fortalecer vínculos comunitários e familiares, oferecendo suporte contínuo às necessidades das moradoras. Com serviços planejados e equipe qualificada, o Lar Renascer garante que cada idosa tenha qualidade de vida, segurança e respeito, transformando o cotidiano em um ambiente de cuidado, acolhimento e valorização.',
                 'filtros': ['roupas', 'livros', 'alimentos'],
@@ -190,7 +190,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'joao-de-paula',
                 'categoria': 'idosos',
-                'nome': 'Centro Integrado João de Paula - Exército da Salvação',
+                'nome': 'Exército da Salvação',
                 'descricao_curta': 'Apoia idosos e imigrantes, promovendo autonomia, envelhecimento saudável e assistência social humanizada.',
                 'descricao': 'O Centro Integrado João de Paula atua em Joinville oferecendo suporte a idosos e imigrantes em situação de vulnerabilidade social. A instituição realiza atendimento holístico, promovendo saúde física, emocional e social, com foco na autonomia e protagonismo dos indivíduos atendidos. As ações incluem suporte psicológico, atividades educativas, recreativas e acompanhamento social, com uma abordagem humanizada e inclusiva. O Centro integra serviços de alimentação, vestuário e cuidados básicos, garantindo dignidade e proteção aos participantes. O trabalho é planejado para estimular participação comunitária, fortalecer vínculos e promover envelhecimento saudável, respeitando a individualidade e necessidades de cada idoso. Por meio de parcerias com a sociedade civil, voluntários e órgãos públicos, a instituição amplia o alcance e impacto de seus programas, contribuindo para qualidade de vida, bem-estar e integração social dos atendidos. Cada ação reflete compromisso com respeito, cuidado e atenção contínua.',
                 'filtros': ['alimentos', 'roupas'],
@@ -203,7 +203,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'lar-aconchego',
                 'categoria': 'idosos',
-                'nome': 'Casa de Repouso Lar Aconchego',
+                'nome': 'Lar Aconchego',
                 'descricao_curta': 'Oferece lar seguro e acolhedor com cuidados contínuos, promovendo dignidade e bem-estar integral aos idosos.',
                 'descricao': 'A Casa de Repouso Lar Aconchego proporciona um ambiente seguro, acolhedor e estruturado para pessoas idosas, com acompanhamento 24 horas por profissionais especializados. A instituição oferece serviços de enfermagem, nutrição, terapia ocupacional e atendimento médico, garantindo cuidados integrados e atenção individualizada. Além dos cuidados básicos, são realizadas atividades recreativas e educativas para estimular o bem-estar físico e emocional dos residentes. Cada ação é planejada com foco na dignidade, conforto e saúde, respeitando as necessidades e limites de cada idoso. O Lar Aconchego valoriza o cuidado humanizado, promovendo interação social, suporte emocional e segurança em todas as etapas do dia a dia. O compromisso da instituição é oferecer qualidade de vida, respeito e atenção contínua, tornando o espaço um verdadeiro lar para seus moradores, onde cada idoso é valorizado e cuidado com carinho.',
                 'filtros': ['alimentos', 'livros'],
@@ -216,7 +216,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'bom-retiro',
                 'categoria': 'idosos',
-                'nome': 'Casa de Repouso Bom Retiro',
+                'nome': 'Repouso Bom Retiro',
                 'descricao_curta': 'Dedica-se ao cuidado integral de idosos, oferecendo conforto, segurança e atendimento especializado 24 horas.',
                 'descricao': 'A Casa de Repouso Bom Retiro, em Joinville, é um espaço dedicado ao cuidado integral de pessoas idosas, garantindo conforto, segurança e atenção personalizada. A instituição possui equipe qualificada disponível 24 horas, incluindo enfermeiros, nutricionistas, terapeutas ocupacionais e médicos, oferecendo acompanhamento contínuo e humanizado. Além dos cuidados de saúde, são promovidas atividades recreativas, sociais e educativas, incentivando interação, bem-estar e manutenção da autonomia dos residentes. Cada idoso recebe atenção individualizada, com foco em qualidade de vida, respeito e dignidade. O espaço é planejado para atender às necessidades físicas, emocionais e sociais, proporcionando um ambiente acolhedor e seguro. A Casa de Repouso Bom Retiro busca garantir que cada morador tenha conforto, suporte e acompanhamento integral, tornando o cotidiano mais seguro, saudável e agradável.',
                 'filtros': ['alimentos', 'livros'],
@@ -229,7 +229,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'casa-de-repouso-siloe',
                 'categoria': 'idosos',
-                'nome': 'Casa de Repouso SILOÉ',
+                'nome': 'Repouso SILOÉ',
                 'descricao_curta': 'Proporciona bem-estar e cuidados diários a idosos, garantindo atenção individualizada e qualidade de vida.',
                 'descricao': 'A Casa de Repouso SILOÉ é um espaço dedicado ao cuidado e bem-estar de idosos, oferecendo atenção contínua, acompanhamento médico, atividades recreativas e suporte emocional. A instituição conta com equipe preparada e atenciosa, garantindo atendimento personalizado e humanizado. Os residentes participam de atividades sociais e educativas que promovem interação, desenvolvimento pessoal e qualidade de vida. O espaço é seguro, acolhedor e adaptado para atender às necessidades físicas e emocionais de cada idoso. O objetivo é proporcionar dignidade, conforto e apoio integral, promovendo envelhecimento saudável e valorizando cada indivíduo. A instituição também oferece suporte às famílias, mantendo comunicação e apoio constante. Cada ação é voltada a assegurar um ambiente seguro, respeitoso e enriquecedor para todos os residentes.',
                 'filtros': ['alimentos', 'livros'],
@@ -242,7 +242,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'casa-repouso-acolher',
                 'categoria': 'idosos',
-                'nome': 'Casa de Repouso Acolher',
+                'nome': 'Repouso Acolher',
                 'descricao_curta': 'Oferece lar seguro e cuidados básicos a idosos sem recursos, promovendo dignidade e atenção humanizada.',
                 'descricao': 'A Casa de Repouso Acolher acolhe idosos que não possuem condições de custear cuidados especiais, oferecendo alimentação, acompanhamento diário e assistência integral em um ambiente seguro e acolhedor. A instituição promove dignidade, respeito e bem-estar, com equipe dedicada a cada residente, garantindo suporte emocional, social e físico. Além dos cuidados básicos, são realizadas atividades recreativas, educativas e de convivência, estimulando interação e qualidade de vida. O trabalho busca transformar a vida dos idosos, promovendo inclusão social e atenção personalizada. Cada ação é planejada com foco no conforto, segurança e valorização individual, garantindo que os residentes vivam em um lar de cuidado, solidariedade e respeito.',
                 'filtros': ['alimentos', 'livros', 'brinquedos'],
@@ -270,7 +270,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'casa-santo-egidio',
                 'categoria': 'moradores-de-rua',
-                'nome': 'Casa de Passagem Santo Egídio',
+                'nome': 'Passagem Santo Egídio',
                 'descricao_curta': 'Acolhe pessoas em situação de rua, migrantes e egressos do sistema prisional com apoio integral e acompanhamento social.',
                 'descricao': 'A Casa Santo Egídio é uma casa de passagem em Joinville que recebe pessoas em situação de rua, migrantes e egressos do sistema prisional. Os encaminhamentos são realizados pelo Centro Pop do município, e o acolhimento é feito por uma equipe técnica composta por coordenador, assistentes sociais, psicólogos e dez educadores sociais. O espaço oferece suporte integral, incluindo alimentação, vestuário e acompanhamento psicossocial, garantindo dignidade, segurança e atenção às necessidades individuais de cada pessoa. A instituição promove integração social e reinserção gradual na comunidade, valorizando a escuta ativa, respeito e cuidado humanizado.',
                 'filtros': ['roupas', 'alimentos'],
@@ -296,7 +296,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'crepsr',
                 'categoria': 'moradores-de-rua',
-                'nome': 'Centro de Referência Especializado para População em Situação de Rua',
+                'nome': 'Centro POP',
                 'descricao_curta': 'Espaço de acolhimento que promove direitos, autonomia, reintegração social e cuidado humanizado para pessoas vulneráveis.',
                 'descricao': 'O Centro de Referência Especializado para População em Situação de Rua, em Joinville, é um espaço voltado ao acolhimento, proteção e orientação de pessoas em situação de rua. A instituição oferece apoio psicossocial, orientação, encaminhamentos para serviços essenciais, atividades educativas e de reintegração social. Todo o trabalho é realizado com foco na dignidade, autonomia e inclusão social, garantindo escuta ativa, atenção individualizada e respeito aos direitos de cada pessoa. O centro atua para fortalecer a autoestima, promover vínculos comunitários e facilitar a reinserção social, criando oportunidades de desenvolvimento pessoal e acesso a recursos essenciais de forma humanizada.',
                 'filtros': ['roupas', 'alimentos', 'brinquedos', 'livros'],
@@ -309,7 +309,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'caps',
                 'categoria': 'moradores-de-rua',
-                'nome': 'Centro de Atenção Psicossocial em Álcool e outras Drogas',
+                'nome': 'CAPS',
                 'descricao_curta': 'Atendimento humanizado a pessoas com problemas relacionados a álcool e drogas, com terapias e acompanhamento integral.',
                 'descricao': 'O Centro de Atenção Psicossocial em Álcool e outras Drogas de Joinville oferece atendimento integral a pessoas que enfrentam problemas com álcool e outras drogas. A instituição disponibiliza uma equipe multiprofissional, terapias individuais e em grupo, acompanhamento psicológico, orientação social e atividades de reinserção. O espaço é aberto, acolhedor e livre de julgamentos, priorizando o vínculo, a escuta qualificada e o respeito à dignidade de cada indivíduo. O objetivo é promover saúde mental, desenvolvimento pessoal, autonomia e qualidade de vida, incentivando a integração social, a superação de desafios e a construção de novas oportunidades para os atendidos.',
                 'filtros': ['alimentos', 'livros'],
@@ -322,7 +322,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'restaurante-herbert',
                 'categoria': 'moradores-de-rua',
-                'nome': 'Restaurante Popular – Herbert José de Souza',
+                'nome': 'Restaurante Popular UND1',
                 'descricao_curta': 'Oferece refeições acessíveis e nutritivas, promovendo segurança alimentar, dignidade e inclusão social para pessoas vulneráveis.',
                 'descricao': 'O Restaurante Popular Herbert José de Souza, em Joinville, oferece refeições saudáveis, acessíveis e nutritivas para pessoas em situação de vulnerabilidade social, garantindo acesso à alimentação digna e equilibrada. A instituição prioriza qualidade dos alimentos, atendimento humanizado e respeito aos frequentadores, promovendo segurança alimentar e inclusão social. O objetivo é combater a fome, apoiar famílias e indivíduos, fortalecer vínculos comunitários e promover cidadania. Cada refeição é preparada com cuidado, buscando atender às necessidades nutricionais, respeitar hábitos alimentares e garantir conforto e acolhimento em um ambiente seguro e organizado.',
                 'filtros': ['alimentos'],
@@ -335,7 +335,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'restaurante-zilda',
                 'categoria': 'moradores-de-rua',
-                'nome': 'Restaurante Popular – Zilda Arns',
+                'nome': 'Restaurante Popular UND2',
                 'descricao_curta': 'Garante alimentação digna a preços populares, promovendo inclusão, cuidado e respeito para pessoas em vulnerabilidade.',
                 'descricao': 'O Restaurante Popular Zilda Arns em Joinville oferece refeições nutritivas e acessíveis a preços populares para pessoas em situação de vulnerabilidade social. A instituição promove dignidade e cuidado por meio da alimentação, garantindo que todos tenham acesso a refeições equilibradas, seguras e saborosas. O espaço valoriza atendimento humanizado, acolhimento, respeito e empatia, buscando combater a fome e fortalecer a inclusão social. A equipe trabalha para garantir qualidade, segurança alimentar e um ambiente acolhedor, estimulando hábitos alimentares saudáveis e proporcionando oportunidades de bem-estar e cidadania para todos os frequentadores.',
                 'filtros': ['alimentos'],
@@ -348,7 +348,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'casa-de-levi',
                 'categoria': 'moradores-de-rua',
-                'nome': 'A Casa de Levi',
+                'nome': 'Comunidade Eis-me Aqui',
                 'descricao_curta': 'Iniciativa comunitária que acolhe pessoas vulneráveis, oferecendo apoio, dignidade e esperança.',
                 'descricao': 'Comunidade Eis-me Aqui é uma iniciativa comunitária que acolhe pessoas em situação de vulnerabilidade, oferecendo apoio, dignidade e esperança. A Casa de Levi acolhe pessoas em situação de vulnerabilidade social, oferecendo suporte às famílias em momentos difíceis. Trabalhamos com empatia, escuta ativa e cuidado humanizado, promovendo dignidade e restauração da esperança. Acredita na transformação social por meio do cuidado, disponibiliza alimentos e roupas aos necessitados, fortalece vínculos comunitários e familiares, proporciona um espaço seguro, acolhedor e inclusivo e busca ser presença constante para quem precisa.',
                 'filtros': ['alimentos', 'roupas'],
@@ -361,7 +361,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'sementes-do-futuro',
                 'categoria': 'moradores-de-rua',
-                'nome': 'Centro de Atendimento às Famílias Carentes Sementes do Futuro',
+                'nome': 'AACC',
                 'descricao_curta': 'O Centro de Atendimento às Famílias Carentes Sementes do Futuro apoia famílias vulneráveis, promovendo cuidado, educação e fortalecimento de vínculos.',
                 'descricao': 'apoia famílias vulneráveis com ações de cuidado, educação e dignidade, fortalecendo vínculos e promovendo bem-estar. O Centro Sementes do Futuro apoia famílias em vulnerabilidade social, promovendo dignidade, bem-estar e desenvolvimento pessoal. Atua com foco na proteção de crianças e no fortalecimento de vínculos familiares, oferecendo alimentos, livros, roupas e brinquedos. Trabalha com solidariedade, cuidado e atenção individual, proporcionando um ambiente seguro, acolhedor e estimulante, promovendo educação, integração e oportunidades de crescimento, valorizando a inclusão social e a esperança futura, transformando vidas com dedicação e comprometimento comunitário.',
                 'filtros': ['alimentos', 'livros', 'roupas', 'brinquedos'],
@@ -374,7 +374,7 @@ class Command(BaseCommand):
             {
                 'identificador': 'aaprn',
                 'categoria': 'moradores-de-rua',
-                'nome': 'Associação de Apoio à Reabilitação de Pessoas Necessitadas',
+                'nome': 'AACC',
                 'descricao_curta': 'A Associação de Apoio à Reabilitação de Pessoas Necessitadas promove reabilitação social, emocional e física, oferecendo acolhimento e suporte.',
                 'descricao': 'é uma entidade que apoia a reabilitação de pessoas vulneráveis, promovendo autonomia, dignidade e qualidade de vida. A associação promove reabilitação social, emocional e física, oferecendo acolhimento e orientação contínua a pessoas em situação de vulnerabilidade. Trabalhamos para fortalecer a autonomia, autoestima e confiança, valorizando cada história e trajetória individual. Desenvolve atividades educativas e de integração social, promovendo suporte humanizado, respeito e cuidado. Acreditamos na superação e recuperação com dignidade, oferecendo um espaço seguro, inclusivo e acolhedor, buscando restaurar vidas e oferecer oportunidades de reintegração e crescimento pessoal.',
                 'filtros': ['livros', 'alimentos', 'roupas'],

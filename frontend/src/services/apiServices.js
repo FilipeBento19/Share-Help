@@ -40,28 +40,36 @@ export const instituicoesService = {
   _cacheTime: null,
   _cacheDuration: 5 * 60 * 1000, // 5 minutos
 
-  // Buscar todas as instituições (com cache)
-  async getInstituicoes(forceRefresh = false) {
-    try {
-      // Verificar cache
-      if (!forceRefresh && this._cache && this._cacheTime &&
-          (Date.now() - this._cacheTime < this._cacheDuration)) {
-        return this._cache
-      }
 
-      const response = await api.get('/instituicoes/')
-      const instituicoes = response.data.map(mapInstituicaoToOngData)
-
-      // Atualizar cache
-      this._cache = instituicoes
-      this._cacheTime = Date.now()
-
-      return instituicoes
-    } catch (error) {
-      console.error('Erro ao buscar instituições:', error)
-      throw error
+async getInstituicoes(forceRefresh = false) {
+  try {
+    // FORÇAR REFRESH TEMPORARIAMENTE - REMOVER DEPOIS
+    forceRefresh = true;
+    
+    // Verificar cache
+    if (!forceRefresh && this._cache && this._cacheTime &&
+        (Date.now() - this._cacheTime < this._cacheDuration)) {
+      console.log('🔄 Usando cache')
+      return this._cache
     }
-  },
+
+    console.log('🌐 Buscando dados frescos da API')
+    const response = await api.get('/instituicoes/')
+    console.log('📡 Resposta da API (primeira instituição):', response.data[0])
+    
+    const instituicoes = response.data.map(mapInstituicaoToOngData)
+    console.log('🔄 Depois do mapeamento (primeira instituição):', instituicoes[0])
+
+    // Atualizar cache
+    this._cache = instituicoes
+    this._cacheTime = Date.now()
+
+    return instituicoes
+  } catch (error) {
+    console.error('Erro ao buscar instituições:', error)
+    throw error
+  }
+},
 
   // Buscar instituição por ID (compatível com ongsData)
   async getInstituicao(id) {
