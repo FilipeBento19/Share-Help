@@ -217,15 +217,13 @@ const doarParaEstaOpcao = () => {
 
             <div class="progress-section">
               <div class="progress-bar">
-                <div
-                  class="progress-fill"
-                  :style="{
-                    width: (recommendedInstitution.raised / recommendedInstitution.goal) * 100 + '%',
-                  }"
-                ></div>
+                <div class="progress-fill" :style="{
+                  width: (recommendedInstitution.raised / recommendedInstitution.goal) * 100 + '%',
+                }"></div>
               </div>
               <div class="progress-info">
-                <span>{{ Math.round((recommendedInstitution.raised / recommendedInstitution.goal) * 100) }}% alcançado</span>
+                <span>{{ Math.round((recommendedInstitution.raised / recommendedInstitution.goal) * 100) }}%
+                  alcançado</span>
                 <span>Meta: {{ formatCurrency(recommendedInstitution.goal) }}</span>
               </div>
             </div>
@@ -238,68 +236,60 @@ const doarParaEstaOpcao = () => {
             </div>
           </div>
         </div>
-      </section>
+    
+    </section>
+    </div>
 
-      <!-- Instituições Disponíveis -->
-      <motion.div
-        :initial="{ opacity: 0, scale: 0.95 }"
-        :animate="{ opacity: 1, scale: 1 }"
-        :transition="{ duration: 0.2, ease: 'easeInOut' }"
-      >
-        <section class="instituicoes-disponiveis">
-          <h2>Instituições disponíveis</h2>
-          <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
+    <!-- Instituições Disponíveis -->
+    <motion.div :initial="{ opacity: 0, scale: 0.95 }" :animate="{ opacity: 1, scale: 1 }"
+      :transition="{ duration: 0.2, ease: 'easeInOut' }">
+      <section class="instituicoes-disponiveis">
+        <h2>Instituições disponíveis</h2>
+        <p>Apoie projetos independentes com toda a segurança<br />garantida pela equipe sharehelp</p>
 
-          <!-- Se não há instituições disponíveis -->
-          <div v-if="availableInstitutions.length === 0" class="empty-institutions">
-            <p>Nenhuma instituição adicional encontrada na categoria moradores de rua.</p>
-          </div>
+        <!-- Se não há instituições disponíveis -->
+        <div v-if="availableInstitutions.length === 0" class="empty-institutions">
+          <p>Nenhuma instituição adicional encontrada na categoria moradores de rua.</p>
+        </div>
 
-          <!-- Grid de instituições -->
-          <div v-else class="institutions-grid">
-            <div
-              v-for="institution in availableInstitutions"
-              :key="institution.id"
-              class="institution-card"
-            >
-              <div class="institution-image">
-                <img :src="institution.image" :alt="institution.name" />
-              </div>
-              <div class="institution-info">
-                <h4>{{ institution.name }}</h4>
-                <p class="institution-description">{{ institution.description }}</p>
+        <!-- Grid de instituições -->
+        <div v-else class="institutions-grid">
+          <div v-for="institution in availableInstitutions" :key="institution.id" class="institution-card">
+            <div class="institution-image">
+              <img :src="institution.image" :alt="institution.name" />
+            </div>
+            <div class="institution-info">
+              <h4>{{ institution.name }}</h4>
+              <p class="institution-description">{{ institution.description }}</p>
 
-                <div class="institution-meta">
-                  <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
-                  <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
-                  <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
-                  <div class="meta-item filtros-container">
-                    <strong>Aceita:</strong>
-                    <div class="filtros-list">
-                      <span
-                        v-for="filtro in institution.filtros"
-                        :key="filtro"
-                        class="filtro-tag-small"
-                      >
-                        {{ filtro }}
-                      </span>
-                    </div>
+              <div class="institution-meta">
+                <div class="meta-item"><strong>Categoria:</strong> {{ institution.categoria }}</div>
+                <div class="meta-item"><strong>Telefone:</strong> {{ institution.telefone }}</div>
+                <div class="meta-item"><strong>Horário:</strong> {{ institution.horario }}</div>
+                <div class="meta-item filtros-container">
+                  <strong>Aceita:</strong>
+                  <div class="filtros-list">
+                    <span v-for="filtro in institution.filtros" :key="filtro" class="filtro-tag-small">
+                      {{ filtro }}
+                    </span>
                   </div>
                 </div>
+              </div>
               <div class="card-actions">
-                <router-link :to="`$`"><button class="btn-doar-opcao" >Doar para esta opção</button></router-link>
-                <router-link :to="`${$route.path}/${recommendedInstitution.id}`"><button class="btn-pagina-instituicao" >Página da Instituição</button></router-link>
+                <button class="btn-doar-opcao">Doar para esta opção</button>
+                <router-link :to="`${$route.path}/${recommendedInstitution.id}`"><button
+                    class="btn-pagina-instituicao">Página da Instituição</button></router-link>
               </div>
             </div>
           </div>
-        </section>
-      </motion.div>
-
-      <!-- Footer -->
-      <section>
-        <FooterComponent />
+        </div>
       </section>
-    </div>
+    </motion.div>
+
+    <!-- Footer -->
+    <section>
+      <FooterComponent />
+    </section>    
   </main>
 </template>
 
@@ -307,11 +297,13 @@ const doarParaEstaOpcao = () => {
 /* =====================================
    ESTADOS DE CARREGAMENTO
    ===================================== */
-.loading-container, .error-container {
+.loading-container,
+.error-container {
   min-height: 100vh;
 }
 
-.loading-state, .error-state {
+.loading-state,
+.error-state {
   text-align: center;
   padding: 40px 20px;
   color: #6b7280;
@@ -337,5 +329,4 @@ const doarParaEstaOpcao = () => {
   color: #6b7280;
   font-style: italic;
 }
-
 </style>
