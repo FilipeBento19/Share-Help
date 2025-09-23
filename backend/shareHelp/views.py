@@ -33,6 +33,7 @@ class UsuarioViewSet(ModelViewSet):
 # ✅ CORRETO - linha dentro da função
 # views.py
 import os
+from django.template.loader import render_to_string
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
@@ -43,19 +44,16 @@ class EnviarCodigoView(APIView):
             email = serializer.validated_data["email"]
             codigo_obj, _ = CodigoVerificacao.objects.update_or_create(email=email)
 
-            # ✅ Usar SendGrid API
+            html_content = render_to_string(
+                "emails/codigo_verificacao.html",
+                {"codigo": codigo_obj.codigo}
+            )
+
             message = Mail(
-                from_email='contatosharehelp@gmail.com',
+                from_email="contatosharehelp@gmail.com",
                 to_emails=email,
-                subject='Código de verificação - Share Help',
-                html_content=f'''
-                <h2>Olá!</h2>
-                <p>Seu código de verificação para cadastro no Share Help é: <strong>{codigo_obj.codigo}</strong></p>
-                <p>Este código é válido por 15 minutos.</p>
-                <p>Se você não solicitou este código, ignore este email.</p>
-                <hr>
-                <p>Atenciosamente,<br>Equipe Share Help</p>
-                '''
+                subject="Código de Verificação - Share Help",
+                html_content=html_content
             )
             
             try:
