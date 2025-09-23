@@ -65,7 +65,7 @@ class EnviarCodigoView(APIView):
             try:
                 sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
                 response = sg.send(message)
-                logger.info(f"✅ Email enviado com sucesso para {email} - Status: {response.status_code}")
+                logger.info(f"✅ Email enviado com sucesso para {email}")
                 
                 return Response({
                     "message": "Código enviado para o email"
