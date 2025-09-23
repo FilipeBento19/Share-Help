@@ -45,20 +45,22 @@ class EnviarCodigoView(APIView):
             email = serializer.validated_data["email"]
             codigo_obj, _ = CodigoVerificacao.objects.update_or_create(email=email)
 
-            # ✅ Usar SendGrid API
+            # ✅ Usar Dynamic Template do SendGrid
             message = Mail(
                 from_email='contatosharehelp@gmail.com',
-                to_emails=email,
-                subject='Código de verificação - Share Help',
-                html_content=f'''
-                <h2>Olá!</h2>
-                <p>Seu código de verificação para cadastro no Share Help é: <strong>{codigo_obj.codigo}</strong></p>
-                <p>Este código é válido por 15 minutos.</p>
-                <p>Se você não solicitou este código, ignore este email.</p>
-                <hr>
-                <p>Atenciosamente,<br>Equipe Share Help</p>
-                '''
+                to_emails=email
             )
+            
+            # ✅ ID do template criado no SendGrid
+            message.template_id = 'd-0533d1b7496e45d5b2f076482116836c '  # Substitua pelo seu template ID
+            
+            # ✅ Dados dinâmicos para o template
+            message.dynamic_template_data = {
+                'codigo': codigo_obj.codigo,
+                'email': email,
+                'nome_usuario': 'Usuário',  # pode pegar de algum lugar
+                'ano_atual': '2025'
+            }
             
             try:
                 sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
@@ -76,7 +78,7 @@ class EnviarCodigoView(APIView):
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 class VerificarCodigoView(APIView):
     def post(self, request):
         serializer = VerificarCodigoSerializer(data=request.data)
