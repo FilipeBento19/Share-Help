@@ -5,6 +5,7 @@ import CausasCard from '../components/CausasCard.vue';
 import PaymentCard from '../components/PaymentMethodComponent.vue';
 import MapInteractive from '@/components/MapInterativeComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
+import HowstartComponent from '@/components/HowstartComponent.vue';
 import LogoLoop from '@/components/LogoLoop.vue';
 import ongs from '@/data/ongsData';
 import { motion } from 'motion-v';
@@ -49,6 +50,8 @@ const wordsLine2 = computed(() => line2.split(' '));
     <LogoLoop :logos="ongs" :speed="70" direction="left" :logoHeight="60" :gap="50" :pauseOnHover="true"
             :scaleOnHover="true" fadeOutColor="#f8f9fa" ariaLabel="Clique nos logos para conhecer as ONGs"
             class="logo-loop" />
+
+    <HowstartComponent />
 
     <section class="nossas-causas">
 
