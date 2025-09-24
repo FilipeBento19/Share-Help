@@ -72,7 +72,7 @@ class InstituicaoSerializer(ModelSerializer):
         model = Instituicao
         fields = [
             # Campos base
-            'id', 'identificador', 'nome', 'descricao', 'categoria', 
+            'id', 'identificador', 'nome', 'descricao', 'descricao_curta','categoria', 
             'telefone', 'endereco_completo', 'horario_funcionamento',
             'latitude', 'longitude', 'logo', 'progresso', 'status',
             'data_criacao', 'data_atualizacao',
@@ -114,7 +114,7 @@ class InstituicaoResumoSerializer(ModelSerializer):
     class Meta:
         model = Instituicao
         fields = [
-            'id', 'identificador', 'nome', 'descricao', 'categoria', 'telefone', 'endereco_completo',
+            'id', 'identificador', 'nome', 'descricao', 'descricao_curta', 'categoria', 'telefone', 'endereco_completo',
             'horario_funcionamento', 'logo', 'progresso', 'status',
             'coordenadas', 'filtros', 'endereco_resumo', 'categoria_display'
         ]

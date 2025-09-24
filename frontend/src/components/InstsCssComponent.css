@@ -160,6 +160,13 @@
 }
 
 .description p {
+  display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.description p {
   font-size: 0.95em;
   color: #4b5563;
   line-height: 1.6;

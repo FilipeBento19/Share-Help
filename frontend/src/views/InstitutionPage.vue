@@ -6,6 +6,7 @@ import { motion } from 'motion-v'
 import { useRoute } from 'vue-router'
 import { fromOng } from '@/data/globalState'
 
+// eslint-disable-next-line no-unused-vars
 const route = useRoute()
 
 // Estado reativo
