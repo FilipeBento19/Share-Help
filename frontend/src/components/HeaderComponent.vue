@@ -1,5 +1,83 @@
 <script setup>
 import { motion } from 'motion-v';
+import { ref, onMounted, watch, computed } from 'vue'; // ← ADICIONAR computed
+import { useRoute } from 'vue-router';
+import api from "@/config/api.js";
+
+// Estado reativo para o usuário
+const user = ref(null)
+const isLoading = ref(true)
+
+// ✅ VERIFICAR SE O ROUTER ESTÁ DISPONÍVEL
+let route = null
+try {
+  route = useRoute()
+} catch {
+  console.log('Router não disponível no contexto atual')
+}
+
+// Função para verificar se o usuário está logado
+const checkUserLogin = async () => {
+  const token = localStorage.getItem("access_token")
+
+  if (!token) {
+    user.value = null
+    isLoading.value = false
+    return
+  }
+
+  try {
+    const response = await api.get("/perfil/")
+    user.value = response.data
+    console.log('👤 Usuário logado no header:', user.value)
+  } catch {
+    console.log('⚠️ Token inválido, removendo...')
+    // Token inválido, remover
+    localStorage.removeItem("access_token")
+    localStorage.removeItem("refresh_token")
+    localStorage.removeItem("keepLoggedIn")
+    user.value = null
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// Verificar login quando o componente carregar
+onMounted(() => {
+  checkUserLogin()
+})
+
+// ✅ VERIFICAR LOGIN APENAS SE ROUTE ESTIVER DISPONÍVEL
+if (route) {
+  watch(() => route.path, () => {
+    checkUserLogin()
+  })
+}
+
+// ✅ ALTERNATIVA: Escutar mudanças no localStorage
+window.addEventListener('storage', (e) => {
+  if (e.key === 'access_token') {
+    checkUserLogin()
+  }
+})
+
+// Função para fazer logout
+
+// Computed para nome de exibição
+const displayName = computed(() => {
+  if (!user.value) return 'Entrar'
+
+  // Prioridade: nome > first_name > username
+  if (user.value.nome && user.value.nome.trim()) {
+    return user.value.nome.split(' ')[0] // Só o primeiro nome
+  }
+
+  if (user.value.first_name && user.value.first_name.trim()) {
+    return user.value.first_name
+  }
+
+  return user.value.username || 'Usuário'
+})
 </script>
 
 <template>
@@ -44,12 +122,23 @@ import { motion } from 'motion-v';
           >
           <li><router-link to="/ourteam">Nossa equipe</router-link></li>
           </motion.div>
-          <div class="header-login">
+
+          <!-- ÁREA DE LOGIN ATUALIZADA -->
+          <div class="header-login" :class="{ 'logged-in': user }">
             <li class="login">
-              <router-link to="/perfil" class="login-link">
+              <!-- Se não estiver logado, mostrar "Entrar" -->
+              <router-link v-if="!user" to="/perfil" class="login-link">
                 <img src="/icons/user.png" class="login-img" alt="">
                 <span class="entrar">Entrar</span>
               </router-link>
+
+              <!-- Se estiver logado, mostrar nome do usuário -->
+              <div v-else class="user-menu">
+                <router-link to="/perfil" class="user-link">
+                  <img src="/icons/user.png" class="login-img" alt="">
+                  <span class="user-name">Olá, {{ displayName }}</span>
+                </router-link>
+              </div>
             </li>
           </div>
         </ul>
@@ -134,42 +223,29 @@ import { motion } from 'motion-v';
   color: #2563eb;
 }
 
-.header-donate-button {
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95em;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.header-donate-button:hover {
-  background-color: #1d4ed8;
-}
-
 .login{
   padding-top: 6px;
   color: white;
 }
 
 .header-login {
-  background-color: #2563eb; /* azul */
+  background-color: #2563eb;
   border-radius: 25px;
   padding: 3px 20px 6px 20px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .header-login:hover {
   background-color: #1856ff;
 }
 
+/* ESTILOS PARA USUÁRIO NÃO LOGADO */
 .login-link {
   display: flex;
   justify-content: center;
-  gap: 8px; /* espaço entre ícone e texto */
+  align-items: center;
+  gap: 8px;
   color: white;
   font-weight: 600;
   text-decoration: none;
@@ -185,6 +261,102 @@ import { motion } from 'motion-v';
   color: white;
   font-weight: 700;
   padding-bottom: 3px;
+}
+
+/* ESTILOS PARA USUÁRIO LOGADO */
+.user-menu {
+  position: relative;
+}
+
+.user-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95em;
+  cursor: pointer;
+}
+
+.user-name {
+  color: white;
+  font-weight: 700;
+  padding-bottom: 3px;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* DROPDOWN MENU */
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  padding: 8px 0;
+  margin-top: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.user-menu:hover .user-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  color: #374151;
+  text-decoration: none;
+  font-size: 0.9em;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.dropdown-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+.logout-btn {
+  color: #dc2626;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 4px;
+  padding-top: 12px;
+}
+
+.logout-btn:hover {
+  background-color: #fef2f2;
+}
+
+/* INDICADOR VISUAL PARA USUÁRIO LOGADO */
+.header-login.logged-in {
+  background: #2563eb
+}
+
+.header-login.logged-in:hover {
+  background: #1d51c0
 }
 
 @media (max-width: 1200px) {
@@ -247,6 +419,16 @@ import { motion } from 'motion-v';
     .logo .slogan {
         font-size: 0.6em;
     }
+
+    /* Simplificar dropdown em mobile */
+    .user-dropdown {
+        position: fixed;
+        top: auto;
+        right: 20px;
+        left: 20px;
+        width: auto;
+        min-width: auto;
+    }
 }
 
 @media (max-width: 576px) {
@@ -275,6 +457,11 @@ import { motion } from 'motion-v';
         width: 20px;
         height: 20px;
     }
+
+    .user-name {
+        max-width: 80px;
+        font-size: 0.85em;
+    }
 }
 
 @media (max-width: 400px) {
@@ -285,7 +472,10 @@ import { motion } from 'motion-v';
     .main-nav li a {
         font-size: 0.8em;
     }
+
+    .user-name {
+        max-width: 70px;
+        font-size: 0.8em;
+    }
 }
-
-
 </style>

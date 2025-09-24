@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from shareHelp.views import (
     UsuarioViewSet, TipoDoacaoViewSet, InstituicaoViewSet, 
-    EnderecoViewSet, FavoritoViewSet, DoacaoViewSet, EnviarCodigoView, VerificarCodigoView, RegistrarUsuarioView, PerfilView
+    EnderecoViewSet, FavoritoViewSet, DoacaoViewSet, EnviarCodigoView, VerificarCodigoView, RegistrarUsuarioView, PerfilView, criar_doacao_anonima
 )
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -31,4 +31,6 @@ urlpatterns = [
 
     #Perfil
     path('api/perfil/', PerfilView.as_view(), name='perfil'),
+
+    path('api/doacoes-anonimas/', criar_doacao_anonima, name='doacao-anonima'),
 ]

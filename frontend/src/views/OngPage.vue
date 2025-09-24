@@ -268,7 +268,6 @@ onMounted(async () => {
     </template>
   </AnimatePresence>
 </template>
-
 <style scoped>
 .pagina-wrapper {
   width: 100%;

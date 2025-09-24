@@ -8,13 +8,15 @@ from rest_framework.views import APIView
 from django.db.models import Q, Count
 from django.core.mail import send_mail
 from django.conf import settings
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 import logging
 logger = logging.getLogger(__name__)
 
 from .models import (
     Usuario, TipoDoacao, Instituicao, Endereco, Favorito, 
-    Doacao, CodigoVerificacao
+    Doacao, CodigoVerificacao, get_usuario_anonimo
 )
 from .serializers import (
     UsuarioSerializer, TipoDoacaoSerializer, InstituicaoSerializer,
@@ -44,22 +46,27 @@ class EnviarCodigoView(APIView):
             email = serializer.validated_data["email"]
             codigo_obj, _ = CodigoVerificacao.objects.update_or_create(email=email)
 
-            html_content = render_to_string(
-                "emails/codigo_verificacao.html",
-                {"codigo": codigo_obj.codigo}
-            )
-
+            # ✅ Usar Dynamic Template do SendGrid
             message = Mail(
-                from_email="contatosharehelp@gmail.com",
-                to_emails=email,
-                subject="Código de Verificação - Share Help",
-                html_content=html_content
+                from_email='contatosharehelp@gmail.com',
+                to_emails=email
             )
+            
+            # ✅ ID do template criado no SendGrid
+            message.template_id = 'd-0533d1b7496e45d5b2f076482116836c '  # Substitua pelo seu template ID
+            
+            # ✅ Dados dinâmicos para o template
+            message.dynamic_template_data = {
+                'codigo': codigo_obj.codigo,
+                'email': email,
+                'nome_usuario': 'Usuário',  # pode pegar de algum lugar
+                'ano_atual': '2025'
+            }
             
             try:
                 sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
                 response = sg.send(message)
-                logger.info(f"✅ Email enviado com sucesso para {email} - Status: {response.status_code}")
+                logger.info(f"✅ Email enviado com sucesso para {email}")
                 
                 return Response({
                     "message": "Código enviado para o email"
@@ -72,7 +79,7 @@ class EnviarCodigoView(APIView):
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 class VerificarCodigoView(APIView):
     def post(self, request):
         serializer = VerificarCodigoSerializer(data=request.data)
@@ -126,6 +133,59 @@ class TipoDoacaoViewSet(ModelViewSet):
     serializer_class = TipoDoacaoSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+@api_view(['POST'])
+@permission_classes([AllowAny])  # ✅ PERMITE ACESSO SEM LOGIN
+def criar_doacao_anonima(request):
+    """View específica para criar doações anônimas"""
+    try:
+        # ✅ 1. Buscar a instituição
+        instituicao_id = request.data.get('instituicao')
+        if not instituicao_id:
+            return Response({'error': 'ID da instituição é obrigatório'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            instituicao = Instituicao.objects.get(id=instituicao_id)
+        except Instituicao.DoesNotExist:
+            return Response({'error': 'Instituição não encontrada'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # ✅ 2. Buscar tipo de doação
+        tipo_doacao_id = request.data.get('tipo_doacao')
+        if not tipo_doacao_id:
+            return Response({'error': 'Tipo de doação é obrigatório'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            tipo_doacao = TipoDoacao.objects.get(id=tipo_doacao_id)
+        except TipoDoacao.DoesNotExist:
+            return Response({'error': 'Tipo de doação não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # ✅ 3. Verificar se usuário está logado
+        usuario = None
+        if request.user.is_authenticated:
+            usuario = request.user
+        else:
+            # ✅ Usar usuário anônimo
+            usuario = get_usuario_anonimo()
+            if not usuario:
+                return Response({'error': 'Erro ao configurar doação anônima'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        # ✅ 4. Criar doação
+        doacao = Doacao.objects.create(
+            usuario=usuario,
+            instituicao=instituicao,
+            tipo_doacao=tipo_doacao,
+            valor_estimado=request.data.get('valor_estimado'),
+            data_doacao=request.data.get('data_doacao'),
+            descricao=request.data.get('descricao', ''),
+            status=request.data.get('status', 'confirmada')
+        )
+        
+        # ✅ 5. Retornar resposta
+        serializer = DoacaoSerializer(doacao)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+    except Exception as e:
+        logger.error(f"❌ Erro ao criar doação: {str(e)}")
+        return Response({'error': f'Erro interno: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 class EnderecoViewSet(ModelViewSet):
     queryset = Endereco.objects.all()
     serializer_class = EnderecoSerializer
@@ -310,24 +370,46 @@ class FavoritoViewSet(ModelViewSet):
         return Favorito.objects.filter(usuario=self.request.user).select_related('instituicao')
     
     def perform_create(self, serializer):
-        serializer.save(usuario=self.request.user)
+        if self.request.user.is_authenticated:
+            # Usuário logado - usar o usuário atual
+            serializer.save(usuario=self.request.user)
+        else:
+            # ✅ DOAÇÃO ANÔNIMA - usar usuário especial
+            usuario_anonimo = get_usuario_anonimo()
+        if usuario_anonimo:
+            serializer.save(usuario=usuario_anonimo)
+        else:
+            # Se falhar ao criar usuário anônimo, salvar sem usuário (fallback)
+            serializer.save(usuario=None)
 
 class DoacaoViewSet(ModelViewSet):
     queryset = Doacao.objects.all()
     serializer_class = DoacaoSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get_queryset(self):
-        return Doacao.objects.filter(usuario=self.request.user).select_related(
-            'instituicao', 'tipo_doacao'
-        )
+        if self.request.user.is_authenticated:
+            return Doacao.objects.filter(usuario=self.request.user).select_related(
+                'instituicao', 'tipo_doacao'
+            )
+        else:
+            # Para usuários não logados, retorna queryset vazio
+            return Doacao.objects.none()   
     
     def perform_create(self, serializer):
-        serializer.save(usuario=self.request.user)
+        if self.request.user.is_authenticated:
+            serializer.save(usuario=self.request.user)
+        else:
+            # Para doações anônimas, salva sem usuário
+            serializer.save(usuario=None)
     
     @action(detail=False, methods=['get'])
     def estatisticas_usuario(self, request):
         """Estatísticas de doações do usuário atual"""
+        # ✅ CORRIGIDO: Só funciona para usuários logados
+        if not request.user.is_authenticated:
+            return Response({'error': 'Login necessário'}, status=status.HTTP_401_UNAUTHORIZED)
+            
         doacoes = self.get_queryset()
         
         # Resumo por status

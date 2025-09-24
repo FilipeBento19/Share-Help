@@ -76,6 +76,54 @@ const updateField = (key, value) => {
   data.value[key] = value
 }
 
+// ✅ FUNÇÃO PARA TRATAR ERROS CORRETAMENTE
+const tratarErro = (err) => {
+  console.error('Erro completo:', err)
+
+  let mensagemErro = 'Erro inesperado'
+
+  if (err.response?.data) {
+    const errorData = err.response.data
+    console.log('Dados do erro:', errorData)
+
+    if (errorData.error) {
+      // ✅ VERIFICAR SE É ARRAY ANTES DE USAR .join()
+      if (Array.isArray(errorData.error)) {
+        mensagemErro = errorData.error.join(" | ")
+      } else if (typeof errorData.error === 'string') {
+        mensagemErro = errorData.error
+      } else {
+        mensagemErro = 'Erro de validação'
+      }
+    } else if (errorData.detail) {
+      mensagemErro = errorData.detail
+    } else if (errorData.message) {
+      mensagemErro = errorData.message
+    } else if (typeof errorData === 'string') {
+      mensagemErro = errorData
+    } else {
+      // ✅ TRATAR ERROS DE CAMPO ESPECÍFICOS
+      const fieldErrors = Object.entries(errorData)
+        .map(([field, errors]) => {
+          if (Array.isArray(errors)) {
+            return `${field}: ${errors.join(', ')}`
+          } else {
+            return `${field}: ${errors}`
+          }
+        })
+        .join('; ')
+
+      if (fieldErrors) {
+        mensagemErro = fieldErrors
+      }
+    }
+  } else if (err.message) {
+    mensagemErro = err.message
+  }
+
+  error.value = mensagemErro
+}
+
 // Fluxo
 const handleNext = async () => {
   error.value = ''
@@ -129,12 +177,8 @@ const handleNext = async () => {
       }
     }
   } catch (err) {
-    if (err.response?.data?.error) {
-      // Junta todas as mensagens em uma string
-      error.value = err.response.data.error.join(" | ")
-    } else {
-      error.value = err.message || 'Erro inesperado'
-    }
+    // ✅ USAR A FUNÇÃO DE TRATAMENTO DE ERRO
+    tratarErro(err)
   } finally {
     isLoading.value = false
   }
@@ -145,9 +189,16 @@ const handleResend = async () => {
     await api.post('/send-code/', {
       email: data.value.email
     })
-    alert('Código reenviado!')
-  } catch {
-    error.value = 'Erro ao reenviar código.'
+    Swal.fire({
+      title: "Código reenviado!",
+      text: "Verifique sua caixa de entrada",
+      icon: "success",
+      timer: 2000,
+      showConfirmButton: false
+    })
+  } catch (err) {
+    // ✅ USAR A FUNÇÃO DE TRATAMENTO DE ERRO
+    tratarErro(err)
   }
 }
 </script>
