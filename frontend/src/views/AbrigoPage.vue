@@ -275,11 +275,9 @@ const doarParaEstaOpcao = () => {
                   </div>
                 </div>
               </div>
-              <div class="card-actions">
-                <button class="btn-doar-opcao">Doar para esta opção</button>
-                <router-link :to="`${$route.path}/${recommendedInstitution.id}`"><button
-                    class="btn-pagina-instituicao">Página da Instituição</button></router-link>
-              </div>
+              <router-link :to="`${$route.path}/${institution.id}`">
+                  <button class="btn-doar-instituicao">Doar para esta instituição</button>
+                </router-link>
             </div>
           </div>
         </div>

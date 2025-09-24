@@ -5,6 +5,10 @@ import App from './App.vue'
 import router from './router'
 import 'leaflet/dist/leaflet.css'
 
+import PrimeVue from 'primevue/config'
+import Aura from '@primevue/themes/aura'
+
+
 // Correção para os ícones padrão do Leaflet
 import { Icon } from 'leaflet'
 
@@ -25,4 +29,15 @@ createApp(App).mount('#app')
 const app = createApp(App)
 
 app.use(router)
+app.use(PrimeVue, {
+    theme: {
+        preset: Aura,
+        options: {
+            darkModeSelector: 'none', // ← Desabilita detecção automática
+        }
+    }
+})
+
 app.mount('#app')
+
+

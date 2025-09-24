@@ -1,5 +1,10 @@
 <script setup>
 import FooterComponent from '@/components/FooterComponent.vue';
+import faqData from '@/data/faqData';
+import Accordion from 'primevue/accordion'
+import AccordionPanel from 'primevue/accordionpanel'
+import AccordionHeader from 'primevue/accordionheader'
+import AccordionContent from 'primevue/accordioncontent'
 
 </script>
 
@@ -16,7 +21,13 @@ import FooterComponent from '@/components/FooterComponent.vue';
         </div>
         <div class="ourhistory">
           <h1>Nossa Historia</h1>
-          <p>Nossa equipe nasceu da vontade em comum de ajudar quem precisa. Sempre tivemos o desejo de doar para ONGs locais de Joinville, mas não sabíamos exatamente onde ou como fazer isso. A partir dessa dificuldade, surgiu a ideia de criar um site que facilitasse tanto a comunicação quanto as doações entre moradores e instituições de caridade da cidade. Com apenas 5 amigos, trabalhamos juntos por 2 meses no desenvolvimento do projeto para o hackathon do IFC Campus Araquari, onde estudamos. Foi uma jornada desafiadora, mas muito gratificante, que uniu nossa paixão por tecnologia e solidariedade em uma iniciativa capaz de transformar pequenas ações em grandes impactos para a comunidade.</p>
+          <p>Nossa equipe nasceu da vontade em comum de ajudar quem precisa. Sempre tivemos o desejo de doar para ONGs
+            locais de Joinville, mas não sabíamos exatamente onde ou como fazer isso. A partir dessa dificuldade, surgiu
+            a ideia de criar um site que facilitasse tanto a comunicação quanto as doações entre moradores e
+            instituições de caridade da cidade. Com apenas 5 amigos, trabalhamos juntos por 2 meses no desenvolvimento
+            do projeto para o hackathon do IFC Campus Araquari, onde estudamos. Foi uma jornada desafiadora, mas muito
+            gratificante, que uniu nossa paixão por tecnologia e solidariedade em uma iniciativa capaz de transformar
+            pequenas ações em grandes impactos para a comunidade.</p>
         </div>
 
       </div>
@@ -90,11 +101,25 @@ import FooterComponent from '@/components/FooterComponent.vue';
       </div>
     </div>
   </div>
+  <div class="faq-section">
+    <div class="faq-container">
+      <h2 class="faq-title">Perguntas Frequentes</h2>
+      <p class="faq-subtitle">Esclarecemos as principais dúvidas sobre o ShareHelp</p>
+
+      <Accordion value="0" class="faq-accordion">
+        <AccordionPanel v-for="faq in faqData" :key="faq.id" :value="faq.id.toString()">
+          <AccordionHeader>{{ faq.pergunta }}</AccordionHeader>
+          <AccordionContent>
+            <p class="faq-answer">{{ faq.resposta }}</p>
+          </AccordionContent>
+        </AccordionPanel>
+      </Accordion>
+    </div>
+  </div>
   <FooterComponent />
 </template>
 
 <style scoped>
-
 .nossa-equipe-container {
   display: flex;
   justify-content: center;
@@ -110,7 +135,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
   margin: 40px auto;
 }
 
-.down{
+.down {
   flex-direction: column;
 }
 
@@ -253,6 +278,53 @@ import FooterComponent from '@/components/FooterComponent.vue';
   transform: scale(1.1);
 }
 
+.faq-section {
+  padding: 10px 90px 70px 90px;
+} 
+
+.faq-container h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2563eb;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.faq-subtitle {
+  font-size: 1.1rem;
+  color: #4b5563;
+  text-align: center;
+  margin-bottom: 30px;
+} 
+
+.faq-container {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+.accordion-header {
+  background: #f8fafc !important;
+  color: #1f2937 !important;
+}
+
+.accordion-header:hover {
+  background: #f1f5f9 !important;
+  color: #2563eb !important;
+}
+
+.accordion-header.active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.accordion-body {
+  background: #ffffff !important;
+  color: #4b5563 !important;
+}
+
+.accordion-content {
+  background: #ffffff !important;
+}
 
 @media (max-width: 1024px) {
   .members-section {
@@ -358,6 +430,4 @@ import FooterComponent from '@/components/FooterComponent.vue';
     justify-content: center;
   }
 }
-
-
 </style>
