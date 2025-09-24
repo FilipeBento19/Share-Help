@@ -115,7 +115,6 @@ const toggleFavorite = async () => {
       favoritoId.value = response.data.id
       Swal.fire({ icon: 'success', title: 'Adicionado aos favoritos', timer: 1500, showConfirmButton: false })
     }
-  // eslint-disable-next-line no-unused-vars
   } catch (error) {
     Swal.fire({ icon: 'error', title: 'Erro', text: 'Erro ao alterar favorito' })
   } finally {

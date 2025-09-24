@@ -290,6 +290,7 @@ const doarParaEstaOpcao = () => {
                 <router-link :to="`${$route.path}/${recommendedInstitution.id}`"><button class="btn-pagina-instituicao" >Página da Instituição</button></router-link>
               </div>
             </div>
+            </div>
           </div>
         </section>
       </motion.div>
