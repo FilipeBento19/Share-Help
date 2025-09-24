@@ -1057,6 +1057,10 @@ section {
     }
   }
 
+  img.ong {
+    border-radius: 90px;
+  }
+
   section div.grid {
     grid-template-columns: 1fr;
     padding: 1.5rem;

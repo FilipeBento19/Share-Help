@@ -167,7 +167,6 @@ const goToOng = (id) => {
   width: 100%;
   white-space: nowrap;
   user-select: none;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .logo-track {

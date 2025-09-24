@@ -11,7 +11,7 @@
         <div class="content-wrapper">
             <div class="text-content">
                 <h2 class="content-title">Sua doação está a um passo de quem <span class="highlight">precisa!</span></h2>
-                <div class="description">
+                <div class="descriptionm">
                     <p>
                     Conectar quem quer ajudar com quem precisa é o nosso objetivo. 
                     Pensando nisso, criamos um mapa interativo com todas as 
@@ -102,11 +102,11 @@
   position: relative;
 }
 
-.description {
+.descriptionm {
   margin-bottom: 40px;
 }
 
-.description p {
+.descriptionm p {
   font-size: 1rem;
   color: #555;
   line-height: 1.6;

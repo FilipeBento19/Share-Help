@@ -434,13 +434,22 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Todos os estilos existentes permanecem os mesmos */
+/* Reset e prevenção de scroll horizontal */
+* {
+  box-sizing: border-box;
+}
+
+/* Estilos base */
 .chart-wrapper {
   display: flex;
   gap: 20px;
   background: white;
   border-radius: 6px;
   padding: 15px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden; /* Previne scroll horizontal */
 }
 
 .chart-area {
@@ -449,11 +458,15 @@ onMounted(() => {
   border-radius: 4px;
   padding: 15px;
   min-height: 400px;
+  overflow: hidden;
+  min-width: 0; /* Permite que o flex item encolha */
 }
 
 .chart-canvas {
   height: 370px;
   width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .no-data-message {
@@ -463,18 +476,26 @@ onMounted(() => {
   height: 100%;
   color: #666;
   font-size: 14px;
+  text-align: center;
+  padding: 20px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .controls-panel {
   width: 220px;
+  max-width: 220px;
   display: flex;
   flex-direction: column;
   gap: 18px;
+  flex-shrink: 0;
+  overflow-x: hidden;
 }
 
 .control-group {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .control-label {
@@ -482,14 +503,18 @@ onMounted(() => {
   color: #666;
   margin-bottom: 8px;
   font-weight: 500;
+  word-wrap: break-word;
 }
 
 .select-wrapper {
   position: relative;
+  width: 100%;
+  max-width: 100%;
 }
 
 .control-select {
   width: 100%;
+  max-width: 100%;
   padding: 8px 30px 8px 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -497,6 +522,10 @@ onMounted(() => {
   font-size: 13px;
   appearance: none;
   cursor: pointer;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .select-arrow {
@@ -513,6 +542,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
 }
 
 .radio-item {
@@ -520,17 +550,29 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  padding: 4px 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .radio-input {
   margin: 0;
   accent-color: #2563EB;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .radio-label {
   font-size: 13px;
   color: #333;
   cursor: pointer;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .stats-box {
@@ -541,11 +583,17 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .stat-item {
   text-align: center;
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .stat-number {
@@ -553,12 +601,16 @@ onMounted(() => {
   font-weight: bold;
   color: #2563EB;
   line-height: 1.2;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .stat-label {
   font-size: 10px;
   color: #666;
   margin-top: 2px;
+  word-wrap: break-word;
 }
 
 .pizza-legend {
@@ -567,6 +619,8 @@ onMounted(() => {
   gap: 6px;
   max-height: 150px;
   overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .legend-item {
@@ -574,6 +628,9 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
   padding: 2px 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .legend-color {
@@ -590,8 +647,11 @@ onMounted(() => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
+  min-width: 0;
 }
 
+/* Estados de foco */
 .control-select:focus {
   outline: none;
   border-color: #2563EB;
@@ -603,6 +663,7 @@ onMounted(() => {
   outline-offset: 2px;
 }
 
+/* Scrollbar customizado */
 .pizza-legend::-webkit-scrollbar {
   width: 4px;
 }
@@ -620,4 +681,370 @@ onMounted(() => {
 .pizza-legend::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
+
+/* RESPONSIVIDADE COM PREVENÇÃO DE SCROLL HORIZONTAL */
+
+/* Tablets - Telas médias (768px a 1024px) */
+@media (max-width: 1024px) {
+  .chart-wrapper {
+    gap: 15px;
+    padding: 12px;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .controls-panel {
+    width: 200px;
+    max-width: 200px;
+  }
+  
+  .chart-area {
+    min-height: 350px;
+    min-width: 0;
+  }
+  
+  .chart-canvas {
+    height: 320px;
+  }
+}
+
+/* Tablets pequenos (600px a 768px) */
+@media (max-width: 768px) {
+  .chart-wrapper {
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+  }
+  
+  .chart-area {
+    min-height: 300px;
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .chart-canvas {
+    height: 270px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .controls-panel {
+    width: 100%;
+    max-width: 100%;
+    order: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    overflow-x: hidden;
+  }
+  
+  .control-group {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .stats-box {
+    padding: 10px;
+  }
+  
+  .stat-number {
+    font-size: 16px;
+  }
+  
+  .stat-label {
+    font-size: 9px;
+  }
+  
+  .radio-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    overflow: hidden;
+  }
+  
+  .radio-item {
+    flex: 0 0 auto;
+    min-width: fit-content;
+    max-width: 100%;
+  }
+}
+
+/* Mobile - Telas pequenas (até 600px) */
+@media (max-width: 600px) {
+  .chart-wrapper {
+    padding: 10px;
+    gap: 15px;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  .chart-area {
+    min-height: 250px;
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  .chart-canvas {
+    height: 220px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .controls-panel {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .control-select {
+    padding: 10px 35px 10px 12px;
+    font-size: 14px;
+    min-height: 44px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .select-arrow {
+    right: 12px;
+    font-size: 12px;
+  }
+  
+  .radio-item {
+    padding: 8px 0;
+    min-height: 44px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .radio-input {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .radio-label {
+    font-size: 14px;
+    min-width: 0;
+  }
+  
+  .control-label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  
+  .stats-box {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .stat-item {
+    padding: 5px 0;
+    width: 100%;
+  }
+  
+  .stat-number {
+    font-size: 20px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .stat-label {
+    font-size: 11px;
+  }
+  
+  .pizza-legend {
+    max-height: 120px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .legend-item {
+    padding: 6px 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .legend-color {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .legend-text {
+    font-size: 12px;
+    min-width: 0;
+  }
+  
+  .no-data-message {
+    font-size: 13px;
+    padding: 15px;
+    width: 100%;
+    max-width: 100%;
+    word-break: break-word;
+  }
+}
+
+/* Mobile muito pequeno (até 380px) */
+@media (max-width: 380px) {
+  .chart-wrapper {
+    padding: 8px;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .chart-area {
+    min-height: 200px;
+    padding: 8px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .chart-canvas {
+    height: 180px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .controls-panel {
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .control-group {
+    margin-bottom: 5px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .stat-number {
+    font-size: 16px;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+  }
+  
+  .stat-label {
+    font-size: 10px;
+  }
+}
+
+/* Landscape para mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .chart-wrapper {
+    flex-direction: row;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  
+  .chart-area {
+    order: 1;
+    min-height: 200px;
+    overflow: hidden;
+    min-width: 0;
+  }
+  
+  .chart-canvas {
+    height: 180px;
+    max-width: 100%;
+  }
+  
+  .controls-panel {
+    order: 2;
+    width: 250px;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 300px;
+  }
+}
+
+/* Touch device enhancements */
+@media (hover: none) and (pointer: coarse) {
+  .control-select {
+    min-height: 44px;
+    font-size: 16px; /* Previne zoom no iOS */
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .radio-item {
+    min-height: 44px;
+    touch-action: manipulation;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .radio-input {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .legend-item {
+    padding: 8px 0;
+    min-height: 32px;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .legend-color {
+    border-radius: 3px;
+  }
+  
+  .select-arrow {
+    font-weight: bold;
+  }
+}
+
+/* Garantia extra para prevenir scroll horizontal em qualquer situação */
+@media (max-width: 768px) {
+  .chart-wrapper,
+  .chart-area,
+  .controls-panel,
+  .control-group,
+  .stats-box,
+  .pizza-legend {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+  
+  /* Previne que textos muito longos causem scroll */
+  .stat-number,
+  .legend-text,
+  .radio-label,
+  .control-label {
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    hyphens: auto;
+  }
+}
 </style>
+
