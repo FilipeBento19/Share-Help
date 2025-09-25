@@ -49,7 +49,7 @@ onMounted(async () => {
   try {
     const foundOng = await instituicoesService.getByIdentificador(route.params.id)
     if (!foundOng) throw new Error('ONG não encontrada')
-    
+
     ong.value = foundOng
     await checkFavoriteStatus()
   } catch (err) {
@@ -66,7 +66,7 @@ const checkFavoriteStatus = async () => {
     if (!token || !ong.value) return
 
     const response = await api.get("/favoritos/")
-    const favorito = response.data.find(fav => 
+    const favorito = response.data.find(fav =>
       fav.instituicao.toString() === ong.value.api_id?.toString()
     )
 
@@ -103,7 +103,7 @@ const toggleFavorite = async () => {
     } else {
       const perfilResponse = await api.get("/perfil/")
       const usuario = perfilResponse.data
-      
+
       if (!ong.value.api_id) throw new Error("ID da instituição não encontrado")
 
       const response = await api.post("/favoritos/", {
@@ -139,11 +139,11 @@ onMounted(async () => {
   try {
     const foundOng = await instituicoesService.getByIdentificador(route.params.id)
     if (!foundOng) throw new Error('ONG não encontrada')
-    
+
     ong.value = foundOng
     console.log('Dados da ONG:', foundOng) // <- Adicione isto
     console.log('descricao_curta:', foundOng.descricao_curta) // <- E isto
-    
+
     await checkFavoriteStatus()
   } catch (err) {
     error.value = err.message
@@ -155,9 +155,9 @@ onMounted(async () => {
 
 <template>
   <AnimatePresence @exitComplete="onExitComplete">
-    <motion.div v-if="!sair" class="pagina-wrapper" 
+    <motion.div v-if="!sair" class="pagina-wrapper"
       :initial="{ opacity: 0, scale: 0.95 }"
-      :animate="{ opacity: 1, scale: 1 }" 
+      :animate="{ opacity: 1, scale: 1 }"
       :exit="{ opacity: 0, scale: 0.8 }"
       :transition="{ duration: 0.25, ease: 'easeInOut' }">
 
@@ -189,7 +189,7 @@ onMounted(async () => {
             <div class="logo-section">
               <img :src="ong.img || ong.logo" :alt="ong.title || ong.nome" class="logo-instituicao" />
             </div>
-            
+
             <div class="descricao-section">
               <h3>Sobre a Instituição</h3>
               <div class="texto-formatado">{{ formatarDescricao(ong.descricao || ong.description) }}</div>
@@ -213,7 +213,7 @@ onMounted(async () => {
               <div class="acoes">
                 <button class="botao-doar" @click="abrirModal">Fazer Doação</button>
                 <img @click="toggleFavorite"
-                  :src="isFavorited ? '/icons/heart-solid-full.svg' : '/icons/heart-light-full.svg'" 
+                  :src="isFavorited ? '/icons/heart-solid-full.svg' : '/icons/heart-light-full.svg'"
                   alt="favoritar" class="button-heart" />
               </div>
 
@@ -240,7 +240,7 @@ onMounted(async () => {
 
               <div class="info-item">
                 <strong>Endereço</strong>
-                <span>{{ ong.endereco_completo || 'Não informado' }}</span>
+                <span>{{ ong.local || 'Não informado' }}</span>
               </div>
 
               <div class="info-item">
@@ -257,11 +257,11 @@ onMounted(async () => {
   <!-- Modal de pagamento -->
   <AnimatePresence>
     <template v-if="modalAberto">
-      <motion.div key="backdrop" class="modal-backdrop" 
+      <motion.div key="backdrop" class="modal-backdrop"
         :initial="{ opacity: 0 }" :animate="{ opacity: 0.5 }" :exit="{ opacity: 0 }" />
-      
-      <motion.div key="payment-modal" class="modal-container" 
-        :initial="{ opacity: 0, scale: 0.8 }" :animate="{ opacity: 1, scale: 1 }" 
+
+      <motion.div key="payment-modal" class="modal-container"
+        :initial="{ opacity: 0, scale: 0.8 }" :animate="{ opacity: 1, scale: 1 }"
         :exit="{ opacity: 0, scale: 0.8 }">
         <PaymentComponent :ong="ong" :show="modalAberto" @fechar="fecharModal" />
       </motion.div>
