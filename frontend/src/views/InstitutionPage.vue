@@ -50,7 +50,6 @@ const availableInstitutions = computed(() => {
   }
 
   const filtered = ongs.value
-    .filter(ong => !['joao-de-paula', 'bom-retiro', 'sementes-do-futuro'].includes(ong.id))
     .map(ong => ({
       id: ong.id,
       name: ong.title,

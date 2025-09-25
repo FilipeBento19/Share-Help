@@ -15,6 +15,12 @@ const data = ref({
 const error = ref('')
 const isLoading = ref(false)
 
+// Função para validar email
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
 // Computed para configurar etapas
 const currentStep = computed(() => {
   const steps = {
@@ -79,6 +85,36 @@ const updateField = (key, value) => {
 // Fluxo
 const handleNext = async () => {
   error.value = ''
+
+  // Validação de email no step 1
+  if (step.value === 1) {
+    if (!data.value.email.trim()) {
+      await Swal.fire({
+        title: "Campo obrigatório",
+        text: "Por favor, digite seu email.",
+        icon: "warning",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#4F46E5",
+        background: "#ffffff",
+        color: "#111827"
+      })
+      return
+    }
+
+    if (!isValidEmail(data.value.email)) {
+      await Swal.fire({
+        title: "Email inválido",
+        text: "Por favor, digite um email válido. Exemplo: usuario@exemplo.com",
+        icon: "warning",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#4F46E5",
+        background: "#ffffff",
+        color: "#111827"
+      })
+      return
+    }
+  }
+
   isLoading.value = true
   try {
     if (step.value === 1) {
@@ -145,7 +181,15 @@ const handleResend = async () => {
     await api.post('/send-code/', {
       email: data.value.email
     })
-    alert('Código reenviado!')
+    await Swal.fire({
+      title: "Código reenviado!",
+      text: "Verifique sua caixa de entrada e pasta de spam.",
+      icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#4F46E5",
+      background: "#ffffff",
+      color: "#111827"
+    })
   } catch {
     error.value = 'Erro ao reenviar código.'
   }
