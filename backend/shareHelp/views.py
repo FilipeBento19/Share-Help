@@ -36,8 +36,8 @@ class UsuarioViewSet(ModelViewSet):
 # views.py
 import os
 from django.template.loader import render_to_string
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
 
 class EnviarCodigoView(APIView):
     def post(self, request):
@@ -46,35 +46,44 @@ class EnviarCodigoView(APIView):
             email = serializer.validated_data["email"]
             codigo_obj, _ = CodigoVerificacao.objects.update_or_create(email=email)
 
-            html_content = render_to_string(
-                "emails/codigo_verificacao.html",
-                {"codigo": codigo_obj.codigo}
-            )
-
-            message = Mail(
-                from_email="contatosharehelp@gmail.com",
-                to_emails=email,
-                subject="Código de Verificação - Share Help",
-                html_content=html_content
-            )
-            
             try:
-                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-                response = sg.send(message)
-                logger.info(f"✅ Email enviado com sucesso para {email}")
+                # ✅ RENDERIZAR O TEMPLATE HTML
+                html_content = render_to_string(
+                    'emails/codigo_verificacao.html',
+                    {'codigo': codigo_obj.codigo}
+                )
+                
+                # ✅ CRIAR VERSÃO TEXTO A PARTIR DO HTML
+                text_content = strip_tags(html_content)
+                
+                # ✅ ENVIAR EMAIL COM HTML E FALLBACK TEXTO
+                subject = "Código de verificação - Share Help"
+                from_email = settings.DEFAULT_FROM_EMAIL
+                to_email = [email]
+                
+                # Criar email com alternativas HTML e texto
+                msg = EmailMultiAlternatives(
+                    subject=subject,
+                    body=text_content,
+                    from_email=from_email,
+                    to=to_email
+                )
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+                
+                logger.info(f"✅ Email HTML enviado com sucesso para {email}")
                 
                 return Response({
                     "message": "Código enviado para o email"
                 }, status=status.HTTP_200_OK)
                 
             except Exception as e:
-                logger.error(f"❌ Erro SendGrid API: {str(e)}")
+                logger.error(f"❌ Erro ao enviar email: {str(e)}")
                 return Response({
                     "error": "Erro ao enviar email"
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+     
 class VerificarCodigoView(APIView):
     def post(self, request):
         serializer = VerificarCodigoSerializer(data=request.data)

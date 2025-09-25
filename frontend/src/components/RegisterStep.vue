@@ -8,18 +8,12 @@ const step = ref(1)
 const data = ref({
   email: '',
   name: '',
-  username: '',
+  username: '', 
   password: '',
   confirmPassword: ''
 })
 const error = ref('')
 const isLoading = ref(false)
-
-// Função para validar email
-const isValidEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(email)
-}
 
 // Computed para configurar etapas
 const currentStep = computed(() => {
@@ -85,66 +79,49 @@ const updateField = (key, value) => {
 // Fluxo
 const handleNext = async () => {
   error.value = ''
-
-  // Validação de email no step 1
-  if (step.value === 1) {
-    if (!data.value.email.trim()) {
-      await Swal.fire({
-        title: "Campo obrigatório",
-        text: "Por favor, digite seu email.",
-        icon: "warning",
-        confirmButtonText: "OK",
-        confirmButtonColor: "#4F46E5",
-        background: "#ffffff",
-        color: "#111827"
-      })
-      return
-    }
-
-    if (!isValidEmail(data.value.email)) {
-      await Swal.fire({
-        title: "Email inválido",
-        text: "Por favor, digite um email válido. Exemplo: usuario@exemplo.com",
-        icon: "warning",
-        confirmButtonText: "OK",
-        confirmButtonColor: "#4F46E5",
-        background: "#ffffff",
-        color: "#111827"
-      })
-      return
-    }
-  }
-
   isLoading.value = true
+
   try {
     if (step.value === 1) {
-      // Enviar código
-      await api.post('/send-code/', {
+      console.log('📧 Enviando código para:', data.value.email) // Debug
+
+      const response = await api.post('/send-code/', {
         email: data.value.email
       })
+
+      console.log('✅ Resposta da API:', response.data) // Debug
+
       step.value = 2
+
     } else if (step.value === 2) {
-      // Verificar código
-      await api.post('/verify-code/', {
+      console.log('🔍 Verificando código:', data.value.codigo) // Debug
+
+      const response = await api.post('/verify-code/', {
         email: data.value.email,
         codigo: data.value.codigo
       })
+
+      console.log('✅ Código verificado:', response.data) // Debug
+
       step.value = 3
+
     } else if (step.value === 3) {
       step.value = 4
     } else if (step.value === 4) {
-      // Registrar usuário
+      // Validações de senha
       if (data.value.password !== data.value.confirmPassword) {
         throw new Error('As senhas não coincidem')
       } else if (data.value.password.length <= 8) {
         throw new Error('A senha precisa ter mais de 8 caracteres')
       }
+
       await api.post('/register/', {
         email: data.value.email,
         nome: data.value.name,
         username: data.value.username,
         password: data.value.password
       })
+
       await Swal.fire({
         title: "Cadastro concluído!",
         text: "Sua conta foi criada com sucesso. Faça login para continuar.",
@@ -154,20 +131,20 @@ const handleNext = async () => {
         background: "#ffffff",
         color: "#111827"
       })
+
       window.location.href = "/login"
-      step.value = 1
-      data.value = {
-        email: '',
-        name: '',
-        username: '',
-        password: '',
-        confirmPassword: ''
-      }
     }
   } catch (err) {
+    console.error('❌ Erro completo:', err) // Debug detalhado
+    console.error('❌ Resposta do erro:', err.response) // Debug da resposta
+
     if (err.response?.data?.error) {
-      // Junta todas as mensagens em uma string
-      error.value = err.response.data.error.join(" | ")
+      // Se error é um array, junta as mensagens
+      if (Array.isArray(err.response.data.error)) {
+        error.value = err.response.data.error.join(" | ")
+      } else {
+        error.value = err.response.data.error
+      }
     } else {
       error.value = err.message || 'Erro inesperado'
     }
