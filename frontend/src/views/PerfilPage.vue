@@ -591,7 +591,6 @@ api.interceptors.response.use(
   margin-top: 2rem;
 }
 
-/* ✅ SIDEBAR (mantida como estava) */
 .sidebar {
   position: sticky;
   top: 20px;
@@ -640,7 +639,6 @@ api.interceptors.response.use(
   }
 }
 
-/* ✅ SEÇÕES (mantidas como estavam) */
 section {
   display: grid;
   grid-template-columns: 1fr;
@@ -748,7 +746,6 @@ section {
   }
 }
 
-/* ✅ FAVORITAS (mantidas como estavam) */
 .favoritas {
   display: flex;
   gap: 1.5rem;
@@ -778,7 +775,7 @@ section {
       width: 120px;
       height: 110px;
       background: white;
-      border-radius: 0.75vw;
+      border-radius: 1.75vw;
       box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.658);
       padding: 0.5rem;
       transition: all 0.3s ease;
@@ -813,7 +810,6 @@ section {
   }
 }
 
-/* ✅ DOAÇÕES AJUSTADAS - FUNDO CINZA MANTIDO */
 .doacoes {
   display: flex;
   flex-direction: column;
@@ -827,7 +823,6 @@ section {
   }
 }
 
-/* ✅ REGISTROS AJUSTADOS - FUNDO BRANCO MANTIDO */
 .registros {
   display: flex;
   flex-direction: column;
@@ -841,21 +836,16 @@ section {
   & h2 {
     color: #0062ff;
     font-size: 1.1rem;
-    /* ✅ Reduzido */
     font-weight: 600;
     margin: 0 0 1rem 0;
-    /* ✅ Reduzido */
     padding-bottom: 0.5rem;
-    /* ✅ Reduzido */
     border-bottom: 1px solid #e2e8f0;
-    /* ✅ Borda mais fina */
   }
 
   & table {
     width: 100%;
     border-collapse: collapse;
     border-radius: 8px;
-    /* ✅ Reduzido */
     overflow: hidden;
   }
 
@@ -864,14 +854,10 @@ section {
 
     & th {
       font-weight: 600;
-      /* ✅ Reduzido de 900 */
       color: #000000;
-      /* ✅ Cor mais suave */
       padding: 0.75rem;
-      /* ✅ Reduzido */
       text-align: left;
       font-size: 1rem;
-      /* ✅ Reduzido */
     }
   }
 
@@ -879,45 +865,31 @@ section {
 
     & th {
       font-weight: 500;
-      /* ✅ Reduzido de 900 */
       color: #36465f;
-      /* ✅ Cor mais suave */
       padding: 0.75rem;
-      /* ✅ Reduzido */
       text-align: left;
       border-bottom: 1px solid #f1f5f9;
       font-size: 1rem;
-      /* ✅ Reduzido */
     }
   }
 
   & .preco {
     font-weight: 600;
-    /* ✅ Reduzido de 900 */
     color: #001033;
-    /* ✅ Cor mais suave */
     font-size: 1.2rem;
-    /* ✅ Reduzido */
     margin-top: 1rem;
-    /* ✅ Reduzido */
     text-align: end;
   }
 }
 
-/* ✅ FILTROS AJUSTADOS */
 .filtros {
   background: white;
-  /* ✅ MANTIDO */
   padding: 1.25rem;
-  /* ✅ Reduzido de 1.5rem */
   border-radius: 12px;
-  /* ✅ Reduzido */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  /* ✅ Sombra mais sutil */
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* ✅ Reduzido de 1.5rem */
   border: 1px solid rgba(0, 0, 0, 0.05);
   height: fit-content;
 
@@ -925,21 +897,15 @@ section {
     color: #374151;
     font-weight: 600;
     font-size: 1rem;
-    /* ✅ Reduzido */
     margin: 0;
     padding-bottom: 0.5rem;
-    /* ✅ Reduzido */
     border-bottom: 1px solid #f1f5f9;
-    /* ✅ Borda mais fina */
   }
 
   & p {
     font-size: 0.75rem;
-    /* ✅ Reduzido */
     color: #64748b;
-    /* ✅ Cor mais suave */
     margin: 0.25rem 0;
-    /* ✅ Reduzido */
     font-weight: 500;
   }
 
@@ -947,7 +913,6 @@ section {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    /* ✅ Mantido */
     font-weight: 500;
     color: #374151;
 
@@ -964,14 +929,10 @@ section {
 
   & select {
     padding: 0.625rem;
-    /* ✅ Reduzido */
     border: 1px solid #d1d5db;
-    /* ✅ Borda mais fina */
     border-radius: 8px;
-    /* ✅ Reduzido */
     background: white;
     font-size: 0.875rem;
-    /* ✅ Reduzido */
     transition: all 0.2s ease;
     cursor: pointer;
 
@@ -979,7 +940,6 @@ section {
       outline: none;
       border-color: #2563EB;
       box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
-      /* ✅ Sombra menor */
     }
 
     &:hover {
@@ -988,38 +948,32 @@ section {
   }
 }
 
-/* ✅ GRID DE DOAÇÕES AJUSTADO */
 .doacoes-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 1.5rem;
-  /* ✅ Reduzido de 2rem */
   margin-top: 1rem;
 
   & .registros-conteiner {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    /* ✅ Reduzido */
   }
 }
 
-/* ✅ PLACEHOLDER DO GRÁFICO */
 .grafico-placeholder {
   background: white;
   border-radius: 12px;
-  /* ✅ Reduzido */
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  /* ✅ Sombra mais sutil */
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* ✅ RESPONSIVIDADE */
 @media (max-width: 1024px) {
   .main-container {
     grid-template-columns: 1fr;
     gap: 2rem;
+    gap: 0;
   }
 
   .sidebar {
@@ -1030,7 +984,6 @@ section {
   .doacoes-grid {
     grid-template-columns: 1fr;
     gap: 1.25rem;
-    /* ✅ Reduzido */
   }
 }
 
@@ -1058,7 +1011,7 @@ section {
   }
 
   img.ong {
-    border-radius: 90px;
+    border-radius: 8.75vw;
   }
 
   section div.grid {
@@ -1073,35 +1026,27 @@ section {
     height: 40px;
   }
 
-  /* ✅ Responsividade das doações ajustada */
   .doacoes {
     padding: 1rem 1.25rem;
-    /* ✅ Reduzido */
   }
 
   .registros {
     padding: 1rem;
-    /* ✅ Reduzido */
 
     & tr.titulos th,
     & .infos th {
       padding: 0.5rem;
-      /* ✅ Reduzido */
       font-size: 0.8rem;
-      /* ✅ Reduzido */
     }
 
     & .preco {
       font-size: 0.9rem;
-      /* ✅ Reduzido */
       padding: 0.5rem;
-      /* ✅ Reduzido */
     }
   }
 
   .filtros {
     padding: 1rem;
-    /* ✅ Reduzido */
   }
 }
 </style>

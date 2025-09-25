@@ -327,6 +327,10 @@ import AccordionContent from 'primevue/accordioncontent'
 }
 
 @media (max-width: 1024px) {
+
+  .faq-section{
+    padding: 20px;
+  }
   .members-section {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     padding-top: 25px;
