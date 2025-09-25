@@ -229,14 +229,13 @@ const doarParaEstaOpcao = () => {
             </div>
 
             <div class="card-actions">
-              <button class="btn-doar-opcao" @click="doarParaEstaOpcao">Doar para esta opção</button>
               <router-link :to="`${$route.path}/${recommendedInstitution.id}`">
                 <button class="btn-pagina-instituicao">Página da Instituição</button>
               </router-link>
             </div>
           </div>
         </div>
-    
+
     </section>
     </div>
 
@@ -298,7 +297,7 @@ const doarParaEstaOpcao = () => {
     <!-- Footer -->
     <section>
       <FooterComponent />
-    </section>    
+    </section>
   </main>
 </template>
 
