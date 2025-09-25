@@ -218,7 +218,7 @@ onMounted(async () => {
               </div>
 
               <div class="aviso">
-                <p>* Sua doação será feita através da plataforma da Benfeitoria, parceira do ParaQuemDoar.</p>
+                <p>* Sua doação será feita através da plataforma ShareHelp, gerenciada por nossa equipe interna</p>
               </div>
             </div>
 
