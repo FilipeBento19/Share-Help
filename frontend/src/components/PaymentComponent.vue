@@ -671,87 +671,155 @@ defineExpose({ showModal })
 
 /* ===== RESPONSIVIDADE SIMPLIFICADA ===== */
 
-/* Tablet (até 768px) */
 @media (max-width: 768px) {
   .divprimary {
     max-width: 95vw;
-    padding: 16px;
+    padding: 12px;
     border-radius: 8px;
+    margin: 10px;
   }
 
   .header {
-    top: 16px;
-    left: 16px;
+    top: 12px;
+    left: 12px;
+  }
+
+  .header h2 {
+    font-size: 1.1rem;
   }
 
   .content-wrapper {
     flex-direction: column;
-    gap: 20px;
-    padding-top: 60px;
+    gap: 16px;
+    padding-top: 50px;
     min-height: auto;
+  }
+
+  .valor h1 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+
+  .form h2 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
   }
 
   .value-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 
   .payment-options {
-    gap: 8px;
+    gap: 6px;
   }
 
   .payment-option,
   .value-button,
   .custom-input,
   .finalize-button {
-    padding: 12px;
+    padding: 10px;
     font-size: 14px;
   }
 
   .payment-icon {
     width: 24px;
     height: 24px;
+    margin-right: 12px;
   }
 
-  .radio-indicator {
-    width: 16px;
-    height: 16px;
+  .donation-type {
+    margin-bottom: 24px;
   }
 
-  .radio-indicator.active::after {
-    width: 6px;
-    height: 6px;
-  }
-
-  .msgzinha {
-    font-size: 0.75rem;
+  .custom-value {
+    margin-bottom: 20px;
   }
 }
 
 /* Mobile (até 480px) */
 @media (max-width: 480px) {
-  .divprimary {
-    padding: 12px;
+  .overlay {
+    padding: 8px;
   }
 
-  .valor h1,
+  .divprimary {
+    padding: 8px;
+    margin: 5px;
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+
+  .header {
+    top: 8px;
+    left: 8px;
+  }
+
+  .header h2 {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .content-wrapper {
+    gap: 12px;
+    padding-top: 40px;
+  }
+
+  .valor h1 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
   .form h2 {
-    font-size: 1.25rem;
+    font-size: 1rem;
+    margin-bottom: 12px;
   }
 
   .value-grid {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 6px;
   }
 
-  .value-button,
-  .custom-input,
-  .finalize-button {
-    padding: 10px;
+  .value-button {
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .custom-input {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .custom-value {
+    margin-bottom: 16px;
+  }
+
+  .donation-type {
+    margin-bottom: 20px;
+  }
+
+  .donation-type h3 {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .radio-group {
+    gap: 16px;
+  }
+
+  .radio-label {
     font-size: 13px;
   }
 
   .payment-option {
-    padding: 10px;
+    padding: 8px 12px;
+  }
+
+  .payment-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
   }
 
   .payment-name {
@@ -762,17 +830,101 @@ defineExpose({ showModal })
     font-size: 11px;
   }
 
-  .donation-type h3 {
+  .finalize-button {
+    padding: 10px 16px;
     font-size: 13px;
+    font-weight: 500;
   }
 
-  .radio-label {
-    font-size: 13px;
+  .radio-indicator {
+    width: 14px;
+    height: 14px;
+  }
+
+  .radio-indicator.active::after {
+    width: 5px;
+    height: 5px;
+  }
+
+  .back-button {
+    padding: 4px;
   }
 
   .back-button svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .msgzinha {
+    font-size: 0.7rem;
+    margin-top: 8px;
+  }
+
+  .thank-you-box {
+    padding: 24px 20px;
+    max-width: 280px;
+  }
+
+  .thank-you-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .thank-you-box h3 {
+    font-size: 16px;
+  }
+
+  .thank-you-box p {
+    font-size: 13px;
+  }
+}
+
+/* Extra Small Mobile (até 360px) */
+@media (max-width: 360px) {
+  .divprimary {
+    padding: 6px;
+  }
+
+  .header h2 {
+    font-size: 0.85rem;
+  }
+
+  .content-wrapper {
+    padding-top: 35px;
+    gap: 10px;
+  }
+
+  .valor h1,
+  .form h2 {
+    font-size: 0.95rem;
+  }
+
+  .value-button,
+  .custom-input,
+  .finalize-button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .payment-option {
+    padding: 6px 10px;
+  }
+
+  .payment-name {
+    font-size: 12px;
+  }
+
+  .payment-desc {
+    font-size: 10px;
+  }
+
+  .msgzinha {
+    font-size: 0.65rem;
+  }
+
+  .thank-you-box {
+    padding: 20px 16px;
+    max-width: 250px;
   }
 }
 </style>
