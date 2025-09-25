@@ -133,13 +133,6 @@ const availableInstitutions = computed(() => {
     }))
 })
 
-// =====================================
-// AÇÕES
-// =====================================
-const doarParaEstaOpcao = () => {
-  // Sua lógica de doação aqui
-  console.log('Doar para:', recommendedInstitution.value.name)
-}
 </script>
 
 <template>
@@ -230,7 +223,6 @@ const doarParaEstaOpcao = () => {
             </div>
 
             <div class="card-actions">
-              <button class="btn-doar-opcao" @click="doarParaEstaOpcao">Doar para esta opção</button>
               <router-link :to="`${$route.path}/${recommendedInstitution.id}`">
                 <button class="btn-pagina-instituicao">Página da Instituição</button>
               </router-link>
