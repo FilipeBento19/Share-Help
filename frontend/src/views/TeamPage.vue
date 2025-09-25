@@ -5,10 +5,16 @@ import Accordion from 'primevue/accordion'
 import AccordionPanel from 'primevue/accordionpanel'
 import AccordionHeader from 'primevue/accordionheader'
 import AccordionContent from 'primevue/accordioncontent'
+import { motion } from 'motion-v';
 
 </script>
 
 <template>
+  <motion.div
+    :initial="{ opacity: 0, scale: 0.95 }"
+    :animate="{ opacity: 1, scale: 1 }"
+    :transition="{ duration: 0.2, ease: 'easeInOut' }"
+  >
   <div class="nossa-equipe-container">
     <div class="equipe-content">
       <!-- Card da imagem grande -->
@@ -116,6 +122,7 @@ import AccordionContent from 'primevue/accordioncontent'
       </Accordion>
     </div>
   </div>
+  </motion.div>
   <FooterComponent />
 </template>
 

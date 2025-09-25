@@ -85,7 +85,6 @@ const backToLogin = () => {
         </div>
       </div>
     </div>
-
     <div
       class="side-text"
       :class="{ 'show': showRegister }"
